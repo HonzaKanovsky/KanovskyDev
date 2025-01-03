@@ -6,5 +6,6 @@ import java.time.LocalDateTime
 
 data class HistorisationCryptoPriceDTO(
     val timestamp: LocalDate,
-    val price: BigDecimal
+    val price: BigDecimal,
+    val marketCap: Long?
 )

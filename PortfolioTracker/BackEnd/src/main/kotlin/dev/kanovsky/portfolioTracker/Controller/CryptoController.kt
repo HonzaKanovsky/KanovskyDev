@@ -2,18 +2,24 @@ package dev.kanovsky.portfolioTracker.Controller
 
 import dev.kanovsky.portfolioTracker.Dto.ApiResponse
 import dev.kanovsky.portfolioTracker.Dto.CryptoDTO
+import dev.kanovsky.portfolioTracker.Dto.CryptoDetailDto
+import dev.kanovsky.portfolioTracker.Dto.HistorisationCryptoPriceDTO
 import dev.kanovsky.portfolioTracker.Model.Crypto
 import dev.kanovsky.portfolioTracker.Model.HistorisationCryptoPrice
 import dev.kanovsky.portfolioTracker.Service.CryptoService
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
+import org.springframework.data.web.PageableDefault
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import java.math.BigDecimal
 
 @RestController
 @RequestMapping("/api/cryptos")
 class CryptoController(private val cryptoService: CryptoService) {
     @GetMapping
-    fun getAllCryptos(): List<Crypto> = cryptoService.getAllCryptos()
+    fun getAllCryptos(
+        @PageableDefault(size = 30, sort = ["id"]) pageable: Pageable
+    ): Page<Crypto> = cryptoService.getAllCryptos(pageable)
 
     @GetMapping("/{id}")
     fun getCryptoById(@PathVariable id: Long): Crypto = cryptoService.getCryptoById(id)
@@ -21,9 +27,9 @@ class CryptoController(private val cryptoService: CryptoService) {
     @GetMapping("/{id}/history")
     fun getHistoricalData(
         @PathVariable id: Long,
-        @RequestParam startDate: String,
-        @RequestParam endDate: String
-    ): List<HistorisationCryptoPrice> = cryptoService.getHistoricalData(id, startDate, endDate)
+        @RequestParam(required = false) startDate: String?,
+        @RequestParam(required = false) endDate: String?
+    ): ApiResponse<CryptoDetailDto> = cryptoService.getHistoricalData(id, startDate, endDate)
 
     @PostMapping("/update")
     fun updateCryptoPricesManually(@RequestParam amount: Long): ResponseEntity<ApiResponse<CryptoDTO>> {

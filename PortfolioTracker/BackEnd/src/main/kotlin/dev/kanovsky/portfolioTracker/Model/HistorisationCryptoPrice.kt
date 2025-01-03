@@ -15,18 +15,17 @@ data class HistorisationCryptoPrice(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cryptoID", nullable = false)
+    @JoinColumn(name = "crypto_id", nullable = false)
     val crypto: Crypto,
-
     @Column(nullable = false)
     val timestamp: LocalDate,
-
-    @Column(nullable = false, precision = 18, scale = 4)
-    var price: BigDecimal
+    @Column(nullable = false, precision = 18, scale = 8)
+    val price: BigDecimal,
+    @Column(nullable = false)
+    val marketCap: Long
 ) {
-    fun toDto() = HistorisationCryptoPriceDTO(timestamp, price)
+    fun toDto() = HistorisationCryptoPriceDTO(timestamp, price, marketCap)
 
     companion object {
         fun fromDto(dto: CryptoDTO) {

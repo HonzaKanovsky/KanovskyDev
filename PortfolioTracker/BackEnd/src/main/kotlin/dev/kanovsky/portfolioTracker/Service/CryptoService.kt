@@ -2,6 +2,8 @@ package dev.kanovsky.portfolioTracker.Service
 
 import dev.kanovsky.portfolioTracker.Dto.ApiResponse
 import dev.kanovsky.portfolioTracker.Dto.CryptoDTO
+import dev.kanovsky.portfolioTracker.Dto.CryptoDetailDto
+import dev.kanovsky.portfolioTracker.Dto.HistorisationCryptoPriceDTO
 import dev.kanovsky.portfolioTracker.Model.Crypto
 import dev.kanovsky.portfolioTracker.Model.HistorisationCryptoPrice
 import dev.kanovsky.portfolioTracker.Repository.CryptoRepository
@@ -13,6 +15,8 @@ import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
 import org.json.JSONArray
 import org.json.JSONObject
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 
@@ -24,16 +28,24 @@ class CryptoService(
     companion object {
         private val logger: Logger = LogManager.getLogger(CryptoService::class.java)
     }
-    fun getAllCryptos(): List<Crypto> = cryptoRepository.findAll()
+    fun getAllCryptos(pageable: Pageable): Page<Crypto> = cryptoRepository.findAll(pageable)
 
     fun getCryptoById(id: Long): Crypto =
         cryptoRepository.findById(id).orElseThrow { IllegalArgumentException("Crypto with id $id not found") }
 
-    fun getHistoricalData(cryptoId: Long, startDate: String, endDate: String): List<HistorisationCryptoPrice> {
+    fun getHistoricalData(cryptoId: Long, startDate: String?, endDate: String?): ApiResponse<CryptoDetailDto> {
         val crypto = getCryptoById(cryptoId)
-        val start = LocalDate.parse(startDate)
-        val end = LocalDate.parse(endDate)
-        return historisationCryptoPriceRepository.findByCryptoAndTimestampBetween(crypto, start, end)
+        val start = LocalDate.parse(startDate ?: LocalDate.now().minusMonths(12).toString())
+        val end = LocalDate.parse(endDate ?: LocalDate.now().toString())
+        val cryptosInInterval = historisationCryptoPriceRepository.findByCryptoAndTimestampBetween(crypto, start, end)
+
+        val cryptosInIntervalDto = mutableListOf<HistorisationCryptoPriceDTO>()
+        for (cryptoEntry in cryptosInInterval){
+            cryptosInIntervalDto.add(cryptoEntry.toDto())
+        }
+
+        val cryptoDetailDto = CryptoDetailDto(cryptoDTO = crypto.toDto(), historisationCryptoPriceDTOs = cryptosInIntervalDto)
+        return ApiResponse(success = true, message = "Prices in interval are found", data = cryptoDetailDto)
     }
 
     fun updatedCryptoPrices(amount: Long): ApiResponse<CryptoDTO> {
@@ -59,8 +71,10 @@ class CryptoService(
     private fun updateCryptos(data: JSONArray, cryptoRepository: CryptoRepository){
         val existingCryptos = cryptoRepository.findAll()
         val existingCryptoMap = existingCryptos.associateBy { it.name to it.symbol }
+        val currentDate = LocalDate.now()
 
         val newOrUpdatedCryptos = mutableListOf<Crypto>()
+        val newOrUpdatedHistorisationCryptoPrices = mutableListOf<HistorisationCryptoPrice>()
 
         for (i in 0 until data.length()) {
             val cryptoEntry = data.getJSONObject(i)
@@ -72,28 +86,25 @@ class CryptoService(
             val marketCap = quote.getLong("market_cap")
 
             val existingCrypto = existingCryptoMap[name to symbol]
+            val updatedCrypto = existingCrypto ?: Crypto(name = name, symbol = symbol)
 
-            val updatedCrypto = if (existingCrypto != null) {
-                logger.debug("Updating: name = $name, symbol = $symbol")
-                existingCrypto.copy(price = price, marketCap = marketCap)
-            } else {
-                logger.debug("Creating: name = $name, symbol = $symbol")
-                Crypto(name = name, symbol = symbol, price = price, marketCap = marketCap)
-            }
+            val existingEntry = historisationCryptoPriceRepository.findByCryptoAndTimestamp(updatedCrypto, currentDate)
+            val updatedEntry = existingEntry?.copy(price = price, marketCap = marketCap)
+                ?: HistorisationCryptoPrice(crypto = updatedCrypto, timestamp = currentDate, price = price, marketCap = marketCap)
+
             newOrUpdatedCryptos.add(updatedCrypto)
+            newOrUpdatedHistorisationCryptoPrices.add(updatedEntry)
         }
         cryptoRepository.saveAll(newOrUpdatedCryptos)
-        historisationCryptoPriceRepository.saveAll(saveOrUpdateDailyHistory(newOrUpdatedCryptos))
+        historisationCryptoPriceRepository.saveAll(newOrUpdatedHistorisationCryptoPrices)
     }
 
-    private fun saveOrUpdateDailyHistory(cryptoList: MutableList<Crypto>) : List<HistorisationCryptoPrice> {
-        val currentDate = LocalDate.now()
+/*    private fun saveOrUpdateDailyHistory(cryptoList: MutableList<Crypto>) : List<HistorisationCryptoPrice> {
         val newOrUpdatedHistorisationCryptoPrices = mutableListOf<HistorisationCryptoPrice>()
 
         for(crypto in cryptoList){
             val existingRecord = historisationCryptoPriceRepository.findByCryptoAndTimestamp(crypto, currentDate)
             val updatedRecord = if (existingRecord != null) {
-                existingRecord.copy(price = crypto.price)
             } else {
                 HistorisationCryptoPrice(crypto = crypto, timestamp = currentDate, price = crypto.price)
             }
@@ -101,7 +112,7 @@ class CryptoService(
         }
         return newOrUpdatedHistorisationCryptoPrices
     }
-
+*/
     private fun requestCMCApi(apiKey: String, url: String): Response {
 
         // Set up OkHttp client
