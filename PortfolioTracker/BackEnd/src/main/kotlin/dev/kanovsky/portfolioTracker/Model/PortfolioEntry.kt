@@ -1,5 +1,7 @@
 package dev.kanovsky.portfolioTracker.Model
 
+import dev.kanovsky.portfolioTracker.Dto.CryptoDTO
+import dev.kanovsky.portfolioTracker.Dto.PortfolioEntryDTO
 import jakarta.persistence.*
 import lombok.Data
 import java.time.LocalDateTime
@@ -27,4 +29,16 @@ data class PortfolioEntry(
 
     @Column(nullable = false)
     val timestamp: LocalDateTime = LocalDateTime.now()
-)
+) {
+    fun toDto() = PortfolioEntryDTO(
+        id = id,
+        crypto = crypto.toDto(),
+        amount = amount
+    )
+
+    companion object {
+        fun fromDto(dto: CryptoDTO) {
+            TODO("NOT IMPLEMENTED")
+        }
+    }
+}

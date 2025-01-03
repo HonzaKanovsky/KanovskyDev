@@ -1,5 +1,7 @@
 package dev.kanovsky.portfolioTracker.Model
 
+import dev.kanovsky.portfolioTracker.Dto.CryptoDTO
+import dev.kanovsky.portfolioTracker.Dto.HistorisationCryptoPriceDTO
 import jakarta.persistence.*
 import lombok.Data
 import java.math.BigDecimal
@@ -22,4 +24,12 @@ data class HistorisationCryptoPrice(
 
     @Column(nullable = false, precision = 18, scale = 4)
     val price: BigDecimal
-)
+) {
+    fun toDto() = HistorisationCryptoPriceDTO(timestamp, price)
+
+    companion object {
+        fun fromDto(dto: CryptoDTO) {
+            TODO("NOT IMPLEMENTED")
+        }
+    }
+}

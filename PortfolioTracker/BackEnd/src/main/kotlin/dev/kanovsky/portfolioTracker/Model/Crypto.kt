@@ -1,5 +1,6 @@
 package dev.kanovsky.portfolioTracker.Model
 
+import dev.kanovsky.portfolioTracker.Dto.CryptoDTO
 import jakarta.persistence.*
 import lombok.Data
 import java.math.BigDecimal
@@ -23,4 +24,16 @@ data class Crypto(
 
     @Column
     val marketCap: Long?
-)
+) {
+    fun toDto() = CryptoDTO(id, symbol, name, price, marketCap)
+
+    companion object {
+        fun fromDto(dto: CryptoDTO) = Crypto(
+            id = dto.id,
+            symbol = dto.symbol,
+            name = dto.name,
+            price = dto.price,
+            marketCap = dto.marketCap
+        )
+    }
+}
