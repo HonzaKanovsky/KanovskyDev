@@ -26,9 +26,13 @@ repositories {
 }
 
 dependencies {
+	implementation("org.json:json:20231013")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-web-services")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
+	implementation("com.squareup.okhttp3:okhttp:4.9.3")
+	implementation("org.apache.logging.log4j:log4j-core:2.24.3")
+	implementation("org.apache.logging.log4j:log4j-api:2.24.3")
 	compileOnly("org.projectlombok:lombok")
 	runtimeOnly("com.mysql:mysql-connector-j")
 	annotationProcessor("org.projectlombok:lombok")
