@@ -33,6 +33,7 @@ dependencies {
 	implementation("com.squareup.okhttp3:okhttp:4.9.3")
 	implementation("org.apache.logging.log4j:log4j-core:2.24.3")
 	implementation("org.apache.logging.log4j:log4j-api:2.24.3")
+	implementation("org.springframework.boot:spring-boot-starter")
 	compileOnly("org.projectlombok:lombok")
 	runtimeOnly("com.mysql:mysql-connector-j")
 	annotationProcessor("org.projectlombok:lombok")
