@@ -5,6 +5,7 @@ import dev.kanovsky.portfolioTracker.Dto.HistorisationCryptoPriceDTO
 import jakarta.persistence.*
 import lombok.Data
 import java.math.BigDecimal
+import java.time.LocalDate
 import java.time.LocalDateTime
 
 @Entity
@@ -20,10 +21,10 @@ data class HistorisationCryptoPrice(
     val crypto: Crypto,
 
     @Column(nullable = false)
-    val timestamp: LocalDateTime,
+    val timestamp: LocalDate,
 
     @Column(nullable = false, precision = 18, scale = 4)
-    val price: BigDecimal
+    var price: BigDecimal
 ) {
     fun toDto() = HistorisationCryptoPriceDTO(timestamp, price)
 

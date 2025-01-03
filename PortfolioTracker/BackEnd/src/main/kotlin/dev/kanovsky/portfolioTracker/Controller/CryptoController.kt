@@ -24,17 +24,8 @@ class CryptoController(private val cryptoService: CryptoService) {
         @RequestParam endDate: String
     ): List<HistorisationCryptoPrice> = cryptoService.getHistoricalData(id, startDate, endDate)
 
-
-    @GetMapping("/test")
-    fun test() : ApiResponse<CryptoDTO> {
-        val crypto = CryptoDTO(
-            id = 1,
-            symbol = "BTC",
-            name = "Bitcoin",
-            price = BigDecimal("50000.00"),
-            marketCap = 1000000000L
-        )
-
-        return ApiResponse(true,"Its ok", crypto)
+    @PostMapping("/update")
+    fun updateCryptoPricesManually(@RequestParam amount: Long) : ApiResponse<CryptoDTO>{
+        return cryptoService.getUpdatedPrice(amount)
     }
 }
