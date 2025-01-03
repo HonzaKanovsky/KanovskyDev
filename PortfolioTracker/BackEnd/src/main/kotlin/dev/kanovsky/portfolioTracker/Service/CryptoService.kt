@@ -14,7 +14,6 @@ import org.apache.logging.log4j.Logger
 import org.json.JSONArray
 import org.json.JSONObject
 import org.springframework.stereotype.Service
-import java.math.BigDecimal
 import java.time.LocalDate
 
 @Service
@@ -37,28 +36,23 @@ class CryptoService(
         return historisationCryptoPriceRepository.findByCryptoAndTimestampBetween(crypto, start, end)
     }
 
-    fun getUpdatedPrice(amount: Long): ApiResponse<CryptoDTO> {
+    fun updatedCryptoPrices(amount: Long): ApiResponse<CryptoDTO> {
         val apiKey = System.getenv("CMC_API_KEY") ?: throw IllegalStateException("API key not found")
         val baseUrl = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest"
         val url = "$baseUrl?start=1&limit=$amount&convert=USD"
 
-        return try {
-            val response = requestCMCApi(apiKey, url)
-            val responseData = response.body?.string()
 
-            if (response.isSuccessful) {
-                val jsonResponse = JSONObject(responseData)
-                val data = jsonResponse.getJSONArray("data")
+        val response = requestCMCApi(apiKey, url)
+        val responseData = response.body?.string()
 
-                updateCryptos(data, cryptoRepository)
-                ApiResponse(true,"Updating crypto prices was successful")
-            }else{
-                ApiResponse(false,"Updating crypto prices failed: ${response.message}")
-            }
-        }catch (e: Exception){
-            logger.fatal("Failed to fetch updated prices", e)
-            e.printStackTrace()
-            ApiResponse(false, "Error occurred while updating crypto prices: ${e.message}")
+        return if (response.isSuccessful) {
+            val jsonResponse = JSONObject(responseData)
+            val data = jsonResponse.getJSONArray("data")
+
+            updateCryptos(data, cryptoRepository)
+            ApiResponse(true,"Updating crypto prices was successful")
+        }else{
+            ApiResponse(false,"Updating crypto prices failed: ${response.message}")
         }
     }
 

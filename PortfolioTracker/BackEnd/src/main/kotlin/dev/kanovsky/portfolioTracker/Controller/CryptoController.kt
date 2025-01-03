@@ -5,6 +5,7 @@ import dev.kanovsky.portfolioTracker.Dto.CryptoDTO
 import dev.kanovsky.portfolioTracker.Model.Crypto
 import dev.kanovsky.portfolioTracker.Model.HistorisationCryptoPrice
 import dev.kanovsky.portfolioTracker.Service.CryptoService
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.math.BigDecimal
 
@@ -25,7 +26,19 @@ class CryptoController(private val cryptoService: CryptoService) {
     ): List<HistorisationCryptoPrice> = cryptoService.getHistoricalData(id, startDate, endDate)
 
     @PostMapping("/update")
-    fun updateCryptoPricesManually(@RequestParam amount: Long) : ApiResponse<CryptoDTO>{
-        return cryptoService.getUpdatedPrice(amount)
+    fun updateCryptoPricesManually(@RequestParam amount: Long): ResponseEntity<ApiResponse<CryptoDTO>> {
+        return try {
+            val response = cryptoService.updatedCryptoPrices(amount)
+            if (response.success) {
+                ResponseEntity.ok(response)
+            } else {
+                ResponseEntity.badRequest().body(response)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            ResponseEntity.status(500).body(
+                ApiResponse(false, "An unexpected error occurred: ${e.message}")
+            )
+        }
     }
 }
