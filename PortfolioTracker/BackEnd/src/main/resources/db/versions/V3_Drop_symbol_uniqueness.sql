@@ -1,0 +1,2 @@
+ALTER TABLE crypto DROP INDEX symbol;
+ALTER TABLE crypto MODIFY COLUMN symbol VARCHAR(50);

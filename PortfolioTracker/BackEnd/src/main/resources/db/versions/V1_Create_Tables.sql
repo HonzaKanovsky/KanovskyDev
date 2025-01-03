@@ -20,7 +20,7 @@ CREATE TABLE Crypto (
                         symbol VARCHAR(10) NOT NULL UNIQUE,
                         name VARCHAR(100) NOT NULL,
                         price DECIMAL(18, 2) NOT NULL,
-                        marketCap BIGINT
+                        market_cap BIGINT
 );
 
 -- Table: PortfolioEntry
