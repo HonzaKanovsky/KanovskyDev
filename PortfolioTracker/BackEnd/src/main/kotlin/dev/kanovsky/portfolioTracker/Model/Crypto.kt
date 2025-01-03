@@ -13,16 +13,16 @@ data class Crypto(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
 
-    @Column(nullable = false, unique = true, length = 10)
+    @Column(nullable = false, unique = true, length = 50)
     val symbol: String,
 
     @Column(nullable = false)
     val name: String,
 
     @Column(nullable = false, precision = 18, scale = 8)
-    val price: BigDecimal,
+    var price: BigDecimal,
 
-    @Column
+    @Column(name = "market_cap")
     val marketCap: Long?
 ) {
     fun toDto() = CryptoDTO(id, symbol, name, price, marketCap)

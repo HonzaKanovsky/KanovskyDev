@@ -26,7 +26,7 @@ data class User(
 
     companion object {
         fun fromDto(dto: CryptoDTO) {
-            TODO("NOT IMPLEMENTED")
+            TODO("Not yet implemented")
         }
     }
 }
