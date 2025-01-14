@@ -58,7 +58,7 @@ class CryptoService(
         }
 
         val cryptoDetailDto =
-            CryptoDetailDTO(cryptoDTO = crypto.toDto(), historisationCryptoPriceDTOs = cryptosInIntervalDto)
+            CryptoDetailDTO(crypto = crypto.toDto(), historisationCryptoPrices = cryptosInIntervalDto)
         return ApiResponse(success = true, message = "Prices in interval are found", data = cryptoDetailDto)
     }
 
