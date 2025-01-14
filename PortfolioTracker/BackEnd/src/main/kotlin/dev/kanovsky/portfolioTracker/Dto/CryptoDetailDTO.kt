@@ -1,6 +1,6 @@
 package dev.kanovsky.portfolioTracker.Dto
 
-class CryptoDetailDto(
+class CryptoDetailDTO(
     val cryptoDTO: CryptoDTO,
     val historisationCryptoPriceDTOs: List<HistorisationCryptoPriceDTO>
 )

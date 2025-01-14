@@ -2,7 +2,7 @@ package dev.kanovsky.portfolioTracker.Controller
 
 import dev.kanovsky.portfolioTracker.Dto.ApiResponse
 import dev.kanovsky.portfolioTracker.Dto.CryptoDTO
-import dev.kanovsky.portfolioTracker.Dto.CryptoDetailDto
+import dev.kanovsky.portfolioTracker.Dto.CryptoDetailDTO
 import dev.kanovsky.portfolioTracker.Dto.HistorisationCryptoPriceDTO
 import dev.kanovsky.portfolioTracker.Model.Crypto
 import dev.kanovsky.portfolioTracker.Service.CryptoService
@@ -46,7 +46,7 @@ class CryptoController(private val cryptoService: CryptoService) {
         @PathVariable id: Long = 0,
         @RequestParam(required = false) startDate: String?,
         @RequestParam(required = false) endDate: String?
-    ): ApiResponse<CryptoDetailDto> = cryptoService.getHistoricalData(id, startDate, endDate)
+    ): ApiResponse<CryptoDetailDTO> = cryptoService.getHistoricalData(id, startDate, endDate)
 
 
     @PostMapping("/update")

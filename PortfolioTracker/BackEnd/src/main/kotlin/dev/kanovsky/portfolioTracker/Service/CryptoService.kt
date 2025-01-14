@@ -2,7 +2,7 @@ package dev.kanovsky.portfolioTracker.Service
 
 import dev.kanovsky.portfolioTracker.Dto.ApiResponse
 import dev.kanovsky.portfolioTracker.Dto.CryptoDTO
-import dev.kanovsky.portfolioTracker.Dto.CryptoDetailDto
+import dev.kanovsky.portfolioTracker.Dto.CryptoDetailDTO
 import dev.kanovsky.portfolioTracker.Dto.HistorisationCryptoPriceDTO
 import dev.kanovsky.portfolioTracker.Enums.CurrencyCode
 import dev.kanovsky.portfolioTracker.Model.Crypto
@@ -46,7 +46,7 @@ class CryptoService(
         )
     }
 
-    fun getHistoricalData(cryptoId: Long, startDate: String?, endDate: String?): ApiResponse<CryptoDetailDto> {
+    fun getHistoricalData(cryptoId: Long, startDate: String?, endDate: String?): ApiResponse<CryptoDetailDTO> {
         val crypto = getCryptoById(cryptoId)
         val start = LocalDate.parse(startDate ?: LocalDate.now().minusMonths(12).toString())
         val end = LocalDate.parse(endDate ?: LocalDate.now().toString())
@@ -58,7 +58,7 @@ class CryptoService(
         }
 
         val cryptoDetailDto =
-            CryptoDetailDto(cryptoDTO = crypto.toDto(), historisationCryptoPriceDTOs = cryptosInIntervalDto)
+            CryptoDetailDTO(cryptoDTO = crypto.toDto(), historisationCryptoPriceDTOs = cryptosInIntervalDto)
         return ApiResponse(success = true, message = "Prices in interval are found", data = cryptoDetailDto)
     }
 
