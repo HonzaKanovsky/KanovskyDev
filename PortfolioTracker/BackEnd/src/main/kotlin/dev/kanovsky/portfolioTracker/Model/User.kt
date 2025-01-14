@@ -1,9 +1,11 @@
 package dev.kanovsky.portfolioTracker.Model
 
 import dev.kanovsky.portfolioTracker.Dto.CryptoDTO
+import dev.kanovsky.portfolioTracker.Dto.PortfolioEntryDTO
 import dev.kanovsky.portfolioTracker.Dto.UserDTO
 import jakarta.persistence.*
 import lombok.Data
+import org.springframework.data.domain.Page
 
 @Entity
 @Data
@@ -22,7 +24,8 @@ data class User(
     @Column(nullable = false, unique = true)
     val email: String
 ) {
-    fun toDto() = UserDTO(id, username, email)
+    fun toDto(portfolioEntryDTO: Page<PortfolioEntryDTO> = Page.empty()) =
+        UserDTO(id, username, email, portfolio = portfolioEntryDTO)
 
     companion object {
         fun fromDto(dto: CryptoDTO) {
