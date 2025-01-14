@@ -25,7 +25,7 @@ data class HistorisationCryptoPrice(
     @Column(nullable = false)
     val marketCap: Long
 ) {
-    fun toDto() = HistorisationCryptoPriceDTO(timestamp, price, marketCap)
+    fun toDto() = HistorisationCryptoPriceDTO(null, timestamp, price, marketCap)
 
     companion object {
         fun fromDto(dto: CryptoDTO) {

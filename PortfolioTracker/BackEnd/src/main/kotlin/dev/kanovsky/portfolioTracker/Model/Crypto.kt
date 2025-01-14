@@ -3,7 +3,6 @@ package dev.kanovsky.portfolioTracker.Model
 import dev.kanovsky.portfolioTracker.Dto.CryptoDTO
 import jakarta.persistence.*
 import lombok.Data
-import java.math.BigDecimal
 
 @Entity
 @Data
@@ -21,10 +20,12 @@ data class Crypto(
     fun toDto() = CryptoDTO(id, symbol, name)
 
     companion object {
-        fun fromDto(dto: CryptoDTO) = Crypto(
-            id = dto.id,
-            symbol = dto.symbol,
-            name = dto.name
-        )
+        fun fromDto(dto: CryptoDTO?) = dto?.let {
+            Crypto(
+                id = it.id,
+                symbol = dto.symbol,
+                name = dto.name
+            )
+        }
     }
 }

@@ -3,9 +3,7 @@ package dev.kanovsky.portfolioTracker.Controller
 import dev.kanovsky.portfolioTracker.Dto.ApiResponse
 import dev.kanovsky.portfolioTracker.Dto.CryptoDTO
 import dev.kanovsky.portfolioTracker.Dto.CryptoDetailDto
-import dev.kanovsky.portfolioTracker.Dto.HistorisationCryptoPriceDTO
 import dev.kanovsky.portfolioTracker.Model.Crypto
-import dev.kanovsky.portfolioTracker.Model.HistorisationCryptoPrice
 import dev.kanovsky.portfolioTracker.Service.CryptoService
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -26,15 +24,21 @@ class CryptoController(private val cryptoService: CryptoService) {
 
     @GetMapping("/{id}/history")
     fun getHistoricalData(
-        @PathVariable id: Long,
+        @PathVariable id: Long = 0,
         @RequestParam(required = false) startDate: String?,
         @RequestParam(required = false) endDate: String?
     ): ApiResponse<CryptoDetailDto> = cryptoService.getHistoricalData(id, startDate, endDate)
 
+
+    /*
+    *
+    *
+    *
+     */
     @PostMapping("/update")
     fun updateCryptoPricesManually(@RequestParam amount: Long): ResponseEntity<ApiResponse<CryptoDTO>> {
         return try {
-            val response = cryptoService.updatedCryptoPrices(amount)
+            val response = cryptoService.updateDBCryptoEntries(amount)
             if (response.success) {
                 ResponseEntity.ok(response)
             } else {
@@ -46,5 +50,9 @@ class CryptoController(private val cryptoService: CryptoService) {
                 ApiResponse(false, "An unexpected error occurred: ${e.message}")
             )
         }
+    }
+    
+    fun createCryptoEntries(){
+
     }
 }

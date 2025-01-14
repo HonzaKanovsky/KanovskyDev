@@ -10,7 +10,7 @@ class HistorisationService(
     @Scheduled(cron = "0 0 1 * * ?", zone = "UTC")
     fun saveDailyHistorisation() {
         try {
-            cryptoService.updatedCryptoPrices(5000)
+            cryptoService.updateDBCryptoEntries(5000)
             println("Daily historisation job completed successfully.")
         } catch (e: Exception) {
             println("Error occurred in daily historisation job: ${e.message}")
