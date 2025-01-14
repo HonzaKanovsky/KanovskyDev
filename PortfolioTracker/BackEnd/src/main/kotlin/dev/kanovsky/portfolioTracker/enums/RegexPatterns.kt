@@ -1,4 +1,4 @@
-package dev.kanovsky.portfolioTracker.Enums
+package dev.kanovsky.portfolioTracker.enums
 
 import java.util.regex.Pattern
 

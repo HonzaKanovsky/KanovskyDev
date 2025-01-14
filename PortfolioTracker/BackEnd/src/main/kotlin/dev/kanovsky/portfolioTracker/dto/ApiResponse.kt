@@ -1,10 +1,8 @@
-package dev.kanovsky.portfolioTracker.Dto
+package dev.kanovsky.portfolioTracker.dto
 
-import java.sql.Timestamp
 import java.time.LocalDateTime
-import java.util.Date
 
-data class ApiResponse<T> (
+data class ApiResponse<T>(
     val success: Boolean,
     val message: String,
     val timestamp: LocalDateTime? = LocalDateTime.now(),

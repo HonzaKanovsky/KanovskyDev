@@ -1,11 +1,11 @@
-package dev.kanovsky.portfolioTracker.Service
+package dev.kanovsky.portfolioTracker.service
 
 import dev.kanovsky.portfolioTracker.Model.Crypto
 import dev.kanovsky.portfolioTracker.Model.PortfolioEntry
 import dev.kanovsky.portfolioTracker.Model.User
-import dev.kanovsky.portfolioTracker.Repository.CryptoRepository
-import dev.kanovsky.portfolioTracker.Repository.PortfolioEntryRepository
-import dev.kanovsky.portfolioTracker.Repository.UserRepository
+import dev.kanovsky.portfolioTracker.repository.CryptoRepository
+import dev.kanovsky.portfolioTracker.repository.PortfolioEntryRepository
+import dev.kanovsky.portfolioTracker.repository.UserRepository
 import org.springframework.stereotype.Service
 import java.math.BigDecimal
 
@@ -43,5 +43,6 @@ class PortfolioEntryService(
         userRepository.findById(userId).orElseThrow { IllegalArgumentException("User with id $userId not found") }
 
     private fun getCryptoById(cryptoId: Long): Crypto =
-        cryptoRepository.findById(cryptoId).orElseThrow { IllegalArgumentException("Crypto with id $cryptoId not found") }
+        cryptoRepository.findById(cryptoId)
+            .orElseThrow { IllegalArgumentException("Crypto with id $cryptoId not found") }
 }

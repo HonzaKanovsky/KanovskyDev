@@ -1,4 +1,4 @@
-package dev.kanovsky.portfolioTracker.Repository
+package dev.kanovsky.portfolioTracker.repository
 
 import dev.kanovsky.portfolioTracker.Model.Crypto
 import dev.kanovsky.portfolioTracker.Model.HistorisationCryptoPrice

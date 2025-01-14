@@ -1,7 +1,7 @@
 package dev.kanovsky.portfolioTracker.Model
 
-import dev.kanovsky.portfolioTracker.Dto.CryptoDTO
-import dev.kanovsky.portfolioTracker.Dto.UserDTO
+import dev.kanovsky.portfolioTracker.dto.CryptoDTO
+import dev.kanovsky.portfolioTracker.dto.UserDTO
 import jakarta.persistence.*
 import lombok.Data
 

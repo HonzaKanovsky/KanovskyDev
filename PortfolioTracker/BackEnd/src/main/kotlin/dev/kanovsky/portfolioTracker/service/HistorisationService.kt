@@ -1,4 +1,4 @@
-package dev.kanovsky.portfolioTracker.Service
+package dev.kanovsky.portfolioTracker.service
 
 import org.springframework.scheduling.annotation.Scheduled
 import org.springframework.stereotype.Service

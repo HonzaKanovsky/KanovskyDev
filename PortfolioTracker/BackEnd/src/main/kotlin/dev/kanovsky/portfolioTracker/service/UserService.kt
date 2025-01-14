@@ -1,10 +1,10 @@
-package dev.kanovsky.portfolioTracker.Service
+package dev.kanovsky.portfolioTracker.service
 
-import dev.kanovsky.portfolioTracker.Dto.ApiResponse
-import dev.kanovsky.portfolioTracker.Dto.UserDetailDTO
-import dev.kanovsky.portfolioTracker.Enums.RegexPatterns
 import dev.kanovsky.portfolioTracker.Model.User
-import dev.kanovsky.portfolioTracker.Repository.UserRepository
+import dev.kanovsky.portfolioTracker.dto.ApiResponse
+import dev.kanovsky.portfolioTracker.dto.UserDetailDTO
+import dev.kanovsky.portfolioTracker.enums.RegexPatterns
+import dev.kanovsky.portfolioTracker.repository.UserRepository
 import org.springframework.stereotype.Service
 import org.springframework.util.StringUtils
 

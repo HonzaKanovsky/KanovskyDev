@@ -1,9 +1,9 @@
-package dev.kanovsky.portfolioTracker.Controller
+package dev.kanovsky.portfolioTracker.controller
 
-import dev.kanovsky.portfolioTracker.Dto.ApiResponse
-import dev.kanovsky.portfolioTracker.Dto.UserDetailDTO
 import dev.kanovsky.portfolioTracker.Model.User
-import dev.kanovsky.portfolioTracker.Service.UserService
+import dev.kanovsky.portfolioTracker.dto.ApiResponse
+import dev.kanovsky.portfolioTracker.dto.UserDetailDTO
+import dev.kanovsky.portfolioTracker.service.UserService
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*

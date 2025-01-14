@@ -1,4 +1,4 @@
-package dev.kanovsky.portfolioTracker.Dto
+package dev.kanovsky.portfolioTracker.dto
 
 
 data class CryptoDTO(

@@ -1,8 +1,7 @@
-package dev.kanovsky.portfolioTracker.Dto
+package dev.kanovsky.portfolioTracker.dto
 
 import java.math.BigDecimal
 import java.time.LocalDate
-import java.time.LocalDateTime
 
 data class HistorisationCryptoPriceDTO(
     val cryptoDTO: CryptoDTO?,

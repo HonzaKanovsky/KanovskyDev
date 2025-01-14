@@ -1,6 +1,6 @@
 package dev.kanovsky.portfolioTracker.Model
 
-import dev.kanovsky.portfolioTracker.Dto.CryptoDTO
+import dev.kanovsky.portfolioTracker.dto.CryptoDTO
 import jakarta.persistence.*
 import lombok.Data
 
@@ -15,8 +15,7 @@ data class Crypto(
     val symbol: String,
     @Column(nullable = false)
     val name: String
-)
- {
+) {
     fun toDto() = CryptoDTO(id, symbol, name)
 
     companion object {

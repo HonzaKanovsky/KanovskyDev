@@ -1,7 +1,7 @@
-package dev.kanovsky.portfolioTracker.Controller
+package dev.kanovsky.portfolioTracker.controller
 
 import dev.kanovsky.portfolioTracker.Model.PortfolioEntry
-import dev.kanovsky.portfolioTracker.Service.PortfolioEntryService
+import dev.kanovsky.portfolioTracker.service.PortfolioEntryService
 import org.springframework.web.bind.annotation.*
 
 @RestController

@@ -1,7 +1,7 @@
 package dev.kanovsky.portfolioTracker.Model
 
-import dev.kanovsky.portfolioTracker.Dto.CryptoDTO
-import dev.kanovsky.portfolioTracker.Dto.HistorisationCryptoPriceDTO
+import dev.kanovsky.portfolioTracker.dto.CryptoDTO
+import dev.kanovsky.portfolioTracker.dto.HistorisationCryptoPriceDTO
 import jakarta.persistence.*
 import lombok.Data
 import java.math.BigDecimal

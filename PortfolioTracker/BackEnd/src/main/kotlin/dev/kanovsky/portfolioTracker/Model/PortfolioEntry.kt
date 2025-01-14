@@ -1,11 +1,11 @@
 package dev.kanovsky.portfolioTracker.Model
 
-import dev.kanovsky.portfolioTracker.Dto.CryptoDTO
-import dev.kanovsky.portfolioTracker.Dto.PortfolioEntryDTO
+import dev.kanovsky.portfolioTracker.dto.CryptoDTO
+import dev.kanovsky.portfolioTracker.dto.PortfolioEntryDTO
 import jakarta.persistence.*
 import lombok.Data
-import java.time.LocalDateTime
 import java.math.BigDecimal
+import java.time.LocalDateTime
 
 
 @Entity

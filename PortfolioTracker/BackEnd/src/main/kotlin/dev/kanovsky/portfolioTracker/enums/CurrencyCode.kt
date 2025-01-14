@@ -1,4 +1,4 @@
-package dev.kanovsky.portfolioTracker.Enums
+package dev.kanovsky.portfolioTracker.enums
 
 enum class CurrencyCode(val code: String) {
     USD("USD"),

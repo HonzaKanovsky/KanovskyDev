@@ -1,11 +1,11 @@
-package dev.kanovsky.portfolioTracker.Controller
+package dev.kanovsky.portfolioTracker.controller
 
-import dev.kanovsky.portfolioTracker.Dto.ApiResponse
-import dev.kanovsky.portfolioTracker.Dto.CryptoDTO
-import dev.kanovsky.portfolioTracker.Dto.CryptoDetailDTO
-import dev.kanovsky.portfolioTracker.Dto.HistorisationCryptoPriceDTO
 import dev.kanovsky.portfolioTracker.Model.Crypto
-import dev.kanovsky.portfolioTracker.Service.CryptoService
+import dev.kanovsky.portfolioTracker.dto.ApiResponse
+import dev.kanovsky.portfolioTracker.dto.CryptoDTO
+import dev.kanovsky.portfolioTracker.dto.CryptoDetailDTO
+import dev.kanovsky.portfolioTracker.dto.HistorisationCryptoPriceDTO
+import dev.kanovsky.portfolioTracker.service.CryptoService
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
