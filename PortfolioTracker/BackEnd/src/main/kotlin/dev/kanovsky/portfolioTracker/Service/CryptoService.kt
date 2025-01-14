@@ -109,53 +109,6 @@ class CryptoService(
     }
 
     /*
-        private fun updateCryptos(data: JSONArray, cryptoRepository: CryptoRepository){
-            val existingCryptos = cryptoRepository.findAll()
-            val existingCryptoMap = existingCryptos.associateBy { it.name to it.symbol }
-            val currentDate = LocalDate.now()
-
-            val newOrUpdatedCryptos = mutableListOf<Crypto>()
-            val newOrUpdatedHistorisationCryptoPrices = mutableListOf<HistorisationCryptoPrice>()
-
-            for (i in 0 until data.length()) {
-                val cryptoEntry = data.getJSONObject(i)
-                val name = cryptoEntry.getString("name")
-                val symbol = cryptoEntry.getString("symbol")
-
-                val quote = cryptoEntry.getJSONObject("quote").getJSONObject("USD")
-                val price = quote.getBigDecimal("price")
-                val marketCap = quote.getLong("market_cap")
-
-                val existingCrypto = existingCryptoMap[name to symbol]
-                val updatedCrypto = existingCrypto ?: Crypto(name = name, symbol = symbol)
-
-                val existingEntry = historisationCryptoPriceRepository.findByCryptoAndTimestamp(updatedCrypto, currentDate)
-                val updatedEntry = existingEntry?.copy(price = price, marketCap = marketCap)
-                    ?: HistorisationCryptoPrice(crypto = updatedCrypto, timestamp = currentDate, price = price, marketCap = marketCap)
-
-                newOrUpdatedCryptos.add(updatedCrypto)
-                newOrUpdatedHistorisationCryptoPrices.add(updatedEntry)
-            }
-            cryptoRepository.saveAll(newOrUpdatedCryptos)
-            historisationCryptoPriceRepository.saveAll(newOrUpdatedHistorisationCryptoPrices)
-        }
-    */
-    /*    private fun saveOrUpdateDailyHistory(cryptoList: MutableList<Crypto>) : List<HistorisationCryptoPrice> {
-            val newOrUpdatedHistorisationCryptoPrices = mutableListOf<HistorisationCryptoPrice>()
-
-            for(crypto in cryptoList){
-                val existingRecord = historisationCryptoPriceRepository.findByCryptoAndTimestamp(crypto, currentDate)
-                val updatedRecord = if (existingRecord != null) {
-                } else {
-                    HistorisationCryptoPrice(crypto = crypto, timestamp = currentDate, price = crypto.price)
-                }
-                newOrUpdatedHistorisationCryptoPrices.add(updatedRecord)
-            }
-            return newOrUpdatedHistorisationCryptoPrices
-        }
-    */
-
-    /*
     * Function responsible for retrieving data from CoinMarketCap API
     */
     private fun fetchDataFromCMCApi(apiKey: String, url: String): Response {
