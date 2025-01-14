@@ -25,9 +25,26 @@ class CryptoService(
     private val historisationCryptoPriceRepository: HistorisationCryptoPriceRepository,
 ) {
     fun getAllCryptos(pageable: Pageable): Page<Crypto> = cryptoRepository.findAll(pageable)
+    fun getAllCryptosWithPricesToday(pageable: Pageable): Page<HistorisationCryptoPriceDTO> {
+        return try {
+            val pricesPage =
+                historisationCryptoPriceRepository.findHistorisationCryptoPricesByTimestamp(pageable, LocalDate.now());
+            return pricesPage.map { it.toDto(containCryptoDto = true) }
+        } catch (e: Exception) {
+            Page.empty(pageable)
+        }
+    }
 
     fun getCryptoById(id: Long): Crypto =
         cryptoRepository.findById(id).orElseThrow { IllegalArgumentException("Crypto with id $id not found") }
+
+    fun getCryptoDataById(id: Long): ApiResponse<CryptoDTO> {
+        return ApiResponse(
+            success = true,
+            message = "Requested crypto currency found",
+            data = getCryptoById(id).toDto()
+        )
+    }
 
     fun getHistoricalData(cryptoId: Long, startDate: String?, endDate: String?): ApiResponse<CryptoDetailDto> {
         val crypto = getCryptoById(cryptoId)
@@ -50,12 +67,12 @@ class CryptoService(
     *
     */
     fun updateDBCryptoEntries(amount: Long, currency: CurrencyCode = CurrencyCode.USD): ApiResponse<CryptoDTO> {
-        val apiKey = System.getenv("CMC_API_KEY") ?: throw IllegalStateException("API key not found")
-        val baseUrl = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest"
-        val url = "$baseUrl?start=1&limit=$amount&convert=${currency.code}"
-
         return (
                 try {
+                    val apiKey = System.getenv("CMC_API_KEY") ?: throw IllegalStateException("API key not found")
+                    val baseUrl = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest"
+                    val url = "$baseUrl?start=1&limit=$amount&convert=${currency.code}"
+
                     val response = fetchDataFromCMCApi(apiKey, url)
                     val responseData = response.body?.string()
 
@@ -104,7 +121,6 @@ class CryptoService(
                 )
             )
         }
-
         historisationCryptoPriceRepository.saveAll(newHistorisationCryptoPrices)
     }
 
@@ -126,4 +142,6 @@ class CryptoService(
         // Make call
         return client.newCall(request).execute()
     }
+
+
 }

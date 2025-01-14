@@ -6,7 +6,6 @@ import jakarta.persistence.*
 import lombok.Data
 import java.math.BigDecimal
 import java.time.LocalDate
-import java.time.LocalDateTime
 
 @Entity
 @Data
@@ -15,7 +14,7 @@ data class HistorisationCryptoPrice(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "crypto_id", nullable = false)
     val crypto: Crypto,
     @Column(nullable = false)
@@ -25,7 +24,13 @@ data class HistorisationCryptoPrice(
     @Column(nullable = false)
     val marketCap: Long
 ) {
-    fun toDto() = HistorisationCryptoPriceDTO(null, timestamp, price, marketCap)
+    fun toDto(containCryptoDto: Boolean = false): HistorisationCryptoPriceDTO {
+        return (if (containCryptoDto) {
+            HistorisationCryptoPriceDTO(crypto.toDto(), timestamp, price, marketCap)
+        } else {
+            HistorisationCryptoPriceDTO(null, timestamp, price, marketCap)
+        })
+    }
 
     companion object {
         fun fromDto(dto: CryptoDTO) {
