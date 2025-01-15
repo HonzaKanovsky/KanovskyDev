@@ -1,12 +1,12 @@
 package dev.kanovsky.portfolioTracker.service
 
-import dev.kanovsky.portfolioTracker.Model.Crypto
-import dev.kanovsky.portfolioTracker.Model.HistorisationCryptoPrice
 import dev.kanovsky.portfolioTracker.dto.ApiResponse
 import dev.kanovsky.portfolioTracker.dto.CryptoDTO
 import dev.kanovsky.portfolioTracker.dto.CryptoDetailDTO
 import dev.kanovsky.portfolioTracker.dto.HistorisationCryptoPriceDTO
 import dev.kanovsky.portfolioTracker.enums.CurrencyCode
+import dev.kanovsky.portfolioTracker.model.Crypto
+import dev.kanovsky.portfolioTracker.model.HistorisationCryptoPrice
 import dev.kanovsky.portfolioTracker.repository.CryptoRepository
 import dev.kanovsky.portfolioTracker.repository.HistorisationCryptoPriceRepository
 import okhttp3.OkHttpClient

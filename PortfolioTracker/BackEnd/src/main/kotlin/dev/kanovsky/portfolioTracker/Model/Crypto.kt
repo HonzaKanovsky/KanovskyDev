@@ -1,4 +1,4 @@
-package dev.kanovsky.portfolioTracker.Model
+package dev.kanovsky.portfolioTracker.model
 
 import dev.kanovsky.portfolioTracker.dto.CryptoDTO
 import jakarta.persistence.*

@@ -1,9 +1,9 @@
 package dev.kanovsky.portfolioTracker.service
 
-import dev.kanovsky.portfolioTracker.Model.User
 import dev.kanovsky.portfolioTracker.dto.ApiResponse
 import dev.kanovsky.portfolioTracker.dto.UserDetailDTO
 import dev.kanovsky.portfolioTracker.enums.RegexPatterns
+import dev.kanovsky.portfolioTracker.model.User
 import dev.kanovsky.portfolioTracker.repository.UserRepository
 import org.springframework.stereotype.Service
 import org.springframework.util.StringUtils
@@ -15,7 +15,7 @@ class UserService(private val userRepository: UserRepository) {
         if (!isUsernameAndEmailValid(user.username, user.email)) {
             return ApiResponse(
                 success = false,
-                message = "submitted username or e-mail is already  or does not satisfy requirements."
+                message = "submitted username or e-mail is already or does not satisfy requirements."
             )
         }
         if (!isPasswordValid(user.password)) {
@@ -24,9 +24,10 @@ class UserService(private val userRepository: UserRepository) {
                 message = "Password does not satisfy requirements"
             )
         }
+        //TODO("add hashing")
         return ApiResponse(
             success = true,
-            message = "User was succesfuly registered",
+            message = "User was successfully registered",
             data = UserDetailDTO(userRepository.save(user).toDto())
         )
     }

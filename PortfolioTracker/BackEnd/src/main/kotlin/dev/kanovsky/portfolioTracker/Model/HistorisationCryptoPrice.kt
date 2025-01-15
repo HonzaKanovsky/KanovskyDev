@@ -1,6 +1,5 @@
-package dev.kanovsky.portfolioTracker.Model
+package dev.kanovsky.portfolioTracker.model
 
-import dev.kanovsky.portfolioTracker.dto.CryptoDTO
 import dev.kanovsky.portfolioTracker.dto.HistorisationCryptoPriceDTO
 import jakarta.persistence.*
 import lombok.Data
@@ -33,7 +32,7 @@ data class HistorisationCryptoPrice(
     }
 
     companion object {
-        fun fromDto(dto: CryptoDTO) {
+        fun fromDto() {
             TODO("Not yet implemented")
         }
     }

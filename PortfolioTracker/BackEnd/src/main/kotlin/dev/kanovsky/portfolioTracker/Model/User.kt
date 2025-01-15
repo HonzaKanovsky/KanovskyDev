@@ -1,6 +1,5 @@
-package dev.kanovsky.portfolioTracker.Model
+package dev.kanovsky.portfolioTracker.model
 
-import dev.kanovsky.portfolioTracker.dto.CryptoDTO
 import dev.kanovsky.portfolioTracker.dto.UserDTO
 import jakarta.persistence.*
 import lombok.Data
@@ -25,7 +24,7 @@ data class User(
     fun toDto() = UserDTO(id, username, email)
 
     companion object {
-        fun fromDto(dto: CryptoDTO) {
+        fun fromDto() {
             TODO("Not yet implemented")
         }
     }
