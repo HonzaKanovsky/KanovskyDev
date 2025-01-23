@@ -1,14 +1,36 @@
-<script setup>
-import { RouterLink, useRoute } from 'vue-router';
+<script lang="ts" setup>
+import { ref } from 'vue'
+import { RouterLink, useRoute } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 
-const isActiveLink = (routePath) => {
-    const route = useRoute();
+const isActiveLink = (routePath: string) => {
+    const route = useRoute()
     return route.path === routePath
+};
+
+const availableLocales = ['en', 'cs']
+
+interface NavbarMessages {
+    navbar: {
+        home: string
+        resume: string
+        projects: string
+        contact: string
+    };
 }
+
+const { locale, t } = useI18n<NavbarMessages>();
+
+const switchLocale = (newLocale: string) => {
+    if (availableLocales.includes(newLocale)) {
+        locale.value = newLocale as typeof locale.value
+        localStorage.setItem('locale', newLocale)
+    }
+};
 </script>
 
 <template>
-    <nav class="bg-white ">
+    <nav class="bg-white">
         <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
             <div class="flex h-20 items-center justify-between">
                 <div class="flex flex-1 items-center justify-center md:items-stretch md:justify-start">
@@ -18,14 +40,36 @@ const isActiveLink = (routePath) => {
                     </RouterLink>
                     <div class="md:ml-auto">
                         <div class="flex space-x-2">
-                            <RouterLink to="/"
-                            :class="[isActiveLink('/') ? ['text-gray-800'] : ['hover:text-gray-700'],'text-gray-500', 'px-3', 'py-2', 'rounded-md']">Home</RouterLink>
-                            <RouterLink to="/resume"
-                            :class="[isActiveLink('/resume') ? ['text-gray-800'] : ['hover:text-gray-700'],'text-gray-500', 'px-3', 'py-2', 'rounded-md']">Resume</RouterLink>
-                            <RouterLink to="/projects"
-                            :class="[isActiveLink('/projects') ? ['text-gray-800'] : ['hover:text-gray-700'],'text-gray-500', 'px-3', 'py-2', 'rounded-md']">Projects</RouterLink>
-                            <RouterLink to="/contact"
-                            :class="[isActiveLink('/contact') ? ['text-gray-800'] : ['hover:text-gray-700'],'text-gray-500', 'px-3', 'py-2', 'rounded-md']">Contact</RouterLink>
+                            <!-- Reactive Translations -->
+                            <RouterLink
+                                to="/"
+                                :class="[isActiveLink('/') ? ['text-gray-800'] : ['hover:text-gray-700'], 'text-gray-500', 'px-3', 'py-2', 'rounded-md']"
+                            >
+                                {{ t('navbar.home') }}
+                            </RouterLink>
+                            <RouterLink
+                                to="/resume"
+                                :class="[isActiveLink('/resume') ? ['text-gray-800'] : ['hover:text-gray-700'], 'text-gray-500', 'px-3', 'py-2', 'rounded-md']"
+                            >
+                                {{ t('navbar.resume') }}
+                            </RouterLink>
+                            <RouterLink
+                                to="/projects"
+                                :class="[isActiveLink('/projects') ? ['text-gray-800'] : ['hover:text-gray-700'], 'text-gray-500', 'px-3', 'py-2', 'rounded-md']"
+                            >
+                                {{ t('navbar.projects') }}
+                            </RouterLink>
+                            <RouterLink
+                                to="/contact"
+                                :class="[isActiveLink('/contact') ? ['text-gray-800'] : ['hover:text-gray-700'], 'text-gray-500', 'px-3', 'py-2', 'rounded-md']"
+                            >
+                                {{ t('navbar.contact') }}
+                            </RouterLink>
+                            <!-- Locale Switcher -->
+                            <div>
+                                <button @click="switchLocale('en')">English</button>
+                                <button @click="switchLocale('cs')">Čeština</button>
+                            </div>
                         </div>
                     </div>
                 </div>

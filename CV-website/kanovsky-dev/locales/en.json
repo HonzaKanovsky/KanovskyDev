@@ -1,0 +1,22 @@
+{
+    "aboutMe": {
+      "title": "About Me",
+      "subtitle": "My name is Jan Kanovsky and I help deliver smart software solutions",
+      "paragraphs": [
+        "I am a dedicated software developer with a strong background in backend development and software testing, supported by a Bachelor's degree in Informatics from the Faculty of Economics and Management at CZU Prague. Currently pursuing a Master's degree in Informatics at the Czech University of Life Sciences, I am committed to advancing my expertise in technology and development.",
+        "With over three years of experience as a Backend Developer at Seyfor, I have honed my skills in building robust software solutions. My prior roles include working as a Java Developer and Software Tester at MOPET CZ, where I gained valuable experience in software quality assurance and development. I have also contributed to customer support and testing roles at organizations like Seznam.cz and Česká spořitelna, showcasing my ability to adapt to various aspects of the tech industry.",
+        "Driven by a passion for technology, I continuously seek opportunities to learn and grow. My skill set includes proficiency in C# and Java, alongside a solid foundation in testing methodologies and problem-solving. I am enthusiastic about leveraging my skills to develop innovative solutions and contribute to impactful projects."
+      ]
+    },
+    "hero" : {
+        "title": "Build software effortlessly and effectively",
+        "subtitle": "I craft intelligent and scalable solutions to help you"
+    },
+    "navbar" : {
+      "home" : "Home",
+      "projects" : "Projects",
+      "resume" : "Resume",
+      "contact" : "Contact"
+    }
+  }
+  

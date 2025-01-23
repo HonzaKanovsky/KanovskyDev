@@ -1,0 +1,22 @@
+{
+    "aboutMe": {
+      "title": "O mně",
+      "subtitle": "Jmenuji se Jan Kanovský a pomáhám dodávat chytrá softwarová řešení",
+      "paragraphs": [
+        "Jsem oddaný softwarový vývojář se silným zázemím v backendovém vývoji a testování softwaru, podpořený bakalářským titulem z informatiky na Fakultě ekonomiky a managementu na ČZU v Praze. V současné době studuji magisterský program z informatiky na České zemědělské univerzitě a usiluji o prohlubování svých znalostí v oblasti technologií a vývoje.",
+        "Více než tři roky zkušeností jako Backend Developer ve společnosti Seyfor mi umožnily zdokonalit své schopnosti při tvorbě robustních softwarových řešení. Mé předchozí role zahrnují práci jako Java Developer a Software Tester ve společnosti MOPET CZ, kde jsem získal cenné zkušenosti v oblasti zajišťování kvality softwaru a vývoje. Také jsem přispíval k zákaznické podpoře a testování v organizacích jako Seznam.cz a Česká spořitelna, což ukazuje moji schopnost přizpůsobit se různým aspektům technologického průmyslu.",
+        "Poháněn vášní pro technologie neustále hledám příležitosti k učení a rozvoji. Moje dovednosti zahrnují znalost C# a Javy, spolu se solidním základem v testovacích metodologiích a řešení problémů. Jsem nadšený z využití svých dovedností k vývoji inovativních řešení a přispívání do smysluplných projektů."
+      ]
+    },
+    "hero" : {
+        "title": "Software na míru snadno a bez starostí",
+        "subtitle": "Pomáhám vám tvořit chytrá a škálovatelná řešení"
+    },
+    "navbar" : {
+      "home" : "Domů",
+      "projects" : "Projekty",
+      "resume" : "Životopis",
+      "contact" : "Kontakty"
+    }
+  }
+  

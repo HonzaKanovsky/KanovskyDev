@@ -7,5 +7,5 @@ import About from '@/components/About.vue';
 <template>
     <Navbar />
     <Hero />
-    <About class="max-lg:relative max-md:mt-40 max-lg:mt-20"/>
+    <About/>
 </template>
