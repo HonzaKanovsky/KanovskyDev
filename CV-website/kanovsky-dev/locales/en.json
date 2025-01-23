@@ -10,13 +10,20 @@
     },
     "hero" : {
         "title": "Build software effortlessly and effectively",
-        "subtitle": "I craft intelligent and scalable solutions to help you"
+        "subtitle": "I craft intelligent and scalable solutions to help you",
+        "resumeButton" : "Resume",
+        "portfolioButton" : "Portfolio"
     },
     "navbar" : {
       "home" : "Home",
-      "projects" : "Projects",
+      "portfolio" : "Portfolio",
       "resume" : "Resume",
       "contact" : "Contact"
+    },
+    "notFound" : {
+      "title": "404 - NOT FOUND",
+      "subtitle": "This page does not exist",
+      "backButton": "Go Back"
     }
   }
   

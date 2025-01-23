@@ -10,16 +10,7 @@ const isActiveLink = (routePath: string) => {
 
 const availableLocales = ['en', 'cs']
 
-interface NavbarMessages {
-    navbar: {
-        home: string
-        resume: string
-        projects: string
-        contact: string
-    };
-}
-
-const { locale, t } = useI18n<NavbarMessages>();
+const { locale, t } = useI18n();
 
 const switchLocale = (newLocale: string) => {
     if (availableLocales.includes(newLocale)) {
@@ -54,14 +45,14 @@ const switchLocale = (newLocale: string) => {
                                 {{ t('navbar.resume') }}
                             </RouterLink>
                             <RouterLink
-                                to="/projects"
-                                :class="[isActiveLink('/projects') ? ['text-gray-800'] : ['hover:text-gray-700'], 'text-gray-500', 'px-3', 'py-2', 'rounded-md']"
+                                to="/portfolio"
+                                :class="[isActiveLink('/portfolio') ? ['text-gray-800'] : ['hover:text-gray-700'], 'text-gray-500', 'px-3', 'py-2', 'rounded-md']"
                             >
-                                {{ t('navbar.projects') }}
+                                {{ t('navbar.portfolio') }}
                             </RouterLink>
                             <RouterLink
-                                to="/contact"
-                                :class="[isActiveLink('/contact') ? ['text-gray-800'] : ['hover:text-gray-700'], 'text-gray-500', 'px-3', 'py-2', 'rounded-md']"
+                                to="/contacts"
+                                :class="[isActiveLink('/contacts') ? ['text-gray-800'] : ['hover:text-gray-700'], 'text-gray-500', 'px-3', 'py-2', 'rounded-md']"
                             >
                                 {{ t('navbar.contact') }}
                             </RouterLink>

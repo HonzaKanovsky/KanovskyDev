@@ -2,22 +2,14 @@
 import {onBeforeMount, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 
-interface AboutMeMessages {
-    aboutMe: {
-        title: string
-        subtitle: string
-        paragraphs: string[]
-    }
-}
-
-const { t, locale } = useI18n<AboutMeMessages>()
+const { t, locale } = useI18n()
 
 const aboutMeParagraphs = ref<string[]>([])
 
 const loadAboutMeDescription = () => {
 
     const paragraphs: string[] = []
-    //TODO - get dynamicaly size of array
+    //TODO - get real size of array
     for (let i = 0; i < 99; i++) {
         const targetedParagraph = `aboutMe.paragraphs[${i}]`
         const paragraph = t(targetedParagraph)

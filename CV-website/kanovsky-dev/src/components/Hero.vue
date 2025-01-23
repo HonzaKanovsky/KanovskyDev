@@ -3,14 +3,7 @@ import photo from '@/assets/img/Photo-placeholder-hd.png'
 import { RouterLink } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 
-interface HeroMessages {
-  hero: {
-    title: string
-    subtitle: string
-  }
-}
-
-const { t } = useI18n<HeroMessages>()
+const { t } = useI18n()
 
 </script>
 
@@ -29,10 +22,10 @@ const { t } = useI18n<HeroMessages>()
                 </h1>
                 <div>
                     <RouterLink to="/resume">
-                        Resume
+                        {{ t('hero.resumeButton') }}
                     </RouterLink>
-                    <RouterLink to="/projects">
-                        Projects
+                    <RouterLink to="/portfolio">
+                        {{ t('hero.portfolioButton') }}
                     </RouterLink>
                 </div>
             </div>

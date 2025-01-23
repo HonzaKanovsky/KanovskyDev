@@ -3,6 +3,7 @@ import HomeView from '@/views/HomeView.vue'
 import ResumeView from '@/views/ResumeView.vue'
 import ContactView from '@/views/ContactView.vue'
 import ProjectsView from '@/views/ProjectsView.vue'
+import NotFoundView from '@/views/NotFoundView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -16,14 +17,19 @@ const router = createRouter({
       name: 'resume',
       component: ResumeView
     }, {
-      path: '/projects',
-      name: 'projects',
+      path: '/portfolio',
+      name: 'portfolio',
       component: ProjectsView
     }, {
       path: '/contacts',
       name: 'contacts',
       component: ContactView
     },
+    {
+      path: '/:catchAll(.*)',
+      name: 'not-found',
+      component: NotFoundView
+    }
   ],
 })
 

@@ -10,13 +10,20 @@
     },
     "hero" : {
         "title": "Software na míru snadno a bez starostí",
-        "subtitle": "Pomáhám vám tvořit chytrá a škálovatelná řešení"
+        "subtitle": "Pomáhám vám tvořit chytrá a škálovatelná řešení",
+        "resumeButton" : "Životopis",
+        "portfolioButton" : "Portfolio"
     },
     "navbar" : {
       "home" : "Domů",
-      "projects" : "Projekty",
+      "portfolio" : "Portfolio",
       "resume" : "Životopis",
       "contact" : "Kontakty"
+    },
+    "notFound" : {
+      "title": "404 - NOT FOUND",
+      "subtitle": "Tato stránka neexistuje",
+      "backButton": "Zpět"
     }
   }
   
