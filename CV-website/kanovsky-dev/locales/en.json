@@ -1,29 +1,91 @@
 {
-    "aboutMe": {
-      "title": "About Me",
-      "subtitle": "My name is Jan Kanovsky and I help deliver smart software solutions",
-      "paragraphs": [
-        "I am a dedicated software developer with a strong background in backend development and software testing, supported by a Bachelor's degree in Informatics from the Faculty of Economics and Management at CZU Prague. Currently pursuing a Master's degree in Informatics at the Czech University of Life Sciences, I am committed to advancing my expertise in technology and development.",
-        "With over three years of experience as a Backend Developer at Seyfor, I have honed my skills in building robust software solutions. My prior roles include working as a Java Developer and Software Tester at MOPET CZ, where I gained valuable experience in software quality assurance and development. I have also contributed to customer support and testing roles at organizations like Seznam.cz and Česká spořitelna, showcasing my ability to adapt to various aspects of the tech industry.",
-        "Driven by a passion for technology, I continuously seek opportunities to learn and grow. My skill set includes proficiency in C# and Java, alongside a solid foundation in testing methodologies and problem-solving. I am enthusiastic about leveraging my skills to develop innovative solutions and contribute to impactful projects."
-      ]
-    },
-    "hero" : {
-        "title": "Build software effortlessly and effectively",
-        "subtitle": "I craft intelligent and scalable solutions to help you",
-        "resumeButton" : "Resume",
-        "portfolioButton" : "Portfolio"
-    },
-    "navbar" : {
-      "home" : "Home",
-      "portfolio" : "Portfolio",
-      "resume" : "Resume",
-      "contact" : "Contact"
-    },
-    "notFound" : {
-      "title": "404 - NOT FOUND",
-      "subtitle": "This page does not exist",
-      "backButton": "Go Back"
-    }
+  "aboutMe": {
+    "title": "About Me",
+    "subtitle": "My name is Jan Kanovsky and I help deliver smart software solutions",
+    "paragraphs": [
+      "I am a dedicated software developer with a strong background in backend development and software testing, supported by a Bachelor's degree in Informatics from the Faculty of Economics and Management at CZU Prague. Currently pursuing a Master's degree in Informatics at the Czech University of Life Sciences, I am committed to advancing my expertise in technology and development.",
+      "With over three years of experience as a Backend Developer at Seyfor, I have honed my skills in building robust software solutions. My prior roles include working as a Java Developer and Software Tester at MOPET CZ, where I gained valuable experience in software quality assurance and development. I have also contributed to customer support and testing roles at organizations like Seznam.cz and Česká spořitelna, showcasing my ability to adapt to various aspects of the tech industry.",
+      "Driven by a passion for technology, I continuously seek opportunities to learn and grow. My skill set includes proficiency in C# and Java, alongside a solid foundation in testing methodologies and problem-solving. I am enthusiastic about leveraging my skills to develop innovative solutions and contribute to impactful projects."
+    ]
+  },
+  "hero": {
+    "title": "Build software effortlessly and effectively",
+    "subtitle": "I craft intelligent and scalable solutions to help you",
+    "resumeButton": "Resume",
+    "portfolioButton": "Portfolio"
+  },
+  "navbar": {
+    "home": "Home",
+    "portfolio": "Portfolio",
+    "resume": "Resume",
+    "contact": "Contact"
+  },
+  "notFound": {
+    "title": "404 - NOT FOUND",
+    "subtitle": "This page does not exist",
+    "backButton": "Go Back"
+  },
+  "resume": {
+    "title": "Resume",
+    "experienceSubtitle": "Experience",
+    "educationSubtitle": "Education",
+    "experiences": [
+      {
+        "position": "Backend Developer",
+        "period": "2020 - Present",
+        "description": "Developing robust backend solutions, improving application performance, and collaborating with cross-functional teams to deliver software solutions.",
+        "company": {
+          "name": "Seyfor",
+          "location": "Prague, Czech Republic"
+        }
+      },
+      {
+        "position": "Java Developer",
+        "period": "2018 - 2020",
+        "description": "Focused on Java development, bug fixing, and testing software for MOPET CZ.",
+        "company": {
+          "name": "MOPET CZ",
+          "location": "Prague, Czech Republic"
+        }
+      },
+      {
+        "position": "Software Tester",
+        "period": "2016 - 2018",
+        "description": "Testing web and mobile applications, providing feedback to the development team, and ensuring high software quality.",
+        "company": {
+          "name": "Seznam.cz",
+          "location": "Prague, Czech Republic"
+        }
+      }
+    ],
+    "universities": [
+      {
+        "degree": "Master's in Informatics",
+        "university": {
+          "name": "Czech University of Life Sciences",
+          "location": "Prague, Czech Republic"
+        },
+        "period": "2023 - Present",
+        "description": "Developing expertise in advanced informatics and software engineering, participating in collaborative research projects, and being a member of the university’s tech innovation club."
+      },
+      {
+        "degree": "Bachelor's in Informatics",
+        "university": {
+          "name": "Faculty of Economics and Management, CZU Prague",
+          "location": "Prague, Czech Republic"
+        },
+        "period": "2018 - 2023",
+        "description": "Graduated with distinction, completed a thesis on efficient algorithms for software testing, and interned at Seznam.cz as part of a university collaboration program."
+      },
+      {
+        "degree": "Exchange Student",
+        "university": {
+          "name": "Inha University",
+          "location": "Incheon, South Korea"
+        },
+        "period": "2024 - 2025",
+        "description": "Studied advanced topics in software development and international relations, participated in cultural exchange programs to strengthen global collaboration skills, and developed a deeper understanding of the Korean technology and innovation landscape."
+      }
+    ]
   }
-  
+}

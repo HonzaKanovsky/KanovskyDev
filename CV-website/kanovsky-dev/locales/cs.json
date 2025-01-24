@@ -1,29 +1,91 @@
 {
-    "aboutMe": {
-      "title": "O mně",
-      "subtitle": "Jmenuji se Jan Kanovský a pomáhám dodávat chytrá softwarová řešení",
-      "paragraphs": [
-        "Jsem oddaný softwarový vývojář se silným zázemím v backendovém vývoji a testování softwaru, podpořený bakalářským titulem z informatiky na Fakultě ekonomiky a managementu na ČZU v Praze. V současné době studuji magisterský program z informatiky na České zemědělské univerzitě a usiluji o prohlubování svých znalostí v oblasti technologií a vývoje.",
-        "Více než tři roky zkušeností jako Backend Developer ve společnosti Seyfor mi umožnily zdokonalit své schopnosti při tvorbě robustních softwarových řešení. Mé předchozí role zahrnují práci jako Java Developer a Software Tester ve společnosti MOPET CZ, kde jsem získal cenné zkušenosti v oblasti zajišťování kvality softwaru a vývoje. Také jsem přispíval k zákaznické podpoře a testování v organizacích jako Seznam.cz a Česká spořitelna, což ukazuje moji schopnost přizpůsobit se různým aspektům technologického průmyslu.",
-        "Poháněn vášní pro technologie neustále hledám příležitosti k učení a rozvoji. Moje dovednosti zahrnují znalost C# a Javy, spolu se solidním základem v testovacích metodologiích a řešení problémů. Jsem nadšený z využití svých dovedností k vývoji inovativních řešení a přispívání do smysluplných projektů."
-      ]
-    },
-    "hero" : {
-        "title": "Software na míru snadno a bez starostí",
-        "subtitle": "Pomáhám vám tvořit chytrá a škálovatelná řešení",
-        "resumeButton" : "Životopis",
-        "portfolioButton" : "Portfolio"
-    },
-    "navbar" : {
-      "home" : "Domů",
-      "portfolio" : "Portfolio",
-      "resume" : "Životopis",
-      "contact" : "Kontakty"
-    },
-    "notFound" : {
-      "title": "404 - NOT FOUND",
-      "subtitle": "Tato stránka neexistuje",
-      "backButton": "Zpět"
-    }
+  "aboutMe": {
+    "title": "O mně",
+    "subtitle": "Jmenuji se Jan Kanovský a pomáhám dodávat chytrá softwarová řešení",
+    "paragraphs": [
+      "Jsem oddaný softwarový vývojář se silným zázemím v backendovém vývoji a testování softwaru, podpořený bakalářským titulem z informatiky na Fakultě ekonomiky a managementu na ČZU v Praze. V současné době studuji magisterský program z informatiky na České zemědělské univerzitě a usiluji o prohlubování svých znalostí v oblasti technologií a vývoje.",
+      "Více než tři roky zkušeností jako Backend Developer ve společnosti Seyfor mi umožnily zdokonalit své schopnosti při tvorbě robustních softwarových řešení. Mé předchozí role zahrnují práci jako Java Developer a Software Tester ve společnosti MOPET CZ, kde jsem získal cenné zkušenosti v oblasti zajišťování kvality softwaru a vývoje. Také jsem přispíval k zákaznické podpoře a testování v organizacích jako Seznam.cz a Česká spořitelna, což ukazuje moji schopnost přizpůsobit se různým aspektům technologického průmyslu.",
+      "Poháněn vášní pro technologie neustále hledám příležitosti k učení a rozvoji. Moje dovednosti zahrnují znalost C# a Javy, spolu se solidním základem v testovacích metodologiích a řešení problémů. Jsem nadšený z využití svých dovedností k vývoji inovativních řešení a přispívání do smysluplných projektů."
+    ]
+  },
+  "hero": {
+    "title": "Software na míru snadno a bez starostí",
+    "subtitle": "Pomáhám vám tvořit chytrá a škálovatelná řešení",
+    "resumeButton": "Životopis",
+    "portfolioButton": "Portfolio"
+  },
+  "navbar": {
+    "home": "Domů",
+    "portfolio": "Portfolio",
+    "resume": "Životopis",
+    "contact": "Kontakty"
+  },
+  "notFound": {
+    "title": "404 - NOT FOUND",
+    "subtitle": "Tato stránka neexistuje",
+    "backButton": "Zpět"
+  },
+  "resume": {
+    "title": "Životopis",
+    "experienceSubtitle": "Zkušenosti",
+    "educationSubtitle": "Vzdělání",
+    "experiences": [
+      {
+        "position": "Backend Developer",
+        "period": "2020 - Present",
+        "description": "Vyvíjení robustních backendových řešení, zlepšování výkonu aplikací a spolupráce s mezioborovými týmy na dodání softwarových řešení.",
+        "company": {
+          "name": "Seyfor a.s.",
+          "location": "Praha, Česká republika"
+        }
+      },
+      {
+        "position": "Java Developer",
+        "period": "2018 - 2020",
+        "description": "Zaměření na vývoj v jazyce Java, opravy chyb a testování softwaru pro společnost MOPET CZ.",
+        "company": {
+          "name": "MOPET CZ",
+          "location": "Praha, Česká republika"
+        }
+      },
+      {
+        "position": "Software Tester",
+        "period": "2016 - 2018",
+        "description": "Testování webových a mobilních aplikací, poskytování zpětné vazby vývojovému týmu a zajištění vysoké kvality softwaru.",
+        "company": {
+          "name": "Seznam.cz",
+          "location": "Praha, Česká republika"
+        }
+      }
+    ],
+    "universities": [
+      {
+        "degree": "Informatika - Magisterské studium",
+        "period": "2023 - Současnost",
+        "description": "Rozvíjení odborných znalostí v oblasti pokročilé informatiky a softwarového inženýrství, účast na společných výzkumných projektech a členství v univerzitním klubu technologických inovací.",
+        "university": {
+          "name": "Česká zemědělská univerzita",
+          "location": "Praha, Česká republika"
+        }
+      },
+      {
+        "degree": "Informatika - Bakalářské studium",
+        "period": "2018 - 2023",
+        "description": "Absolvováno s vyznamenáním, dokončena diplomová práce na téma efektivní algoritmy pro testování softwaru, a stáž ve společnosti Seznam.cz jako součást univerzitního programu spolupráce.",
+        "university": {
+          "name": "Česká zemědělská univerzita",
+          "location": "Praha, Česká republika"
+        }
+      },
+      {
+        "degree": "Výměnný student",
+        "period": "2024 - 2025",
+        "description": "Studium pokročilých témat ve vývoji softwaru a mezinárodních vztazích, účast na kulturních výměnných programech za účelem posílení globálních dovedností spolupráce a získání hlubšího porozumění korejským technologiím a inovacím.",
+        "university": {
+          "name": "Inha University",
+          "location": "Incheon, Jižní Korea"
+        }
+      }
+    ]
   }
-  
+}
