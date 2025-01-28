@@ -87,5 +87,16 @@
         "description": "Studied advanced topics in software development and international relations, participated in cultural exchange programs to strengthen global collaboration skills, and developed a deeper understanding of the Korean technology and innovation landscape."
       }
     ]
+  },
+  "portfolio": {
+    "title": "Portfolio",
+    "projects": [
+      {
+        "name":"Crypto currency portfolio tracker",
+        "description":"description text",
+        "redirectLink": "/crypto-tracker"
+      }
+    ],
+    "redirectButtonText" : "click here"
   }
 }

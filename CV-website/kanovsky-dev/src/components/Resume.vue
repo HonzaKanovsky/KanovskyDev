@@ -1,8 +1,11 @@
 <script lang="ts" setup>
 import { ref, watch, onBeforeMount } from "vue";
-import { Experience, Company, Education, University } from "@/models/Resume";
+import { Experience } from "@/models/Experience";
+import { Education } from "@/models/Education";
+import { Company } from "@/models/Company";
+import { University } from "@/models/University";
 import { useI18n } from "vue-i18n";
-import Experiences from "./Experiences.vue";
+import Experiences from "./Experience.vue";
 import EducationComponent from "./Education.vue";
 
 const { t, locale } = useI18n()

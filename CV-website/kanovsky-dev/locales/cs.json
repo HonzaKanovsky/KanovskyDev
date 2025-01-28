@@ -87,5 +87,16 @@
         }
       }
     ]
+  },
+  "portfolio": {
+    "title": "Portfolio",
+    "projects": [
+      {
+        "name":"crypto currency portfolio tracker",
+        "description":"Popis projektu",
+        "redirectLink": "/crypto-tracker"        
+      }
+    ],
+    "redirectButtonText" : "klikni sem"
   }
 }

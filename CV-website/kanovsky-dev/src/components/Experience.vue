@@ -1,6 +1,5 @@
 <script lang="ts" setup>
-import { Experience } from '@/models/Resume';
-import { defineProps } from 'vue';
+import { Experience } from '@/models/Experience';
 
 defineProps({
     experience: Experience,
