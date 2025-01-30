@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 
@@ -51,7 +50,7 @@ const switchLocale = (newLocale: string) => {
                                 {{ t('navbar.portfolio') }}
                             </RouterLink>
                             <RouterLink
-                                to="/contacts"
+                                to="/contact"
                                 :class="[isActiveLink('/contacts') ? ['text-gray-800'] : ['hover:text-gray-700'], 'text-gray-500', 'px-3', 'py-2', 'rounded-md']"
                             >
                                 {{ t('navbar.contact') }}

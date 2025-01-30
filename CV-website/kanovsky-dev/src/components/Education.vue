@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { Education } from '@/models/Education';
-import { defineProps } from 'vue';
 
 defineProps({
     education: Education,
