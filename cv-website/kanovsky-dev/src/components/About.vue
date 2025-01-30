@@ -41,7 +41,7 @@ onBeforeMount(() => {
                         {{ t('aboutMe.subtitle') }}
                     </h3>
                     <div>
-                        <p v-for="(paragraph, index) in aboutMeParagraphs" :key="index" class="text-gray-600 my-2 max-w-[70%] mx-auto ">
+                        <p v-for="(paragraph, index) in aboutMeParagraphs" :key="index" class="text-gray-600 text-lg my-4 lg:max-w-[70%] max-w-[90%] mx-auto ">
                             {{ paragraph }}
                         </p>
                     </div>
