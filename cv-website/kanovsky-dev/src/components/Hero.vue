@@ -9,9 +9,9 @@ const { t } = useI18n()
 
 <template>
     <section>
-        <div class="max-w-7xl mx-auto my-[3%] px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center h-[80%]">
-            <div class="lg:w-5/12 flex flex-col mb-4">
-                <div class="text-xs font-semibold mr-auto gradient-background-right text-white px-2 rounded-lg mb-4">
+        <div class="max-w-7xl mx-auto my-[3%] px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center lg:h-[80vh]">
+            <div class="lg:w-5/12 flex flex-col mb-4 lg:text-left text-center">
+                <div class="text-xs font-semibold mr-auto gradient-background-right text-white px-2 rounded-lg mb-4 lg:ml-0 mx-auto">
                     JAVA · KOTLIN
                 </div>
                 <h3 class="text-2xl text-gray-500">
@@ -30,10 +30,10 @@ const { t } = useI18n()
                     </RouterLink>
                 </div>
             </div>
-            <div class="lg:w-7/12 w-4/5 rounded-lg flex items-center justify-center mt-8">
+            <div class="lg:w-7/12 w-4/5 rounded-lg flex items-center justify-center my-7">
                 <div
-                    class="gradient-background-bottom-right w-[100%] max-w-[50vh] aspect-square rounded-3xl flex items-end justify-center relative overflow-visible">
-                    <img :src="photo" class="absolute w-[85%] max-h-[65vh] object-cover">
+                    class="gradient-background-bottom-right w-[100%] max-w-[70vh] aspect-square rounded-3xl flex items-end justify-center relative overflow-visible">
+                    <img :src="photo" class="absolute w-[85%] max-h-[75vh] object-cover">
                 </div>
             </div>
 
