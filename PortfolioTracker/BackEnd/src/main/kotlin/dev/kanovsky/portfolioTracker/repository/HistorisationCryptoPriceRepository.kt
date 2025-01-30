@@ -24,4 +24,6 @@ interface HistorisationCryptoPriceRepository : JpaRepository<HistorisationCrypto
         pageable: Pageable,
         timestamp: LocalDate
     ): Page<HistorisationCryptoPrice>
+
+    fun findAllByTimestamp(date: LocalDate) : List<HistorisationCryptoPrice>
 }

@@ -19,7 +19,7 @@ data class HistorisationCryptoPrice(
     @Column(nullable = false)
     val timestamp: LocalDate,
     @Column(nullable = false, precision = 18, scale = 8)
-    val price: BigDecimal,
+    var price: BigDecimal,
     @Column(nullable = false)
     val marketCap: Long
 ) {

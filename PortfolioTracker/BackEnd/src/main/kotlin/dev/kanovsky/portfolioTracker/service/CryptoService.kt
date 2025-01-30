@@ -25,6 +25,7 @@ class CryptoService(
     private val historisationCryptoPriceRepository: HistorisationCryptoPriceRepository,
 ) {
     fun getAllCryptos(pageable: Pageable): Page<Crypto> = cryptoRepository.findAll(pageable)
+    
     fun getAllCryptosWithPricesToday(pageable: Pageable): Page<HistorisationCryptoPriceDTO> {
         return try {
             val pricesPage =
@@ -63,7 +64,7 @@ class CryptoService(
     }
 
     /*
-    * Function called to initialize fetching and saving new crypto data
+    * Called to initialize fetching and saving new crypto data
     *
     */
     fun updateDBCryptoEntries(amount: Long, currency: CurrencyCode = CurrencyCode.USD): ApiResponse<CryptoDTO> {
@@ -92,9 +93,13 @@ class CryptoService(
     }
 
     private fun saveNewHistorisationCryptoPrices(data: JSONArray) {
-        //Get map of cryptos saved in database
+        //Get map of cryptos saved in database group them by name and symbol
         val existingCryptos = cryptoRepository.findAll()
         val existingCryptoMap = existingCryptos.associateBy { it.name to it.symbol }
+
+        //Get map of cryptos saved in database group them by crypto
+        val existingRecordsToday = historisationCryptoPriceRepository.findAllByTimestamp(LocalDate.now())
+        var existingRecordMap = existingRecordsToday.associateBy { it.crypto }
 
         val newHistorisationCryptoPrices = mutableListOf<HistorisationCryptoPrice>()
 
@@ -112,13 +117,20 @@ class CryptoService(
             val existingCrypto = existingCryptoMap[name to symbol]
             val cryptoToBeUpdated = existingCrypto ?: cryptoRepository.save(Crypto(name = name, symbol = symbol))
 
-            newHistorisationCryptoPrices.add(
+            val existingRecord = if (existingRecordMap[cryptoToBeUpdated] != null) {
+                existingRecordMap[cryptoToBeUpdated]?.price = price
+                existingRecordMap[cryptoToBeUpdated]!!
+            } else {
                 HistorisationCryptoPrice(
                     crypto = cryptoToBeUpdated,
                     timestamp = currentDate,
                     price = price,
                     marketCap = marketCap
                 )
+            }
+
+            newHistorisationCryptoPrices.add(
+                existingRecord
             )
         }
         historisationCryptoPriceRepository.saveAll(newHistorisationCryptoPrices)

@@ -1,15 +1,21 @@
 package dev.kanovsky.portfolioTracker.service
 
 import dev.kanovsky.portfolioTracker.dto.ApiResponse
+import dev.kanovsky.portfolioTracker.dto.LoginRequestDTO
+import dev.kanovsky.portfolioTracker.dto.LoginResponseDTO
 import dev.kanovsky.portfolioTracker.dto.UserDetailDTO
 import dev.kanovsky.portfolioTracker.enums.RegexPatterns
 import dev.kanovsky.portfolioTracker.model.User
 import dev.kanovsky.portfolioTracker.repository.UserRepository
+import dev.kanovsky.portfolioTracker.security.JwtUtil
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.util.StringUtils
 
 @Service
 class UserService(private val userRepository: UserRepository) {
+    private val passwordEncoder = BCryptPasswordEncoder()
+    private val jwtUtil = JwtUtil()
 
     fun registerUser(user: User): ApiResponse<UserDetailDTO> {
         if (!isUsernameAndEmailValid(user.username, user.email)) {
@@ -24,11 +30,13 @@ class UserService(private val userRepository: UserRepository) {
                 message = "Password does not satisfy requirements"
             )
         }
-        //TODO("add hashing")
+        val hashedPassword = passwordEncoder.encode(user.password)
+        val newUser = user.copy(password = hashedPassword)
+
         return ApiResponse(
             success = true,
             message = "User was successfully registered",
-            data = UserDetailDTO(userRepository.save(user).toDto())
+            data = UserDetailDTO(userRepository.save(newUser).toDto())
         )
     }
 
@@ -55,6 +63,40 @@ class UserService(private val userRepository: UserRepository) {
             return false
         }
         return RegexPatterns.PASSWORD.matches(password)
+    }
+
+    fun loginUser(loginRequestDTO: LoginRequestDTO): ApiResponse<LoginResponseDTO> {
+        val user = if (userRepository.findByUsername(loginRequestDTO.loginMethod) != null) {
+            userRepository.findByUsername(loginRequestDTO.loginMethod)
+        } else if (userRepository.findByEmail(loginRequestDTO.loginMethod) != null) {
+            userRepository.findByEmail(loginRequestDTO.loginMethod)
+        } else {
+            null
+        }
+
+        if (user == null) {
+            return ApiResponse(
+                success = false,
+                message = "User was not found"
+            )
+        }
+
+
+        if (!passwordEncoder.matches(loginRequestDTO.password, user.password)) {
+            return ApiResponse(
+                success = false,
+                message = "Password is incorrect"
+            )
+        }
+
+        val token = jwtUtil.generateToken(user.username)
+
+        return ApiResponse(
+            success = true,
+            message = "Login Successful",
+            data = LoginResponseDTO(token)
+        )
+
     }
 
 }
