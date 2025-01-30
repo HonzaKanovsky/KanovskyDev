@@ -1,6 +1,5 @@
 package dev.kanovsky.portfolioTracker.dto
 
-class LoginResponseDTO(
-    val accessToken: String,
+class RefreshTokenRequestDTO(
     val refreshToken: String
 )

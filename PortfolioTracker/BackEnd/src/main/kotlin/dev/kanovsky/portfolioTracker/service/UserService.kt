@@ -8,6 +8,8 @@ import dev.kanovsky.portfolioTracker.enums.RegexPatterns
 import dev.kanovsky.portfolioTracker.model.User
 import dev.kanovsky.portfolioTracker.repository.UserRepository
 import dev.kanovsky.portfolioTracker.security.JwtUtil
+import jakarta.servlet.http.Cookie
+import jakarta.servlet.http.HttpServletResponse
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.util.StringUtils
@@ -65,7 +67,7 @@ class UserService(private val userRepository: UserRepository) {
         return RegexPatterns.PASSWORD.matches(password)
     }
 
-    fun loginUser(loginRequestDTO: LoginRequestDTO): ApiResponse<LoginResponseDTO> {
+    fun loginUser(loginRequestDTO: LoginRequestDTO, httpResponse: HttpServletResponse): ApiResponse<LoginResponseDTO> {
         val user = if (userRepository.findByUsername(loginRequestDTO.loginMethod) != null) {
             userRepository.findByUsername(loginRequestDTO.loginMethod)
         } else if (userRepository.findByEmail(loginRequestDTO.loginMethod) != null) {
@@ -89,12 +91,20 @@ class UserService(private val userRepository: UserRepository) {
             )
         }
 
-        val token = jwtUtil.generateToken(user.username)
+        val accessToken = jwtUtil.generateAccessToken(user.username)
+        val refreshToken = jwtUtil.generateRefreshToken(user.username)
+
+        //Store refreshToken to cookie
+        val cookie = Cookie("refreshToken", refreshToken)
+        cookie.isHttpOnly = true
+        cookie.path = "/api/auth/refresh"
+        cookie.maxAge = 24 * 60 * 60 // 1 Day
+        httpResponse.addCookie(cookie)
 
         return ApiResponse(
             success = true,
             message = "Login Successful",
-            data = LoginResponseDTO(token)
+            data = LoginResponseDTO(accessToken, "Stored in HTTP-only cookie")
         )
 
     }

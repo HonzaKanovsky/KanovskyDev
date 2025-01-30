@@ -13,21 +13,31 @@ class JwtUtil {
 
     private val key = SecretKeySpec(secretKey.toByteArray(), SignatureAlgorithm.HS256.jcaName)
 
-    fun generateToken(username: String): String {
+    fun generateAccessToken(userName: String): String {
         return Jwts.builder()
-            .setSubject(username)
+            .setSubject(userName)
             .setIssuedAt(Date(System.currentTimeMillis()))
-            .setExpiration(Date(System.currentTimeMillis() + 1000 * 60 * 30)) // 30 minute expiry
+            .setExpiration(Date(System.currentTimeMillis() + 1000 * 60 * 15)) // 15 minute expiry
             .signWith(key, SignatureAlgorithm.HS256)
             .compact()
     }
+
+    fun generateRefreshToken(userName: String): String {
+        return Jwts.builder()
+            .setSubject(userName) // Store user ID
+            .setIssuedAt(Date(System.currentTimeMillis()))
+            .setExpiration(Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24)) //  1 days expiry
+            .signWith(key, SignatureAlgorithm.HS256)
+            .compact()
+    }
+
 
     fun extractUsername(token: String): String? {
         return extractClaims(token).subject
     }
 
-    fun isTokenValid(token: String, username: String): Boolean {
-        return extractUsername(token) == username && !isTokenExpired(token)
+    fun isTokenValid(token: String, userName: String): Boolean {
+        return extractUsername(token) == userName && !isTokenExpired(token)
     }
 
     private fun extractClaims(token: String): Claims {
@@ -39,6 +49,16 @@ class JwtUtil {
     }
 
     private fun isTokenExpired(token: String): Boolean {
-        return extractClaims(token).expiration.before(Date())
+        return try {
+            val expiration = Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .body
+                .expiration
+            expiration.before(Date())
+        } catch (e: Exception) {
+            true
+        }
     }
 }
