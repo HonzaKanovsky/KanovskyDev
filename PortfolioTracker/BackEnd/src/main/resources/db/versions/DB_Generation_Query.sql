@@ -1,3 +1,6 @@
+create schema portfolio_tracker;
+
+use portfolio_tracker;
 create table crypto
 (
     id     bigint auto_increment
