@@ -20,13 +20,17 @@ class PortfolioEntryService(
     private val portfolioEntryRepository: PortfolioEntryRepository,
     private val userRepository: UserRepository,
     private val cryptoRepository: CryptoRepository,
-    private val historisationCryptoPriceRepository: HistorisationCryptoPriceRepository
+    private val historisationCryptoPriceRepository: HistorisationCryptoPriceRepository,
+    private val AuthorisationService: AuthorisationService
 ) {
 
-    fun getPortfolioEntriesByUserId(userId: Long, pageable: Pageable): ApiResponse<UserDetailDTO> {
+    fun getPortfolioEntriesByUserId(userId: Long, pageable: Pageable, token: String): ApiResponse<UserDetailDTO> {
         val user =
             userRepository.findUserById(userId) ?: return ApiResponse(success = false, message = "User does not exist")
 
+        if (!AuthorisationService.checkAllowedAccess(userId, token)) {
+            return ApiResponse(success = false, message = "It is not possible to access this data")
+        }
         return createUserDetailResponse(user, pageable)
     }
 
@@ -34,7 +38,8 @@ class PortfolioEntryService(
         userId: Long,
         cryptoId: Long,
         amount: Double,
-        pageable: Pageable
+        pageable: Pageable,
+        token: String
     ): ApiResponse<UserDetailDTO> {
         val user =
             userRepository.findUserById(userId) ?: return ApiResponse(success = false, message = "User does not exist")
@@ -51,6 +56,10 @@ class PortfolioEntryService(
                 data = createUserDetailResponse(user, pageable).data
             )
         }
+        if (!AuthorisationService.checkAllowedAccess(userId, token)) {
+            return ApiResponse(success = false, message = "It is not possible to access this data")
+        }
+
         val portfolioEntry = portfolioEntryRepository.findByUserAndCrypto(user, crypto)
         if (portfolioEntry != null) {
             return ApiResponse(
@@ -74,7 +83,8 @@ class PortfolioEntryService(
         userId: Long,
         cryptoId: Long,
         amount: BigDecimal,
-        pageable: Pageable
+        pageable: Pageable,
+        token: String
     ): ApiResponse<UserDetailDTO> {
         val user =
             userRepository.findUserById(userId) ?: return ApiResponse(success = false, message = "User does not exist")
@@ -84,6 +94,10 @@ class PortfolioEntryService(
                 message = "Crypto currency does not exist",
                 data = createUserDetailResponse(user, pageable).data
             )
+
+        if (!AuthorisationService.checkAllowedAccess(userId, token)) {
+            return ApiResponse(success = false, message = "It is not possible to access this data")
+        }
         val portfolioEntry = portfolioEntryRepository.findByUserAndCrypto(user, crypto)
         if (portfolioEntry == null) {
             return ApiResponse(
@@ -99,7 +113,12 @@ class PortfolioEntryService(
         return createUserDetailResponse(user, pageable)
     }
 
-    fun removePortfolioEntry(userId: Long, cryptoId: Long, pageable: Pageable): ApiResponse<UserDetailDTO> {
+    fun removePortfolioEntry(
+        userId: Long,
+        cryptoId: Long,
+        pageable: Pageable,
+        token: String
+    ): ApiResponse<UserDetailDTO> {
         val user =
             userRepository.findUserById(userId) ?: return ApiResponse(success = false, message = "User does not exist")
         val crypto =
@@ -108,6 +127,10 @@ class PortfolioEntryService(
                 message = "Crypto currency does not exist",
                 data = createUserDetailResponse(user, pageable).data
             )
+
+        if (!AuthorisationService.checkAllowedAccess(userId, token)) {
+            return ApiResponse(success = false, message = "It is not possible to access this data")
+        }
         val portfolioEntry = portfolioEntryRepository.findByUserAndCrypto(user, crypto)
         if (portfolioEntry == null) {
             return ApiResponse(
