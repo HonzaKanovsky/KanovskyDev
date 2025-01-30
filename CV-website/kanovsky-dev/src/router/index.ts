@@ -21,8 +21,8 @@ const router = createRouter({
       name: 'portfolio',
       component: ProjectsView
     }, {
-      path: '/contacts',
-      name: 'contacts',
+      path: '/contact',
+      name: 'contact',
       component: ContactView
     },
     {
