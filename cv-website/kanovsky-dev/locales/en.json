@@ -35,8 +35,8 @@
         "period": "2020 - Present",
         "description": "Developing robust backend solutions, improving application performance, and collaborating with cross-functional teams to deliver software solutions.",
         "company": {
-          "name": "Seyfor",
-          "location": "Prague, Czech Republic"
+          "name": "Seyfor a.s.",
+          "location": "Prague, CZ"
         }
       },
       {
@@ -44,8 +44,8 @@
         "period": "2018 - 2020",
         "description": "Focused on Java development, bug fixing, and testing software for MOPET CZ.",
         "company": {
-          "name": "MOPET CZ",
-          "location": "Prague, Czech Republic"
+          "name": "Mopet CZ a.s.",
+          "location": "Prague, CZ"
         }
       },
       {
@@ -54,7 +54,16 @@
         "description": "Testing web and mobile applications, providing feedback to the development team, and ensuring high software quality.",
         "company": {
           "name": "Seznam.cz",
-          "location": "Prague, Czech Republic"
+          "location": "Prague, CZ"
+        }
+      },
+      {
+        "position": "Software Tester",
+        "period": "2018",
+        "description": "Testování mobilní aplikace, poskytování zpětné vazby vývojovému týmu a zajištění vysoké kvality softwaru.",
+        "company": {
+          "name": "Česká spořitelna, a.s.",
+          "location": "Praha, CZ"
         }
       }
     ],

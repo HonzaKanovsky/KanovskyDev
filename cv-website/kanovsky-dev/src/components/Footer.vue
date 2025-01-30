@@ -1,39 +1,26 @@
 <script lang="ts" setup>
+import { RouterLink, useRoute } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 
+
+const availableLocales = ['en', 'cs']
+
+const { locale, t } = useI18n();
+
+const switchLocale = (newLocale: string) => {
+    if (availableLocales.includes(newLocale)) {
+        locale.value = newLocale as typeof locale.value
+        localStorage.setItem('locale', newLocale)
+    }
+};
 </script>
 
 
 <template>
-    <footer>
-        <div>
-            <div>
-                <div>
-                    <p>
-                        © 2025 Your Name. All rights reserved.
-                    </p>
-                    <p>
-                        Built with Vue.js | Hosted on Vercel
-                    </p>
-                </div>
-
-                <!-- Section 1: Navigation Links -->
-                <div>
-                    <h3>Quick Links</h3>
-                    <ul>
-                        <li>
-                            <RouterLink to="/">Resume</RouterLink>
-                        </li>
-                        <li>
-                            <RouterLink to="/projects">Portfolio</RouterLink>
-                        </li>
-                        <li>
-                            <RouterLink to="/resume">Contact</RouterLink>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- Section 3: Copyright -->
-
+    <footer class="my-3">
+        <div class="max-w-7xl mx-auto flex flex-column py-2">
+            <div class="mx-auto">
+                © 2025 Jan Kanovsky, Built with Vue.js.
             </div>
         </div>
     </footer>

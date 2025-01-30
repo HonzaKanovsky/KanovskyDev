@@ -8,6 +8,6 @@ import Footer from '@/components/Footer.vue';
 <template>
     <Navbar />
     <Hero />
-    <About/>
+    <About />
     <Footer />
 </template>

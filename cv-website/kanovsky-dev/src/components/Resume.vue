@@ -5,7 +5,9 @@ import { Education } from "@/models/Education";
 import { Company } from "@/models/Company";
 import { University } from "@/models/University";
 import { useI18n } from "vue-i18n";
+import {PhDownloadSimple} from "@phosphor-icons/vue"
 import Experiences from "./Experience.vue";
+import Skills from "./Skills.vue";
 import EducationComponent from "./Education.vue";
 
 const { t, locale } = useI18n()
@@ -82,8 +84,31 @@ onBeforeMount(() => {
 
 
 <template>
-    <h2>{{ t('resume.experienceSubtitle') }}</h2>
-    <Experiences v-for="experience in resumeExperiences" :key="experience.period" :experience="experience" />
-    <h2>{{ t('resume.educationSubtitle') }}</h2>
-    <EducationComponent v-for="education in resumeEducation" :key="education.period" :education="education" />
+    <section class="bg-slate-50">
+        <div class="max-w-3xl mx-auto flex flex-col justify-center pt-20">
+            <h1 class="text-5xl font-bold gradient-background-right bg-clip-text text-transparent mx-auto">
+                {{ t('resume.title') }}
+            </h1>
+
+            <div class="mt-5 flex lg:flex-row flex-col lg:mx-0 mx-auto items-center">
+                <h3 class="text-4xl font-bold text-blue-800 ml-0 mr-auto">
+                {{t('resume.experienceSubtitle') }}
+                </h3>
+                <button class="text-1xl text-white bg-blue-800 mr-0 flex flex-row py-3 px-4 rounded-md my-5">
+                    <PhDownloadSimple class="my-auto mr-2"/>
+                    Download Resume
+                </button>
+            </div>
+            <Experiences v-for="experience in resumeExperiences" :key="experience.period" :experience="experience"/>
+            
+            <h3 class="text-4xl font-bold text-pink-600 ml-0 mt-5">
+                {{ t('resume.educationSubtitle') }}
+            </h3>
+            <EducationComponent v-for="education in resumeEducation" :key="education.period" :education="education" />
+        
+            <Skills />
+            
+        </div>
+
+    </section>
 </template>

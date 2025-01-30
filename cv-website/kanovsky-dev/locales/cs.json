@@ -36,7 +36,7 @@
         "description": "Vyvíjení robustních backendových řešení, zlepšování výkonu aplikací a spolupráce s mezioborovými týmy na dodání softwarových řešení.",
         "company": {
           "name": "Seyfor a.s.",
-          "location": "Praha, Česká republika"
+          "location": "Praha, CZ"
         }
       },
       {
@@ -44,17 +44,26 @@
         "period": "2018 - 2020",
         "description": "Zaměření na vývoj v jazyce Java, opravy chyb a testování softwaru pro společnost MOPET CZ.",
         "company": {
-          "name": "MOPET CZ",
-          "location": "Praha, Česká republika"
+          "name": "Mopet CZ a.s.",
+          "location": "Praha, CZ"
         }
       },
       {
-        "position": "Software Tester",
+        "position": "Customer support",
         "period": "2016 - 2018",
         "description": "Testování webových a mobilních aplikací, poskytování zpětné vazby vývojovému týmu a zajištění vysoké kvality softwaru.",
         "company": {
           "name": "Seznam.cz",
-          "location": "Praha, Česká republika"
+          "location": "Praha, CZ"
+        }
+      },
+      {
+        "position": "Software Tester",
+        "period": "2018",
+        "description": "Testování mobilní aplikace, poskytování zpětné vazby vývojovému týmu a zajištění vysoké kvality softwaru.",
+        "company": {
+          "name": "Česká spořitelna, a.s.",
+          "location": "Praha, CZ"
         }
       }
     ],
@@ -88,41 +97,41 @@
       }
     ],
     "skills": [
-    {
-      "title": "Profesní dovednosti",
-      "icon": "PhToolbox",
-      "items": [
-        "Webový vývoj",
-        "Návrh a vývoj API",
-        "Správa databází",
-        "Testování řízené vývojem (TDD)",
-        "Byznysová analýza",
-        "Cloud Computing a nasazování"
-      ]
-    },
-    {
-      "title": "Technologie",
-      "icon": "PhCode",
-      "items": [
-        "Java",
-        "Kotlin",
-        "SQL",
-        "Git",
-        "Docker",
-        "Spring Boot"
-      ]
-    }
-  ]
+      {
+        "title": "Profesní dovednosti",
+        "icon": "PhToolbox",
+        "items": [
+          "Webový vývoj",
+          "Návrh a vývoj API",
+          "Správa databází",
+          "Testování řízené vývojem (TDD)",
+          "Byznysová analýza",
+          "Cloud Computing a nasazování"
+        ]
+      },
+      {
+        "title": "Technologie",
+        "icon": "PhCode",
+        "items": [
+          "Java",
+          "Kotlin",
+          "SQL",
+          "Git",
+          "Docker",
+          "Spring Boot"
+        ]
+      }
+    ]
   },
   "portfolio": {
     "title": "Portfolio",
     "projects": [
       {
-        "name":"crypto currency portfolio tracker",
-        "description":"Popis projektu",
-        "redirectLink": "/crypto-tracker"        
+        "name": "crypto currency portfolio tracker",
+        "description": "Popis projektu",
+        "redirectLink": "/crypto-tracker"
       }
     ],
-    "redirectButtonText" : "klikni sem"
+    "redirectButtonText": "klikni sem"
   }
 }

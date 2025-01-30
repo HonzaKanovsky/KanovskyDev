@@ -3,13 +3,13 @@
 @tailwind utilities;
 
 .gradient-background-bottom {
-  @apply bg-gradient-to-b from-blue-700 to-pink-600;
+  @apply bg-gradient-to-b from-blue-800 to-pink-600;
 }
 
 .gradient-background-right {
-    @apply bg-gradient-to-r from-blue-700 to-pink-600;
+    @apply bg-gradient-to-r from-blue-800 to-pink-600;
   }
 
   .gradient-background-bottom-right {
-    @apply bg-gradient-to-br from-blue-700 to-pink-600;
+    @apply bg-gradient-to-br from-blue-800 to-pink-600;
   }
