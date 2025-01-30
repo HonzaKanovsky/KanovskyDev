@@ -9,8 +9,8 @@
     ]
   },
   "hero": {
-    "title": "Build software effortlessly and effectively",
-    "subtitle": "I craft intelligent and scalable solutions to help you",
+    "title": "Build software effortlessly",
+    "subtitle": "I craft intelligent solutions to help you",
     "resumeButton": "Resume",
     "portfolioButton": "Portfolio"
   },
@@ -86,7 +86,33 @@
         "period": "2024 - 2025",
         "description": "Studied advanced topics in software development and international relations, participated in cultural exchange programs to strengthen global collaboration skills, and developed a deeper understanding of the Korean technology and innovation landscape."
       }
-    ]
+    ],
+    "skills": [
+    {
+      "title": "Professional Skills",
+      "icon": "PhToolbox",  
+      "items": [
+        "Web Development",
+        "API Design & Development",
+        "Database Management",
+        "Test Driven Development",
+        "Business Analysis",
+        "Cloud Computing & Deployment"
+      ]
+    },
+    {
+      "title": "Technologies",
+      "icon": "PhCode",
+      "items": [
+        "Java",
+        "Kotlin",
+        "SQL",
+        "Git",
+        "Docker",
+        "Spring Boot"
+      ]
+    }
+  ]
   },
   "portfolio": {
     "title": "Portfolio",

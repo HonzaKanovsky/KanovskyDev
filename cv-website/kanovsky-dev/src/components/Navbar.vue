@@ -55,11 +55,11 @@ const switchLocale = (newLocale: string) => {
                             >
                                 {{ t('navbar.contact') }}
                             </RouterLink>
-                            <!-- Locale Switcher -->
+                            <!-- Locale Switcher
                             <div>
                                 <button @click="switchLocale('en')">English</button>
                                 <button @click="switchLocale('cs')">Čeština</button>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>

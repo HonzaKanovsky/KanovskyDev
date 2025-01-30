@@ -6,8 +6,8 @@ export default {
       fontFamily: {
         sans: ['Poppins', 'sans-serif']
       },
-      gridTemplateColumns: {
-        '70/30': '70% 28%',
+      backgroundImage: {
+        'gradient-background': 'linear-gradient(to bottom-right, #262eec, #d51f86)',
       }
     },
   },

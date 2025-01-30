@@ -9,8 +9,8 @@
     ]
   },
   "hero": {
-    "title": "Software na míru snadno a bez starostí",
-    "subtitle": "Pomáhám vám tvořit chytrá a škálovatelná řešení",
+    "title": "Software na míru bez starostí",
+    "subtitle": "Pomůžu vám vytvořit",
     "resumeButton": "Životopis",
     "portfolioButton": "Portfolio"
   },
@@ -86,7 +86,33 @@
           "location": "Incheon, Jižní Korea"
         }
       }
-    ]
+    ],
+    "skills": [
+    {
+      "title": "Profesní dovednosti",
+      "icon": "PhToolbox",
+      "items": [
+        "Webový vývoj",
+        "Návrh a vývoj API",
+        "Správa databází",
+        "Testování řízené vývojem (TDD)",
+        "Byznysová analýza",
+        "Cloud Computing a nasazování"
+      ]
+    },
+    {
+      "title": "Technologie",
+      "icon": "PhCode",
+      "items": [
+        "Java",
+        "Kotlin",
+        "SQL",
+        "Git",
+        "Docker",
+        "Spring Boot"
+      ]
+    }
+  ]
   },
   "portfolio": {
     "title": "Portfolio",
