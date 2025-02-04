@@ -1,14 +1,18 @@
-# Use OpenJDK as the base image
-FROM eclipse-temurin:17-jdk-alpine
+# Use Node.js to build the frontend
+FROM node:18-alpine AS build
 
-# Set the working directory inside the container
 WORKDIR /app
 
-# Copy the Kotlin JAR file (change `*.jar` if necessary)
-COPY build/libs/*.jar app.jar
+COPY package.json package-lock.json ./
+RUN npm install
 
-# Expose the application port (default for Spring Boot)
-EXPOSE 8080
+COPY . .
 
-# Run the application
-ENTRYPOINT ["java", "-jar", "app.jar"]
+RUN npm run build
+
+# Use nginx to serve the frontend
+FROM nginx:alpine
+COPY --from=build /app/dist /usr/share/nginx/html
+
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
