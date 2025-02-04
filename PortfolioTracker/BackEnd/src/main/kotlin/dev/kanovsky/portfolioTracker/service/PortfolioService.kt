@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service
 import java.math.BigDecimal
 
 @Service
-class PortfolioEntryService(
+class PortfolioService(
     private val portfolioEntryRepository: PortfolioEntryRepository,
     private val userRepository: UserRepository,
     private val cryptoRepository: CryptoRepository,

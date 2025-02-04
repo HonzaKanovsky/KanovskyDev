@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="pdfkit-orientation" content="portrait"/>
+    <meta name="pdfkit-page-size" content="A4"/>
+    <title th:text="${name} + ' - Resume'"></title>
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        @font-face {
+            font-family: 'TitilliumWeb';
+            src: url('/fonts/TitilliumWeb-Light.ttf') format('truetype');
+        }
+
+        body {
+            font-family: 'TitilliumWeb', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            width: 210mm;
+            height: 297mm;
+        }
+
+        .container {
+            display: table;
+            table-layout: fixed;
+            width: 100%;
+            height: 100%;
+            border-collapse: collapse;
+        }
+
+        .sidebar {
+            display: table-cell;
+            width: 40%;
+            background: #4262b8;
+            color: white;
+            padding: 20px;
+            vertical-align: top;
+        }
+
+        .main-content {
+            display: table-cell;
+            width: 70%;
+            padding: 30px 20px 20px 20px;
+            vertical-align: top;
+        }
+
+        h2 {
+            margin: 0;
+            font-weight: lighter;
+        }
+
+        h3 {
+            margin: 0;
+            font-weight: bold;
+        }
+
+        h4 {
+            margin-bottom: 3px;
+            color: #4262b8;
+            font-weight: lighter;
+        }
+
+        h5 {
+            margin-top: 3px;
+            margin-bottom: 3px;
+            font-weight: normal;
+            font-size: medium;
+        }
+
+        .profile-pic {
+            width: 60%;
+            object-fit: cover;
+            border: white solid;
+        }
+
+        .skill, .language {
+            font-weight: bold;
+            /*
+                        background: rgba(255, 255, 255, 0.2);
+                        padding: 5px 10px;
+                        border-radius: 5px;
+                        display: inline-block;
+                        font-size: 14px;
+                        margin: 5px 0;
+            */
+        }
+
+
+        .contact-info p {
+            margin: 10px 0;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        a {
+            color: #4262b8;
+            text-decoration: none;
+        }
+
+        .person-name {
+            font-weight: lighter;
+            font-size: 50px;
+            max-width: 100%; /* Ensure it does not overflow */
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            line-height: 1.2;
+            white-space: normal;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .main-section-separator {
+            border: none;
+            height: 1px;
+            background-color: #4262b8;
+            margin: 10px 20px 0px 0px;
+        }
+
+        .sidebar-separator {
+            border: none;
+            height: 1px;
+            background-color: white;
+            margin: 15px 0px 20px 0px;
+        }
+
+        .sidebar-section {
+            margin: 40px 0px 0px 0px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <img class="profile-pic" th:if="${imageBase64}"
+             style="vertical-align: middle;"
+             th:src="'data:image/jpeg;base64,' + ${imageBase64}"/>
+
+        <h1 class="person-name" th:text="${name}">Kanovsky Jan</h1>
+
+        <div class="sidebar-section">
+            <h2>Contact</h2>
+            <hr class="sidebar-separator"/>
+            <table style="width: 100%; border-collapse: collapse;">
+                <!-- Phone Number -->
+                <tr th:if="${contact.phoneNumber}" style="height: 40px">
+                    <td style="vertical-align: middle; padding-right: 8px; width: 30px;">
+                        <img th:if="${phoneIconBase64}"
+                             th:src="'data:image/png;base64,' + ${phoneIconBase64}"
+                             width="25px" height="25px"/>
+                    </td>
+                    <td style="vertical-align: middle;">
+                        <span th:text="${contact.phoneNumber}"></span>
+                    </td>
+                </tr>
+
+                <!-- Email -->
+                <tr th:if="${contact.email}" style="height: 40px">
+                    <td style="vertical-align: middle; padding-right: 8px; width: 30px;">
+                        <img th:if="${emailIconBase64}"
+                             th:src="'data:image/png;base64,' + ${emailIconBase64}"
+                             width="25px" height="25px"/>
+                    </td>
+                    <td style="vertical-align: middle;">
+                        <a style="color: white" th:href="'mailto:' + ${contact.email}" th:text="${contact.email}"></a>
+                    </td>
+                </tr>
+
+                <!-- website -->
+                <tr th:if="${contact.website}" style="height: 40px">
+                    <td style="vertical-align: middle; padding-right: 8px; width: 30px;">
+                        <img th:if="${webIconBase64}"
+                             th:src="'data:image/png;base64,' + ${webIconBase64}"
+                             width="25px" height="25px"/>
+                    </td>
+                    <td style="vertical-align: middle;">
+                        <a style="color: white" th:href="'mailto:' + ${contact.website}"
+                           th:text="${contact.website}"></a>
+                    </td>
+                </tr>
+
+                <!-- Location -->
+                <tr th:if="${contact.address}" style="height: 40px">
+                    <td style="vertical-align: middle; padding-right: 8px; width: 30px;">
+                        <img th:if="${pinIconBase64}"
+                             th:src="'data:image/png;base64,' + ${pinIconBase64}"
+                             width="25px" height="25px"/>
+                    </td>
+                    <td style="vertical-align: middle;">
+                        <span th:text="${contact.address}"></span>
+                    </td>
+                </tr>
+            </table>
+
+
+        </div>
+
+        <div th:each="sidebarSection : ${sidebarSections}" class="sidebar-section">
+            <h2 th:text="${sidebarSection.title}"></h2>
+            <hr class="sidebar-separator"/>
+            <ul style="padding: 0px 0px 0px 30px" th:each="item : ${sidebarSection.sidebarItems}">
+                <li class="skill"
+                    th:text="${item.sidebarItemName} + (${item.sidebarItemLevel != null ? ' - ' + item.sidebarItemLevel : ''})">
+                </li>
+                <div th:if="${item.sidebarItemDescription}" style="margin-top: 5px" th:text="
+                     ${item.sidebarItemDescription}
+                ">
+                </div>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+
+        <div class="section" th:if="${aboutMe}">
+            <h2>Professional summary</h2>
+            <hr class="main-section-separator"/>
+            <p th:text="${aboutMe}"></p>
+        </div>
+
+        <div th:each="section : ${itemSections}" class="section">
+            <h2 th:text="${section.sectionTitle}"></h2>
+            <hr class="main-section-separator"/>
+            <div th:each="item : ${section.resumeItems}" class="job">
+                <h4 th:if="${item.period}" th:text="${item.period}"></h4>
+                <h3 th:if="${item.itemName}" th:text="${item.itemName}"></h3>
+                <h5 th:if="${item.location}" th:text="${item.location}"></h5>
+                <ul th:if="${item.skillsLearned}" style="margin-top: 10px">
+                    <li th:each="skill : ${item.skillsLearned}" th:text="${skill}" style="margin: 2px 0px 2px 0px"></li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

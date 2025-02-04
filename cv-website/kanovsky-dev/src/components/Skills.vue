@@ -31,8 +31,10 @@ const skillGroups = computed<SkillGroup[]>(() => tm("resume.skills") as SkillGro
         <div class="mb-10">
           <ul class="flex flex-wrap justify-center gap-x-15 gap-3">
             <li v-for="(skill, i) in group.items" :key="i"
-              class="w-3/4 lg:w-[27%] text-center bg-slate-50 py-3 px-6 rounded-xl">
-              {{ skill }}
+              class="w-3/4 lg:w-[27%] text-center bg-slate-50 py-3 px-6 rounded-xl flex flex-row">
+              <div class="flex items-center mx-auto">
+                {{ skill }}
+              </div>
             </li>
           </ul>
         </div>

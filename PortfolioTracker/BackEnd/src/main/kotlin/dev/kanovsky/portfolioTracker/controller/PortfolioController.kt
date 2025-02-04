@@ -2,7 +2,7 @@ package dev.kanovsky.portfolioTracker.controller
 
 import dev.kanovsky.portfolioTracker.dto.ApiResponse
 import dev.kanovsky.portfolioTracker.dto.UserDetailDTO
-import dev.kanovsky.portfolioTracker.service.PortfolioEntryService
+import dev.kanovsky.portfolioTracker.service.PortfolioService
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.validation.constraints.Min
 import org.springframework.data.domain.Pageable
@@ -14,7 +14,7 @@ import java.math.BigDecimal
 
 @RestController
 @RequestMapping("/api/portfolios")
-class PortfolioEntryController(private val portfolioEntryService: PortfolioEntryService) {
+class PortfolioController(private val portfolioService: PortfolioService) {
 
     @GetMapping("/{userId}")
     fun getPortfolioByUserId(
@@ -23,7 +23,7 @@ class PortfolioEntryController(private val portfolioEntryService: PortfolioEntry
         request: HttpServletRequest
     ): ResponseEntity<ApiResponse<UserDetailDTO>> {
         val token = getToken(request) ?: return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build()
-        val result = portfolioEntryService.getPortfolioEntriesByUserId(userId, pageable, token)
+        val result = portfolioService.getPortfolioEntriesByUserId(userId, pageable, token)
         return if (result.success) {
             ResponseEntity.status(HttpStatus.OK).body(result)
         } else {
@@ -40,7 +40,7 @@ class PortfolioEntryController(private val portfolioEntryService: PortfolioEntry
         request: HttpServletRequest
     ): ResponseEntity<ApiResponse<UserDetailDTO>> {
         val token = getToken(request) ?: return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build()
-        val result = portfolioEntryService.addPortfolioEntry(userId, cryptoId, amount, pageable, token)
+        val result = portfolioService.addPortfolioEntry(userId, cryptoId, amount, pageable, token)
         return if (result.success) {
             ResponseEntity.status(HttpStatus.OK).body(result)
         } else {
@@ -57,7 +57,7 @@ class PortfolioEntryController(private val portfolioEntryService: PortfolioEntry
         request: HttpServletRequest
     ): ResponseEntity<ApiResponse<UserDetailDTO>> {
         val token = getToken(request) ?: return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build()
-        val result = portfolioEntryService.updatePortfolioEntry(userId, cryptoId, amount, pageable, token)
+        val result = portfolioService.updatePortfolioEntry(userId, cryptoId, amount, pageable, token)
         return if (result.success) {
             ResponseEntity.status(HttpStatus.OK).body(result)
         } else {
@@ -74,7 +74,7 @@ class PortfolioEntryController(private val portfolioEntryService: PortfolioEntry
         request: HttpServletRequest
     ): ResponseEntity<ApiResponse<UserDetailDTO>> {
         val token = getToken(request) ?: return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build()
-        val result = portfolioEntryService.removePortfolioEntry(userId, cryptoId, pageable, token)
+        val result = portfolioService.removePortfolioEntry(userId, cryptoId, pageable, token)
         return if (result.success) {
             ResponseEntity.status(HttpStatus.OK).body(result)
         } else {
