@@ -13,12 +13,12 @@
         }
 
         @font-face {
-            font-family: 'TitilliumWeb';
+            font-family: 'TitilliumWeb-Light';
             src: url('/fonts/TitilliumWeb-Light.ttf') format('truetype');
         }
 
         body {
-            font-family: 'TitilliumWeb', Arial, sans-serif;
+            font-family: 'TitilliumWeb-Light', sans-serif;
             margin: 0;
             padding: 0;
             width: 210mm;
@@ -36,7 +36,7 @@
         .sidebar {
             display: table-cell;
             width: 40%;
-            background: #4262b8;
+            background: #06548c;
             color: white;
             padding: 20px;
             vertical-align: top;
@@ -61,7 +61,7 @@
 
         h4 {
             margin-bottom: 3px;
-            color: #4262b8;
+            color: #06548c;
             font-weight: lighter;
         }
 
@@ -100,7 +100,7 @@
         }
 
         a {
-            color: #4262b8;
+            color: #06548c;
             text-decoration: none;
         }
 
@@ -121,7 +121,7 @@
         .main-section-separator {
             border: none;
             height: 1px;
-            background-color: #4262b8;
+            background-color: #06548c;
             margin: 10px 20px 0px 0px;
         }
 
@@ -173,7 +173,7 @@
                              width="25px" height="25px"/>
                     </td>
                     <td style="vertical-align: middle;">
-                        <a style="color: white" th:href="'mailto:' + ${contact.email}" th:text="${contact.email}"></a>
+                        <a style="color: white" th:href="${contact.email}" th:text="${contact.email}"></a>
                     </td>
                 </tr>
 
@@ -185,7 +185,7 @@
                              width="25px" height="25px"/>
                     </td>
                     <td style="vertical-align: middle;">
-                        <a style="color: white" th:href="'mailto:' + ${contact.website}"
+                        <a style="color: white" th:href="${contact.website}"
                            th:text="${contact.website}"></a>
                     </td>
                 </tr>

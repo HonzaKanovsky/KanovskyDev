@@ -1,7 +1,10 @@
 package dev.kanovsky.portfolioTracker.dto
 
-class SidebarItemDTO(
-    val sidebarItemName: String,
-    val sidebarItemLevel: String?,
-    val sidebarItemDescription: String?
+import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonProperty
+
+data class SidebarItemDTO @JsonCreator constructor(
+    @JsonProperty("sidebarItemName") val sidebarItemName: String,
+    @JsonProperty("sidebarItemLevel") val sidebarItemLevel: String?,
+    @JsonProperty("sidebarItemDescription") val sidebarItemDescription: String?
 )

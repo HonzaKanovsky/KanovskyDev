@@ -1,20 +1,17 @@
 package dev.kanovsky.portfolioTracker.dto
 
-import org.springframework.web.multipart.MultipartFile
+import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonProperty
 
-data class ResumeRequestDTO(
-    val name: String,
-    val aboutMe: String?,
-
-    val phoneNumber: String,
-    val email: String,
-    val address: String,
-    val website: String,
-
-    val sidebarItemsDTO: String,
-
-    val itemSectionDTO: String,
-
-    var profilePicture: MultipartFile? = null
+data class ResumeRequestDTO @JsonCreator constructor(
+    @JsonProperty("name") val name: String,
+    @JsonProperty("aboutMe") val aboutMe: String,
+    @JsonProperty("phoneNumber") val phoneNumber: String,
+    @JsonProperty("email") val email: String,
+    @JsonProperty("address") val address: String,
+    @JsonProperty("website") val website: String,
+    @JsonProperty("sidebarItemsDTO") val sidebarItemsDTO: List<SidebarSectionDTO>,
+    @JsonProperty("itemSectionDTO") val itemSectionDTO: List<ItemSectionDTO>
 )
+
 

@@ -1,6 +1,5 @@
 package dev.kanovsky.portfolioTracker.controller
 
-import dev.kanovsky.portfolioTracker.dto.ResumeRequestDTO
 import dev.kanovsky.portfolioTracker.service.PdfGeneratorService
 import org.springframework.core.io.ByteArrayResource
 import org.springframework.http.HttpHeaders
@@ -10,6 +9,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 
+@CrossOrigin(origins = ["http://localhost:5173"])
 @RestController
 @RequestMapping("/api/resume")
 class ResumeController(
@@ -18,22 +18,19 @@ class ResumeController(
 
     @PostMapping(consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
     fun generatePdf(
-        @ModelAttribute resumeRequestDTO: ResumeRequestDTO,
-        @RequestParam("profilePicture") profilePicture: MultipartFile?
+        @RequestPart("resumeRequestDTO") resumeRequestString: String, // JSON as String
+        @RequestPart("profilePicture") profilePicture: MultipartFile?
     ): ResponseEntity<ByteArrayResource> {
         return try {
-            pdfGeneratorService.createPdf(resumeRequestDTO, profilePicture)
-
             ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=resume.pdf")
                 .contentType(MediaType.APPLICATION_PDF)
-                .body(pdfGeneratorService.createPdf(resumeRequestDTO, profilePicture))
+                .body(pdfGeneratorService.createPdf(resumeRequestString, profilePicture))
         } catch (ex: Exception) {
-            //logger.error("Error reading files: ${ex.message}", ex)
+            println("Error: ${ex.message}")
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(ByteArrayResource("File read error".toByteArray()))
         }
-
     }
 
 

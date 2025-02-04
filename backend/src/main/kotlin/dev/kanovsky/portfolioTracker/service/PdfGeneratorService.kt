@@ -1,19 +1,18 @@
 package dev.kanovsky.portfolioTracker.service
 
-import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.lowagie.text.pdf.BaseFont
-import dev.kanovsky.portfolioTracker.dto.ItemSectionDTO
 import dev.kanovsky.portfolioTracker.dto.ResumeRequestDTO
-import dev.kanovsky.portfolioTracker.dto.SidebarSectionDTO
 import org.springframework.core.io.ByteArrayResource
+import org.springframework.core.io.ClassPathResource
 import org.springframework.stereotype.Service
 import org.springframework.web.multipart.MultipartFile
 import org.thymeleaf.TemplateEngine
 import org.thymeleaf.context.Context
-import org.xhtmlrenderer.pdf.ITextFontResolver
 import org.xhtmlrenderer.pdf.ITextRenderer
 import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.InputStream
 import java.util.*
 
 @Service
@@ -23,10 +22,14 @@ class PdfGeneratorService(
 ) {
 
     fun createPdf(
-        resumeRequestDTO: ResumeRequestDTO,
+        resumeRequestString: String,
         profilePicture: MultipartFile?
     ): ByteArrayResource {
-        val context = prepareContentForPDF(profilePicture, resumeRequestDTO)
+        // Convert JSON String to ResumeRequestDTO object
+        val objectMapper = ObjectMapper()
+        val resumeDtoObj = objectMapper.readValue(resumeRequestString, ResumeRequestDTO::class.java)
+
+        val context = prepareContentForPDF(profilePicture, resumeDtoObj)
 
         val htmlContent = templateEngine.process("resume", context)
         val pdfBytes = generatePdfFromHtml(htmlContent)
@@ -38,14 +41,6 @@ class PdfGeneratorService(
     private fun prepareContentForPDF(profilePicture: MultipartFile?, resumeRequestDTO: ResumeRequestDTO): Context {
         val imageBase64 = profilePicture?.let { convertToBase64(it) } ?: ""
 
-        // ✅ Properly deserialize JSON into DTOs
-        val sidebarSections: List<SidebarSectionDTO> = objectMapper.readValue(
-            resumeRequestDTO.sidebarItemsDTO, object : TypeReference<List<SidebarSectionDTO>>() {}
-        )
-
-        val itemSections: List<ItemSectionDTO> = objectMapper.readValue(
-            resumeRequestDTO.itemSectionDTO, object : TypeReference<List<ItemSectionDTO>>() {}
-        )
         val phoneIconBase64 = convertFileToBase64("/static/images/phone-icon.png")
         val emailIconBase64 = convertFileToBase64("/static/images/email-icon.png")
         val pinIconBase64 = convertFileToBase64("/static/images/pin-icon.png")
@@ -66,8 +61,8 @@ class PdfGeneratorService(
             )
 
             // ✅ Now Thymeleaf will correctly read structured DTOs
-            setVariable("sidebarSections", sidebarSections)
-            setVariable("itemSections", itemSections)
+            setVariable("sidebarSections", resumeRequestDTO.sidebarItemsDTO)
+            setVariable("itemSections", resumeRequestDTO.itemSectionDTO)
 
 
             setVariable("phoneIconBase64", phoneIconBase64)
@@ -84,15 +79,22 @@ class PdfGeneratorService(
         val outputStream = ByteArrayOutputStream()
         val renderer = ITextRenderer()
 
-        // Register a font that supports Czech characters
-        val fontPath = "/fonts/TitilliumWeb-Light.ttf" // Place this file inside "resources/fonts"
-        val fontResolver = renderer.sharedContext.fontResolver as ITextFontResolver
-        fontResolver.addFont(fontPath, BaseFont.IDENTITY_H, BaseFont.EMBEDDED)
+        // Load font from classpath
+        val fontResource = ClassPathResource("fonts/TitilliumWeb-Light.ttf")
+        val fontInputStream: InputStream = fontResource.inputStream
+        val tempFontFile = File.createTempFile("TitilliumWeb-Light", ".ttf")
+
+        // Copy font to a temporary file
+        tempFontFile.outputStream().use { output -> fontInputStream.copyTo(output) }
+
+        // Register the font
+        renderer.fontResolver.addFont(tempFontFile.absolutePath, BaseFont.IDENTITY_H, BaseFont.EMBEDDED)
 
         renderer.setDocumentFromString(htmlContent)
         renderer.layout()
         renderer.createPDF(outputStream)
         renderer.finishPDF()
+
         return outputStream.toByteArray()
     }
 

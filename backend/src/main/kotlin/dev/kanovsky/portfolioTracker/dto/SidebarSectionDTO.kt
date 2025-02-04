@@ -1,7 +1,10 @@
 package dev.kanovsky.portfolioTracker.dto
 
 
-class SidebarSectionDTO(
-    val title: String,
-    val sidebarItems: List<SidebarItemDTO>? = emptyList()
+import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonProperty
+
+data class SidebarSectionDTO @JsonCreator constructor(
+    @JsonProperty("title") val title: String,
+    @JsonProperty("sidebarItems") val sidebarItems: List<SidebarItemDTO>
 )
