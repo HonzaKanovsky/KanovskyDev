@@ -127,11 +127,19 @@
     "title": "Portfolio",
     "projects": [
       {
-        "name": "crypto currency portfolio tracker",
-        "description": "Popis projektu",
-        "redirectLink": "/crypto-tracker"
+        "name":"Crypto currency tracking",
+        "description":"Application using coin market cap api to fetch prices of crypto currencies every day so user can track their portfolio prices on day to day basis.",
+        "redirectLink": "/crypto-tracker",
+        "redirectLinkSpecification": "/crypto-tracker-specification"
+      },
+      {
+        "name":"Resume generator",
+        "description":"Application using coin market cap api to fetch prices of crypto currencies every day so user can track their portfolio prices on day to day basis.",
+        "redirectLink": "/resume-generation",
+        "redirectLinkSpecification": "/resume-generation-specification"
       }
     ],
-    "redirectButtonText": "klikni sem"
+    "redirectButtonText" : "Try app",
+    "redirectButtonTextSpecification" : "See specification"
   }
 }

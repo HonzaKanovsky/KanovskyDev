@@ -12,18 +12,19 @@ const loadProjects = () => {
     const projects: Projekt[] = []
 
     for (let i = 0; i < 99; i++) {
-        const targetedExperience = `portfolio.projects[${i}]`
-        const projectName = t(targetedExperience + '.name')
-        const projectDescription = t(targetedExperience + '.description')
-        const projectRedirectLink = t(targetedExperience + '.redirectLink')
+        const targetedProject = `portfolio.projects[${i}]`
+        const projectName = t(targetedProject + '.name')
+        const projectDescription = t(targetedProject + '.description')
+        const projectRedirectLink = t(targetedProject + '.redirectLink')
+        const projectRedirectLinkSpec = t(targetedProject + '.redirectLinkSpecification')
 
-        if (projectName === (targetedExperience + '.name')) break
-
+        if (projectName === (targetedProject + '.name')) break
 
         projects.push(new Projekt(
             projectName,
             projectDescription,
-            projectRedirectLink
+            projectRedirectLink,
+            projectRedirectLinkSpec
         ))
     }
     portfolioProjects.value = projects
@@ -40,8 +41,14 @@ onBeforeMount(() => {
 
 
 <template>
-    <section>
-        <h2>{{ t('portfolio.title') }}</h2>
-        <Project v-for="project in portfolioProjects" :key="project.name" :projekt="project" :redirectButtonText="t('portfolio.redirectButtonText')"/>
+    <section class="bg-slate-50">
+        <div class="max-w-3xl mx-auto flex flex-col justify-center pt-20 pb-20">
+            <h1 class="text-5xl font-bold gradient-background-right bg-clip-text text-transparent mx-auto">
+                {{ t('portfolio.title') }}
+            </h1>
+            <Project v-for="project in portfolioProjects" :key="project.name" :projekt="project"
+                :redirectButtonText="t('portfolio.redirectButtonText')"
+                :redirectButtonTextSpecification="t('portfolio.redirectButtonTextSpecification')" />
+        </div>
     </section>
 </template>
