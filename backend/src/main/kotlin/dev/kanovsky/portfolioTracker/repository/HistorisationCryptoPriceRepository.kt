@@ -5,6 +5,7 @@ import dev.kanovsky.portfolioTracker.model.HistorisationCryptoPrice
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import java.time.LocalDate
 
@@ -25,5 +26,8 @@ interface HistorisationCryptoPriceRepository : JpaRepository<HistorisationCrypto
         timestamp: LocalDate
     ): Page<HistorisationCryptoPrice>
 
-    fun findAllByTimestamp(date: LocalDate) : List<HistorisationCryptoPrice>
+    fun findAllByTimestamp(date: LocalDate): List<HistorisationCryptoPrice>
+
+    @Query("SELECT MAX(h.timestamp) FROM HistorisationCryptoPrice h WHERE h.timestamp < :currentDate")
+    fun findLatestTimestampBefore(currentDate: LocalDate): LocalDate?
 }

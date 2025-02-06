@@ -1,6 +1,5 @@
 package dev.kanovsky.portfolioTracker.service
 
-import dev.kanovsky.portfolioTracker.dto.ApiResponse
 import dev.kanovsky.portfolioTracker.dto.CryptoDTO
 import dev.kanovsky.portfolioTracker.dto.CryptoDetailDTO
 import dev.kanovsky.portfolioTracker.dto.HistorisationCryptoPriceDTO
@@ -25,7 +24,7 @@ class CryptoService(
     private val historisationCryptoPriceRepository: HistorisationCryptoPriceRepository,
 ) {
     fun getAllCryptos(pageable: Pageable): Page<Crypto> = cryptoRepository.findAll(pageable)
-    
+
     fun getAllCryptosWithPricesToday(pageable: Pageable): Page<HistorisationCryptoPriceDTO> {
         return try {
             val pricesPage =
@@ -39,35 +38,42 @@ class CryptoService(
     fun getCryptoById(id: Long): Crypto =
         cryptoRepository.findById(id).orElseThrow { IllegalArgumentException("Crypto with id $id not found") }
 
-    fun getCryptoDataById(id: Long): ApiResponse<CryptoDTO> {
-        return ApiResponse(
-            success = true,
-            message = "Requested crypto currency found",
-            data = getCryptoById(id).toDto()
-        )
+    fun getCryptoDataById(id: Long): Result<CryptoDTO> {
+        return try {
+            Result.success(getCryptoById(id).toDto())
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
     }
 
-    fun getHistoricalData(cryptoId: Long, startDate: String?, endDate: String?): ApiResponse<CryptoDetailDTO> {
-        val crypto = getCryptoById(cryptoId)
-        val start = LocalDate.parse(startDate ?: LocalDate.now().minusMonths(12).toString())
-        val end = LocalDate.parse(endDate ?: LocalDate.now().toString())
-        val cryptosInInterval = historisationCryptoPriceRepository.findByCryptoAndTimestampBetween(crypto, start, end)
+    fun getHistoricalData(cryptoId: Long, startDate: String?, endDate: String?): Result<CryptoDetailDTO> {
 
-        val cryptosInIntervalDto = mutableListOf<HistorisationCryptoPriceDTO>()
-        for (cryptoEntry in cryptosInInterval) {
-            cryptosInIntervalDto.add(cryptoEntry.toDto())
+        return try {
+            val crypto = getCryptoById(cryptoId)
+            val start = LocalDate.parse(startDate ?: LocalDate.now().minusMonths(12).toString())
+            val end = LocalDate.parse(endDate ?: LocalDate.now().toString())
+            val cryptosInInterval =
+                historisationCryptoPriceRepository.findByCryptoAndTimestampBetween(crypto, start, end)
+
+            val cryptosInIntervalDto = mutableListOf<HistorisationCryptoPriceDTO>()
+            for (cryptoEntry in cryptosInInterval) {
+                cryptosInIntervalDto.add(cryptoEntry.toDto())
+            }
+
+            val cryptoDetailDto =
+                CryptoDetailDTO(crypto = crypto.toDto(), historisationCryptoPrices = cryptosInIntervalDto)
+            return Result.success(cryptoDetailDto)
+        } catch (e: Exception) {
+            Result.failure(e)
         }
 
-        val cryptoDetailDto =
-            CryptoDetailDTO(crypto = crypto.toDto(), historisationCryptoPrices = cryptosInIntervalDto)
-        return ApiResponse(success = true, message = "Prices in interval are found", data = cryptoDetailDto)
     }
 
     /*
     * Called to initialize fetching and saving new crypto data
     *
     */
-    fun updateDBCryptoEntries(amount: Long, currency: CurrencyCode = CurrencyCode.USD): ApiResponse<CryptoDTO> {
+    fun updateDBCryptoEntries(amount: Long, currency: CurrencyCode = CurrencyCode.USD): Result<String> {
         return (
                 try {
                     val apiKey = System.getenv("CMC_API_KEY") ?: throw IllegalStateException("API key not found")
@@ -83,12 +89,12 @@ class CryptoService(
 
                         saveNewHistorisationCryptoPrices(data)
 
-                        ApiResponse(true, "Updating crypto prices was successful")
+                        Result.success("Updating crypto prices was successful")
                     } else {
-                        ApiResponse(false, "Fetching data from CMC was unsuccessful: ${response.message}")
+                        Result.failure(Exception("Fetching data from CMC was unsuccessful: ${response.message}"))
                     }
                 } catch (e: Exception) {
-                    ApiResponse(false, "Fetching data from CMC failed due to technical error: ${e.message}")
+                    Result.failure(e)
                 })
     }
 
@@ -99,11 +105,21 @@ class CryptoService(
 
         //Get map of cryptos saved in database group them by crypto
         val existingRecordsToday = historisationCryptoPriceRepository.findAllByTimestamp(LocalDate.now())
-        var existingRecordMap = existingRecordsToday.associateBy { it.crypto }
+        val existingRecordMap = existingRecordsToday.associateBy { it.crypto }
+
+        val currentDate = LocalDate.now()
+
+        val latestTimestamp = historisationCryptoPriceRepository.findLatestTimestampBefore(currentDate)
+
+        // Get all records from that timestamp
+        val previousRecords = latestTimestamp?.let {
+            historisationCryptoPriceRepository.findAllByTimestamp(it)
+        } ?: emptyList()
+
+        val previousRecordMap = previousRecords.associateBy { it.crypto }
 
         val newHistorisationCryptoPrices = mutableListOf<HistorisationCryptoPrice>()
 
-        val currentDate = LocalDate.now()
 
         for (i in 0 until data.length()) {
             val cryptoEntryJSON = data.getJSONObject(i)
@@ -117,6 +133,9 @@ class CryptoService(
             val existingCrypto = existingCryptoMap[name to symbol]
             val cryptoToBeUpdated = existingCrypto ?: cryptoRepository.save(Crypto(name = name, symbol = symbol))
 
+
+            val previousPrice = previousRecordMap[existingCrypto]?.price
+
             val existingRecord = if (existingRecordMap[cryptoToBeUpdated] != null) {
                 existingRecordMap[cryptoToBeUpdated]?.price = price
                 existingRecordMap[cryptoToBeUpdated]!!
@@ -129,6 +148,8 @@ class CryptoService(
                 )
             }
 
+
+            existingRecord.determinePriceChange(previousPrice)
             newHistorisationCryptoPrices.add(
                 existingRecord
             )
