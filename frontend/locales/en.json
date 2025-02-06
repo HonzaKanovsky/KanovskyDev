@@ -135,8 +135,8 @@
       {
         "name":"Resume generator",
         "description":"Application using coin market cap api to fetch prices of crypto currencies every day so user can track their portfolio prices on day to day basis.",
-        "redirectLink": "/resume-generation",
-        "redirectLinkSpecification": "/resume-generation-specification"
+        "redirectLink": "/resume-generator",
+        "redirectLinkSpecification": "/resume-generator-specification"
       }
     ],
     "redirectButtonText" : "Try app",
