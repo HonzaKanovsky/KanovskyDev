@@ -15,7 +15,7 @@ interface HistorisationCryptoPriceRepository : JpaRepository<HistorisationCrypto
     fun findByCryptoAndTimestamp(crypto: Crypto, timestamp: LocalDate): HistorisationCryptoPrice?
 
     fun findFirstByCryptoOrderByTimestampDesc(crypto: Crypto): HistorisationCryptoPrice?
-    fun findByCryptoAndTimestampBetween(
+    fun findByCryptoAndTimestampBetweenOrderByTimestampDesc(
         crypto: Crypto,
         start: LocalDate,
         end: LocalDate

@@ -53,7 +53,11 @@ class CryptoService(
             val start = LocalDate.parse(startDate ?: LocalDate.now().minusMonths(12).toString())
             val end = LocalDate.parse(endDate ?: LocalDate.now().toString())
             val cryptosInInterval =
-                historisationCryptoPriceRepository.findByCryptoAndTimestampBetween(crypto, start, end)
+                historisationCryptoPriceRepository.findByCryptoAndTimestampBetweenOrderByTimestampDesc(
+                    crypto,
+                    start,
+                    end
+                )
 
             val cryptosInIntervalDto = mutableListOf<HistorisationCryptoPriceDTO>()
             for (cryptoEntry in cryptosInInterval) {
@@ -148,8 +152,7 @@ class CryptoService(
                 )
             }
 
-
-            existingRecord.determinePriceChange(previousPrice)
+            existingRecord.calculatePriceChange(previousPrice)
             newHistorisationCryptoPrices.add(
                 existingRecord
             )

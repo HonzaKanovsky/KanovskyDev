@@ -58,6 +58,7 @@ class PortfolioController(private val portfolioService: PortfolioService) {
     ): ResponseEntity<ApiResponse<UserDetailDTO>> {
         val token = getToken(request) ?: return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build()
         val result = portfolioService.updatePortfolioEntry(userId, cryptoId, amount, pageable, token)
+
         return if (result.success) {
             ResponseEntity.status(HttpStatus.OK).body(result)
         } else {

@@ -1,7 +1,6 @@
 package dev.kanovsky.portfolioTracker.model
 
 import dev.kanovsky.portfolioTracker.dto.HistorisationCryptoPriceDTO
-import dev.kanovsky.portfolioTracker.enums.PriceChangeStatus
 import jakarta.persistence.*
 import lombok.Data
 import java.math.BigDecimal
@@ -23,25 +22,26 @@ data class HistorisationCryptoPrice(
     var price: BigDecimal,
     @Column(nullable = false)
     val marketCap: Long,
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    var priceChangeStatus: PriceChangeStatus = PriceChangeStatus.STABLE
+
+    @Column(nullable = false, precision = 10, scale = 2)
+    var priceChangePercentage: BigDecimal = BigDecimal.ZERO
 
 ) {
 
-    fun determinePriceChange(previousPrice: BigDecimal?) {
-        priceChangeStatus = when {
-            previousPrice == null || previousPrice == price -> PriceChangeStatus.STABLE
-            price > previousPrice -> PriceChangeStatus.INCREASE
-            else -> PriceChangeStatus.DECREASE
+    fun calculatePriceChange(previousPrice: BigDecimal?) {
+        priceChangePercentage = if (previousPrice == null || previousPrice.compareTo(BigDecimal.ZERO) == 0) {
+            BigDecimal.ZERO
+        } else {
+            ((price - previousPrice) / previousPrice * BigDecimal(100))
         }
     }
 
+
     fun toDto(containCryptoDto: Boolean = false): HistorisationCryptoPriceDTO {
         return (if (containCryptoDto) {
-            HistorisationCryptoPriceDTO(crypto.toDto(), timestamp, price, marketCap, priceChangeStatus)
+            HistorisationCryptoPriceDTO(crypto.toDto(), timestamp, price, marketCap, priceChangePercentage)
         } else {
-            HistorisationCryptoPriceDTO(null, timestamp, price, marketCap, priceChangeStatus)
+            HistorisationCryptoPriceDTO(null, timestamp, price, marketCap, priceChangePercentage)
         })
     }
 
