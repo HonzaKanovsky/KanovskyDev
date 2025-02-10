@@ -35,9 +35,6 @@ class CryptoService(
         }
     }
 
-    fun getCryptoById(id: Long): Crypto =
-        cryptoRepository.findById(id).orElseThrow { IllegalArgumentException("Crypto with id $id not found") }
-
     fun getCryptoDataById(id: Long): Result<CryptoDTO> {
         return try {
             Result.success(getCryptoById(id).toDto())
@@ -75,7 +72,6 @@ class CryptoService(
 
     /*
     * Called to initialize fetching and saving new crypto data
-    *
     */
     fun updateDBCryptoEntries(amount: Long, currency: CurrencyCode = CurrencyCode.USD): Result<String> {
         return (
@@ -101,6 +97,10 @@ class CryptoService(
                     Result.failure(e)
                 })
     }
+
+
+    private fun getCryptoById(id: Long): Crypto =
+        cryptoRepository.findById(id).orElseThrow { IllegalArgumentException("Crypto with id $id not found") }
 
     private fun saveNewHistorisationCryptoPrices(data: JSONArray) {
         //Get map of cryptos saved in database group them by name and symbol
