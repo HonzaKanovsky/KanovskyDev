@@ -45,7 +45,7 @@ class CryptoController(private val cryptoService: CryptoService) {
         val cryptoData = cryptoService.getHistoricalData(id, startDate, endDate)
 
         return cryptoData.fold(
-            onSuccess = { crypto -> ResponseEntity.ok(cryptoData) },
+            onSuccess = { crypto -> ResponseEntity.ok(crypto) },
             onFailure = { exception ->
                 ResponseEntity.status(HttpStatus.NOT_FOUND).body(mapOf("error" to exception.message))
             }

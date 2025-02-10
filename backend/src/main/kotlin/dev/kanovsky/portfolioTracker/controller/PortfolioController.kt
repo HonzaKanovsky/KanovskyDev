@@ -1,6 +1,5 @@
 package dev.kanovsky.portfolioTracker.controller
 
-import dev.kanovsky.portfolioTracker.dto.ApiResponse
 import dev.kanovsky.portfolioTracker.dto.UserDetailDTO
 import dev.kanovsky.portfolioTracker.service.PortfolioService
 import jakarta.servlet.http.HttpServletRequest
@@ -21,14 +20,13 @@ class PortfolioController(private val portfolioService: PortfolioService) {
         @PathVariable userId: Long,
         @PageableDefault(size = 30, sort = ["id"]) pageable: Pageable,
         request: HttpServletRequest
-    ): ResponseEntity<ApiResponse<UserDetailDTO>> {
+    ): ResponseEntity<UserDetailDTO> {
         val token = getToken(request) ?: return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build()
-        val result = portfolioService.getPortfolioEntriesByUserId(userId, pageable, token)
-        return if (result.success) {
-            ResponseEntity.status(HttpStatus.OK).body(result)
-        } else {
-            ResponseEntity.status(HttpStatus.NOT_FOUND).body(result)
-        }
+        return portfolioService.getPortfolioEntriesByUserId(userId, pageable, token)
+            .fold(
+                onSuccess = { ResponseEntity.ok(it) },
+                onFailure = { ResponseEntity.status(HttpStatus.NOT_FOUND).build() }
+            )
     }
 
     @PostMapping
@@ -38,14 +36,13 @@ class PortfolioController(private val portfolioService: PortfolioService) {
         @RequestParam @Min(0) amount: Double,
         @PageableDefault(size = 30, sort = ["id"]) pageable: Pageable,
         request: HttpServletRequest
-    ): ResponseEntity<ApiResponse<UserDetailDTO>> {
+    ): ResponseEntity<UserDetailDTO> {
         val token = getToken(request) ?: return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build()
-        val result = portfolioService.addPortfolioEntry(userId, cryptoId, amount, pageable, token)
-        return if (result.success) {
-            ResponseEntity.status(HttpStatus.OK).body(result)
-        } else {
-            ResponseEntity.status(HttpStatus.NOT_FOUND).body(result)
-        }
+        return portfolioService.addPortfolioEntry(userId, cryptoId, amount, pageable, token)
+            .fold(
+                onSuccess = { ResponseEntity.ok(it) },
+                onFailure = { ResponseEntity.status(HttpStatus.BAD_REQUEST).build() }
+            )
     }
 
     @PatchMapping
@@ -55,17 +52,14 @@ class PortfolioController(private val portfolioService: PortfolioService) {
         @RequestParam @Min(0) amount: BigDecimal,
         @PageableDefault(size = 30, sort = ["id"]) pageable: Pageable,
         request: HttpServletRequest
-    ): ResponseEntity<ApiResponse<UserDetailDTO>> {
+    ): ResponseEntity<UserDetailDTO> {
         val token = getToken(request) ?: return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build()
-        val result = portfolioService.updatePortfolioEntry(userId, cryptoId, amount, pageable, token)
-
-        return if (result.success) {
-            ResponseEntity.status(HttpStatus.OK).body(result)
-        } else {
-            ResponseEntity.status(HttpStatus.NOT_FOUND).body(result)
-        }
+        return portfolioService.updatePortfolioEntry(userId, cryptoId, amount, pageable, token)
+            .fold(
+                onSuccess = { ResponseEntity.ok(it) },
+                onFailure = { ResponseEntity.status(HttpStatus.NOT_FOUND).build() }
+            )
     }
-
 
     @DeleteMapping
     fun deletePortfolioEntry(
@@ -73,19 +67,16 @@ class PortfolioController(private val portfolioService: PortfolioService) {
         @RequestParam cryptoId: Long,
         @PageableDefault(size = 30, sort = ["id"]) pageable: Pageable,
         request: HttpServletRequest
-    ): ResponseEntity<ApiResponse<UserDetailDTO>> {
+    ): ResponseEntity<UserDetailDTO> {
         val token = getToken(request) ?: return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build()
-        val result = portfolioService.removePortfolioEntry(userId, cryptoId, pageable, token)
-        return if (result.success) {
-            ResponseEntity.status(HttpStatus.OK).body(result)
-        } else {
-            ResponseEntity.status(HttpStatus.NOT_FOUND).body(result)
-        }
+        return portfolioService.removePortfolioEntry(userId, cryptoId, pageable, token)
+            .fold(
+                onSuccess = { ResponseEntity.ok(it) },
+                onFailure = { ResponseEntity.status(HttpStatus.NOT_FOUND).build() }
+            )
     }
-
 
     private fun getToken(request: HttpServletRequest): String? {
         return request.getHeader("Authorization")?.substring(7)
     }
-
 }

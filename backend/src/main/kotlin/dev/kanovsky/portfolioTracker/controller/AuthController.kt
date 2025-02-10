@@ -1,74 +1,79 @@
 package dev.kanovsky.portfolioTracker.controller
 
-import dev.kanovsky.portfolioTracker.dto.*
+import dev.kanovsky.portfolioTracker.dto.LoginRequestDTO
+import dev.kanovsky.portfolioTracker.enums.TokenValidityCode
 import dev.kanovsky.portfolioTracker.model.User
-import dev.kanovsky.portfolioTracker.security.JwtUtil
+import dev.kanovsky.portfolioTracker.service.AuthorisationService
 import dev.kanovsky.portfolioTracker.service.UserService
+import jakarta.mail.event.FolderEvent.CREATED
 import jakarta.servlet.http.Cookie
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/api/auth")
-class AuthController(private val userService: UserService) {
-
-    val jwtUtil = JwtUtil()
-
+class AuthController(
+    private val userService: UserService,
+    private val authorisationService: AuthorisationService
+) {
+    
     @PostMapping("/register")
-    fun registerUser(@RequestBody user: User): ResponseEntity<ApiResponse<UserDetailDTO>> {
-        val response = userService.registerUser(user)
-        return ResponseEntity.status(
-            if (response.success) HttpStatus.CREATED else HttpStatus.BAD_REQUEST
-        ).body(response)
+    fun registerUser(@RequestBody user: User): ResponseEntity<Any> {
+        val result = userService.registerUser(user)
+        return result.fold(
+            onSuccess = { newUser -> ResponseEntity.status(CREATED).body(newUser) },
+            onFailure = { exception ->
+                ResponseEntity.status(HttpStatus.NOT_FOUND).body(mapOf("error" to exception.message))
+            }
+        )
     }
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     fun loginUser(
         @RequestBody loginRequestDTO: LoginRequestDTO,
         httpResponse: HttpServletResponse
-    ): ResponseEntity<ApiResponse<LoginResponseDTO>> {
-        val response = userService.loginUser(loginRequestDTO, httpResponse)
-        return ResponseEntity.status(
-            if (response.success) HttpStatus.CREATED else HttpStatus.UNAUTHORIZED
-        ).body(response)
+    ): ResponseEntity<Any> {
+        val result = userService.loginUser(loginRequestDTO, httpResponse)
+
+        return result.fold(
+            onSuccess = { user -> ResponseEntity.ok(user) },
+            onFailure = { exception ->
+                ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(mapOf("error" to exception.message))
+            }
+        )
     }
 
     @PostMapping("/refresh")
-    fun refreshAccessToken(request: HttpServletRequest): ResponseEntity<ApiResponse<AccessTokenDTO>> {
-        val cookies = request.cookies ?: return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-            .body(ApiResponse(success = false, message = "No cookies found"))
+    fun refreshAccessToken(request: HttpServletRequest): ResponseEntity<Any> {
 
-        val refreshToken = cookies.find { it.name == "refreshToken" }?.value
-            ?: return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                .body(ApiResponse(success = false, message = "Refresh token not found"))
+        val result = authorisationService.refreshAccessToken(request)
 
-        val username = jwtUtil.extractUsername(refreshToken)
-            ?: return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                .body(ApiResponse(success = false, message = "Invalid refresh token"))
-
-        val newAccessToken = jwtUtil.generateAccessToken(username)
-
-        return ResponseEntity.ok(
-            ApiResponse(
-                success = true,
-                message = "Access token refreshed",
-                data = AccessTokenDTO(newAccessToken)
-            )
+        return result.fold(
+            onSuccess = { accessToken -> ResponseEntity.ok(accessToken) },
+            onFailure = { exception ->
+                ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(mapOf("error" to exception.message))
+            }
         )
     }
 
     @PostMapping("/logout")
-    fun logout(response: HttpServletResponse): ResponseEntity<ApiResponse<Unit>> {
-        val cookie = Cookie("refreshToken", "")
-        cookie.isHttpOnly = true
-        cookie.path = "/api/auth/refresh"
-        cookie.maxAge = 0 // 🔹 Remove cookie
+    fun logout(response: HttpServletResponse): ResponseEntity<Unit> {
+
+        val cookie = Cookie("refreshToken", "").apply {
+            isHttpOnly = true
+            path = "/"
+            maxAge = TokenValidityCode.ZERO.seconds
+        }
         response.addCookie(cookie)
 
-        return ResponseEntity.ok(ApiResponse(success = true, message = "Logged out successfully"))
+        return ResponseEntity.ok().build()
+
     }
 
 }
