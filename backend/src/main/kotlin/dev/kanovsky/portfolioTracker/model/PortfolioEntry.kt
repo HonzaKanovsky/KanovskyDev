@@ -30,7 +30,6 @@ data class PortfolioEntry(
     var timestamp: LocalDateTime = LocalDateTime.now()
 ) {
     fun toDto() = PortfolioEntryDTO(
-        id = id,
         crypto = crypto.toDto(),
         amount = amount
     )

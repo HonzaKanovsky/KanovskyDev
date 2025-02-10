@@ -4,7 +4,7 @@ import dev.kanovsky.portfolioTracker.dto.ContactRequestDTO
 import dev.kanovsky.portfolioTracker.service.EmailService
 import org.springframework.web.bind.annotation.*
 
-@CrossOrigin(origins = ["http://localhost:5173"])
+@CrossOrigin(origins = [])
 @RestController
 @RequestMapping("/api/contact")
 class ContactController(private val emailService: EmailService) {

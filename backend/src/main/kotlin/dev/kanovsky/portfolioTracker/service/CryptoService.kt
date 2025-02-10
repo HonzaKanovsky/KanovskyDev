@@ -98,6 +98,11 @@ class CryptoService(
                 })
     }
 
+    fun searchCryptoByNameOrSymbol(query: String): List<CryptoDTO> {
+        return cryptoRepository.findByNameContainingIgnoreCaseOrSymbolContainingIgnoreCase(query, query)
+            .map { it.toDto() }
+    }
+
 
     private fun getCryptoById(id: Long): Crypto =
         cryptoRepository.findById(id).orElseThrow { IllegalArgumentException("Crypto with id $id not found") }

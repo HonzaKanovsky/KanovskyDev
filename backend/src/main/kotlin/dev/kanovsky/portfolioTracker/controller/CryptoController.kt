@@ -1,7 +1,7 @@
 package dev.kanovsky.portfolioTracker.controller
 
+import dev.kanovsky.portfolioTracker.dto.CryptoDTO
 import dev.kanovsky.portfolioTracker.dto.HistorisationCryptoPriceDTO
-import dev.kanovsky.portfolioTracker.model.Crypto
 import dev.kanovsky.portfolioTracker.service.CryptoService
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -10,14 +10,15 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
-@CrossOrigin(origins = ["http://localhost:5173"])
 @RestController
 @RequestMapping("/api/cryptos")
 class CryptoController(private val cryptoService: CryptoService) {
-    @GetMapping
-    fun getAllCryptos(
-        @PageableDefault(size = 30, sort = ["id"]) pageable: Pageable
-    ): Page<Crypto> = cryptoService.getAllCryptos(pageable)
+
+    @GetMapping("/search")
+    fun searchCryptos(@RequestParam query: String): ResponseEntity<List<CryptoDTO>> {
+        val results = cryptoService.searchCryptoByNameOrSymbol(query)
+        return ResponseEntity.ok(results)
+    }
 
     @GetMapping("/list")
     fun getAllCryptosWithPrices(

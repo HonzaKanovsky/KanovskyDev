@@ -5,7 +5,6 @@ import dev.kanovsky.portfolioTracker.enums.TokenValidityCode
 import dev.kanovsky.portfolioTracker.model.User
 import dev.kanovsky.portfolioTracker.service.AuthorisationService
 import dev.kanovsky.portfolioTracker.service.UserService
-import jakarta.mail.event.FolderEvent.CREATED
 import jakarta.servlet.http.Cookie
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
@@ -22,12 +21,12 @@ class AuthController(
     private val userService: UserService,
     private val authorisationService: AuthorisationService
 ) {
-    
+
     @PostMapping("/register")
     fun registerUser(@RequestBody user: User): ResponseEntity<Any> {
         val result = userService.registerUser(user)
         return result.fold(
-            onSuccess = { newUser -> ResponseEntity.status(CREATED).body(newUser) },
+            onSuccess = { newUser -> ResponseEntity.status(HttpStatus.CREATED).body(newUser) },
             onFailure = { exception ->
                 ResponseEntity.status(HttpStatus.NOT_FOUND).body(mapOf("error" to exception.message))
             }

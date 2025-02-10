@@ -62,7 +62,7 @@ class UserService(private val userRepository: UserRepository) {
         cookie.maxAge = TokenValidityCode.ONE_DAY.seconds
         httpResponse.addCookie(cookie)
 
-        return Result.success(LoginResponseDTO(accessToken, "Stored in HTTP-only cookie"))
+        return Result.success(LoginResponseDTO(user.id, accessToken, "Stored in HTTP-only cookie"))
     }
 
     private fun isUsernameAndEmailValid(username: String, email: String): Boolean {
