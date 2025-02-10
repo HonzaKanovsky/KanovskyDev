@@ -11,9 +11,6 @@ import java.time.LocalDate
 
 @Repository
 interface HistorisationCryptoPriceRepository : JpaRepository<HistorisationCryptoPrice, Long> {
-    fun findByCrypto(crypto: Crypto): List<HistorisationCryptoPrice>
-    fun findByCryptoAndTimestamp(crypto: Crypto, timestamp: LocalDate): HistorisationCryptoPrice?
-
     fun findFirstByCryptoOrderByTimestampDesc(crypto: Crypto): HistorisationCryptoPrice?
     fun findByCryptoAndTimestampBetweenOrderByTimestampDesc(
         crypto: Crypto,

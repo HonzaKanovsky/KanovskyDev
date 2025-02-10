@@ -7,6 +7,4 @@ import org.springframework.stereotype.Repository
 @Repository
 interface CryptoRepository : JpaRepository<Crypto, Long> {
     fun findCryptoById(id: Long): Crypto?
-    fun findBySymbol(symbol: String): Crypto?
-    fun findByName(name: String): List<Crypto>
 }
