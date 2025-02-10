@@ -6,7 +6,7 @@ import { Company } from "@/models/Company";
 import { University } from "@/models/University";
 import { useI18n } from "vue-i18n";
 import Experiences from "./Experience.vue";
-import ResumeButton from "./ResumeButton.vue"
+import ResumeButton from "./StaticResumeButton.vue"
 import Skills from "./Skills.vue";
 import EducationComponent from "./Education.vue";
 
