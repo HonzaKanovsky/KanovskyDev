@@ -30,9 +30,9 @@ class SecurityConfig(
             .csrf { it.disable() }
             .authorizeHttpRequests { auth ->
                 auth
-                    //                   .requestMatchers("/api/auth/login", "/api/auth/register", "/api/cryptos/**", "/api/resume")
-                    //                 .permitAll()
-                    .anyRequest().permitAll()
+                    .requestMatchers("/api/auth/login", "/api/auth/register", "/api/cryptos/**", "/api/resume")
+                    .permitAll()
+                    .anyRequest().authenticated()
             }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .authenticationProvider(authenticationProvider())
