@@ -31,35 +31,24 @@ const switchLocale = (newLocale: string) => {
                     <div class="md:ml-auto">
                         <div class="flex space-x-2">
                             <!-- Reactive Translations -->
-                            <RouterLink
-                                to="/"
-                                :class="[isActiveLink('/') ? ['text-gray-800'] : ['hover:text-gray-700'], 'text-gray-500', 'px-3', 'py-2', 'rounded-md']"
-                            >
-                                {{ t('navbar.home') }}
-                            </RouterLink>
-                            <RouterLink
-                                to="/resume"
-                                :class="[isActiveLink('/resume') ? ['text-gray-800'] : ['hover:text-gray-700'], 'text-gray-500', 'px-3', 'py-2', 'rounded-md']"
-                            >
-                                {{ t('navbar.resume') }}
-                            </RouterLink>
-                            <RouterLink
-                                to="/portfolio"
-                                :class="[isActiveLink('/portfolio') ? ['text-gray-800'] : ['hover:text-gray-700'], 'text-gray-500', 'px-3', 'py-2', 'rounded-md']"
-                            >
-                                {{ t('navbar.portfolio') }}
-                            </RouterLink>
-                            <RouterLink
-                                to="/contact"
-                                :class="[isActiveLink('/contacts') ? ['text-gray-800'] : ['hover:text-gray-700'], 'text-gray-500', 'px-3', 'py-2', 'rounded-md']"
-                            >
-                                {{ t('navbar.contact') }}
-                            </RouterLink>
-                            <!-- Locale Switcher
                             <div>
-                                <button @click="switchLocale('en')">English</button>
-                                <button @click="switchLocale('cs')">Čeština</button>
-                            </div> -->
+                                <RouterLink to="/"
+                                    :class="[isActiveLink('/') ? ['text-gray-800'] : ['hover:text-gray-700'], 'text-gray-500', 'px-3', 'py-2', 'rounded-md']">
+                                    {{ t('navbar.home') }}
+                                </RouterLink>
+                                <RouterLink to="/resume"
+                                    :class="[isActiveLink('/resume') ? ['text-gray-800'] : ['hover:text-gray-700'], 'text-gray-500', 'px-3', 'py-2', 'rounded-md']">
+                                    {{ t('navbar.resume') }}
+                                </RouterLink>
+                                <RouterLink to="/portfolio"
+                                    :class="[isActiveLink('/portfolio') ? ['text-gray-800'] : ['hover:text-gray-700'], 'text-gray-500', 'px-3', 'py-2', 'rounded-md']">
+                                    {{ t('navbar.portfolio') }}
+                                </RouterLink>
+                                <RouterLink to="/contact"
+                                    :class="[isActiveLink('/contacts') ? ['text-gray-800'] : ['hover:text-gray-700'], 'text-gray-500', 'px-3', 'py-2', 'rounded-md']">
+                                    {{ t('navbar.contact') }}
+                                </RouterLink>
+                            </div>
                         </div>
                     </div>
                 </div>

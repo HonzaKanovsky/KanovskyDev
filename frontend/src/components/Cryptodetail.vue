@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onBeforeMount, computed } from "vue";
+import { ref, onBeforeMount, computed, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import axios from "axios";
 import { Chart as ChartJS, LineElement, PointElement, LinearScale, Title, Tooltip, CategoryScale } from 'chart.js';
@@ -19,8 +19,7 @@ const props = defineProps({
     id: [String, Number]
 });
 
-// Fetch historical data
-onBeforeMount(async () => {
+const fetchCryptoHistory = async () => {
     try {
         const response = await axios.get(`http://localhost:8080/api/cryptos/${cryptoId}/history`);
         cryptoDetails.value = response.data;
@@ -30,7 +29,10 @@ onBeforeMount(async () => {
     } finally {
         loading.value = false;
     }
-});
+}
+
+// Fetch historical data
+onBeforeMount(fetchCryptoHistory);
 
 // Format price function
 const formatPrice = (price) => {
@@ -46,6 +48,8 @@ const getSegmentColors = (data) => {
         return point.priceChangePercentage >= 0 ? "green" : "red";
     });
 };
+
+
 
 // Prepare data for the chart (REVERSED ORDER)
 const chartData = computed(() => {
@@ -77,6 +81,10 @@ const chartData = computed(() => {
 const goBack = () => {
     router.push("/crypto-tracker");
 };
+
+watch(() => route.params.id, fetchCryptoHistory);
+
+
 </script>
 
 

@@ -18,7 +18,7 @@ const fetchPage = async (page) => {
     loading.value = true;
     try {
         const response = await axios.get("http://localhost:8080/api/cryptos/list", {
-            params: { page, size: 10 },
+            params: { page, size: 20 },
         });
         cryptoPrices.value = response.data.content;
         currentPage.value = response.data.number;
@@ -92,22 +92,29 @@ const goToHistory = (id) => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="crypto in cryptoPrices" :key="crypto.cryptoDTO.id"
+                        <tr v-for="(crypto, index) in cryptoPrices" :key="crypto.cryptoDTO.id"
                             class="hover:bg-gray-100 cursor-pointer transition"
                             @click="goToHistory(crypto.cryptoDTO.id)">
-                            <td class="border border-gray-300 px-4 py-2 text-center">{{ crypto.cryptoDTO.id }}</td>
-                            <td class="border border-gray-300 px-4 py-2">{{ crypto.cryptoDTO.name }}
-                                <span class="text-gray-500">- {{ crypto.cryptoDTO.symbol }}</span>
+                            <!-- Show Row Number Instead of ID -->
+                            <td class="border border-gray-300 px-4 py-2 text-center">
+                                {{ index + 1 + (currentPage * 20) }}
                             </td>
-                            <td class="border border-gray-300 px-4 py-2 text-right">${{ formatPrice(crypto.price) }}
+                            <td class="border border-gray-300 px-4 py-2">
+                                {{ crypto.cryptoDTO.name }} <span class="text-gray-500">- {{ crypto.cryptoDTO.symbol
+                                    }}</span>
+                            </td>
+                            <td class="border border-gray-300 px-4 py-2 text-right">
+                                ${{ formatPrice(crypto.price) }}
                             </td>
                             <td class="border border-gray-300 px-4 py-2 text-right"
                                 :class="crypto.priceChangePercentage >= 0 ? 'text-green-600' : 'text-red-600'">
                                 {{ Math.abs(crypto.priceChangePercentage).toFixed(2) }}%
                             </td>
-                            <td class="border border-gray-300 px-4 py-2 text-right">{{ crypto.marketCap.toLocaleString()
-                                }}</td>
+                            <td class="border border-gray-300 px-4 py-2 text-right">
+                                {{ crypto.marketCap.toLocaleString() }}
+                            </td>
                         </tr>
+
                     </tbody>
                 </table>
             </div>

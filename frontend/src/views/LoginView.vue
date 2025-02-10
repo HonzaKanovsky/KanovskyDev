@@ -1,11 +1,11 @@
 <script setup>
 import Navbar from '@/components/CryptoTrackerNavbar.vue';
-import Cryptodetail from '@/components/Cryptodetail.vue';
 import Footer from '@/components/Footer.vue';
+import Login from '@/components/Login.vue';
 </script>
 
 <template>
-    <Navbar :isCryptoApp="true"/>
-    <Cryptodetail />
-    <Footer />
+    <Navbar/>
+    <Login />
+    <Footer/>
 </template>
