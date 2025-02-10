@@ -1,5 +1,6 @@
 package dev.kanovsky.portfolioTracker.security
 
+import dev.kanovsky.portfolioTracker.enums.TokenValidityCode
 import io.jsonwebtoken.Claims
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
@@ -17,7 +18,7 @@ class JwtUtil {
         return Jwts.builder()
             .setSubject(userName)
             .setIssuedAt(Date(System.currentTimeMillis()))
-            .setExpiration(Date(System.currentTimeMillis() + 1000 * 60 * 15)) // 15 minute expiry
+            .setExpiration(Date(System.currentTimeMillis() + 1000 * (TokenValidityCode.ONE_HOUR.seconds / 4))) // 15 minute expiry
             .signWith(key, SignatureAlgorithm.HS256)
             .compact()
     }
@@ -26,7 +27,7 @@ class JwtUtil {
         return Jwts.builder()
             .setSubject(userName) // Store user ID
             .setIssuedAt(Date(System.currentTimeMillis()))
-            .setExpiration(Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24)) //  1 days expiry
+            .setExpiration(Date(System.currentTimeMillis() + 1000 * TokenValidityCode.ONE_DAY.seconds)) //  1 days expiry
             .signWith(key, SignatureAlgorithm.HS256)
             .compact()
     }
