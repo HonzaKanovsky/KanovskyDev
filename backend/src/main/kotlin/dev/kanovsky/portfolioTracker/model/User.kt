@@ -2,10 +2,11 @@ package dev.kanovsky.portfolioTracker.model
 
 import dev.kanovsky.portfolioTracker.dto.UserDTO
 import jakarta.persistence.*
-import lombok.Data
 
+/**
+ * Entity representing a user in the system.
+ */
 @Entity
-@Data
 @Table(name = "user")
 data class User(
     @Id
@@ -22,10 +23,4 @@ data class User(
     val email: String
 ) {
     fun toDto() = UserDTO(id, username, email)
-
-    companion object {
-        fun fromDto() {
-            TODO("Not yet implemented")
-        }
-    }
 }

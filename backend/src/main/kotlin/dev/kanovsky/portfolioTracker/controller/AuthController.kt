@@ -15,13 +15,20 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
+/**
+ * Controller responsible for handling authentication-related requests.
+ **/
 @RestController
 @RequestMapping("/api/auth")
 class AuthController(
     private val userService: UserService,
     private val authorisationService: AuthorisationService
 ) {
-
+    /**
+     * Registers a new user.
+     * @param user The user details provided in the request body.
+     * @return ResponseEntity containing the created user or an error message.
+     **/
     @PostMapping("/register")
     fun registerUser(@RequestBody user: User): ResponseEntity<Any> {
         val result = userService.registerUser(user)
@@ -33,6 +40,12 @@ class AuthController(
         )
     }
 
+    /**
+     * Authenticates a user and issues an authentication token.
+     * @param loginRequestDTO The login credentials provided in the request body.
+     * @param httpResponse The HTTP response to set cookies if necessary.
+     * @return ResponseEntity containing the authenticated user or an error message.
+     **/
     @PostMapping("/login")
     fun loginUser(
         @RequestBody loginRequestDTO: LoginRequestDTO,
@@ -48,6 +61,11 @@ class AuthController(
         )
     }
 
+    /**
+     * Refreshes the access token using the refresh token stored in cookies.
+     * @param request The HTTP request containing the refresh token.
+     * @return ResponseEntity containing the new access token or an error message.
+     **/
     @PostMapping("/refresh")
     fun refreshAccessToken(request: HttpServletRequest): ResponseEntity<Any> {
 
@@ -61,9 +79,14 @@ class AuthController(
         )
     }
 
+    /**
+     * Logs out the user by clearing the refresh token cookie.
+     * @param response The HTTP response used to set the cookie.
+     * @return ResponseEntity with an empty response indicating successful logout.
+     **/
     @PostMapping("/logout")
     fun logout(response: HttpServletResponse): ResponseEntity<Unit> {
-
+        // Create a cookie with an empty value and set expiration to zero to remove it
         val cookie = Cookie("refreshToken", "").apply {
             isHttpOnly = true
             path = "/"
@@ -72,7 +95,6 @@ class AuthController(
         response.addCookie(cookie)
 
         return ResponseEntity.ok().build()
-
     }
 
 }

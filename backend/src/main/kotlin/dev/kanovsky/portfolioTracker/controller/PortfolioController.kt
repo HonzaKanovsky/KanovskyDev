@@ -11,10 +11,21 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import java.math.BigDecimal
 
+/**
+ * Controller responsible for handling user portfolio operations.
+ **/
 @RestController
 @RequestMapping("/api/portfolios")
 class PortfolioController(private val portfolioService: PortfolioService) {
 
+
+    /**
+     * Retrieves a user's portfolio by their user ID.
+     * @param userId The user's unique identifier.
+     * @param pageable Pagination details, defaults to 30 results sorted by ID.
+     * @param request The HTTP request to extract the authorization token.
+     * @return A ResponseEntity containing the user's portfolio or an error response.
+     **/
     @GetMapping("/{userId}")
     fun getPortfolioByUserId(
         @PathVariable userId: Long,
@@ -29,6 +40,15 @@ class PortfolioController(private val portfolioService: PortfolioService) {
             )
     }
 
+    /**
+     * Adds a new cryptocurrency entry to the user's portfolio.
+     * @param userId The user's unique identifier.
+     * @param cryptoId The cryptocurrency's unique identifier.
+     * @param amount The amount of cryptocurrency to add (must be 0 or greater).
+     * @param pageable Pagination details.
+     * @param request The HTTP request to extract the authorization token.
+     * @return A ResponseEntity containing the updated portfolio or an error response.
+     **/
     @PostMapping
     fun addPortfolioEntry(
         @RequestParam userId: Long,
@@ -45,6 +65,15 @@ class PortfolioController(private val portfolioService: PortfolioService) {
             )
     }
 
+    /**
+     * Updates an existing cryptocurrency entry in the user's portfolio.
+     * @param userId The user's unique identifier.
+     * @param cryptoId The cryptocurrency's unique identifier.
+     * @param amount The new amount of cryptocurrency (must be 0 or greater).
+     * @param pageable Pagination details.
+     * @param request The HTTP request to extract the authorization token.
+     * @return A ResponseEntity containing the updated portfolio or an error response.
+     **/
     @PatchMapping
     fun updatePortfolioEntry(
         @RequestParam userId: Long,
@@ -61,6 +90,14 @@ class PortfolioController(private val portfolioService: PortfolioService) {
             )
     }
 
+    /**
+     * Deletes a cryptocurrency entry from the user's portfolio.
+     * @param userId The user's unique identifier.
+     * @param cryptoId The cryptocurrency's unique identifier.
+     * @param pageable Pagination details.
+     * @param request The HTTP request to extract the authorization token.
+     * @return A ResponseEntity containing the updated portfolio or an error response.
+     **/
     @DeleteMapping
     fun deletePortfolioEntry(
         @RequestParam userId: Long,
@@ -76,6 +113,11 @@ class PortfolioController(private val portfolioService: PortfolioService) {
             )
     }
 
+    /**
+     * Extracts the JWT token from the Authorization header.
+     * @param request The HTTP request containing the Authorization header.
+     * @return The extracted token, or null if missing.
+     **/
     private fun getToken(request: HttpServletRequest): String? {
         return request.getHeader("Authorization")?.substring(7)
     }

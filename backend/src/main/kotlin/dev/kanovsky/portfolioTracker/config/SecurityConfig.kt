@@ -1,5 +1,6 @@
 package dev.kanovsky.portfolioTracker.config
 
+import dev.kanovsky.portfolioTracker.enums.TokenValidityCode
 import dev.kanovsky.portfolioTracker.security.JwtAuthFilter
 import dev.kanovsky.portfolioTracker.security.JwtUtil
 import org.springframework.context.annotation.Bean
@@ -19,6 +20,9 @@ import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.CorsConfigurationSource
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 
+/**
+ * Security configuration class for handling authentication, authorization, and CORS settings.
+ **/
 @Configuration
 @EnableWebSecurity
 class SecurityConfig(
@@ -27,11 +31,14 @@ class SecurityConfig(
     private val userDetailsService: UserDetailsService
 ) {
 
+    /**
+     * Defines security filter chain configuration.
+     **/
     @Bean
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
         http
-            .csrf { it.disable() }
-            .cors { it.configurationSource(corsConfigurationSource()) }
+            .csrf { it.disable() } // Disable CSRF for stateless authentication
+            .cors { it.configurationSource(corsConfigurationSource()) } // Enable CORS
             .authorizeHttpRequests { auth ->
                 auth
                     .requestMatchers(
@@ -42,41 +49,54 @@ class SecurityConfig(
                         "/api/cryptos/search",
                         "/api/resume"
                     )
-                    .permitAll()
-                    .anyRequest().authenticated()
+                    .permitAll() // Publicly accessible endpoints
+                    .anyRequest().authenticated() // All other requests require authentication
             }
-            .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
-            .authenticationProvider(authenticationProvider())
-            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter::class.java)
+            .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) } // Stateless session
+            .authenticationProvider(authenticationProvider()) // Configure authentication provider
+            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter::class.java) // Apply JWT filter
 
         return http.build()
     }
 
+    /**
+     * Configures the authentication provider to use DaoAuthenticationProvider.
+     **/
     @Bean
     fun authenticationProvider(): AuthenticationProvider {
-        val authProvider = DaoAuthenticationProvider()
-        authProvider.setUserDetailsService(userDetailsService)
-        authProvider.setPasswordEncoder(passwordEncoder())
-        return authProvider
+        return DaoAuthenticationProvider().apply {
+            setUserDetailsService(userDetailsService)
+            setPasswordEncoder(passwordEncoder())
+        }
     }
 
+    /**
+     * Provides the authentication manager for handling authentication requests.
+     **/
     @Bean
     fun authenticationManager(config: AuthenticationConfiguration): AuthenticationManager {
         return config.authenticationManager
     }
 
+    /**
+     * Defines password encoder using BCrypt hashing algorithm.
+     **/
     @Bean
     fun passwordEncoder(): BCryptPasswordEncoder {
         return BCryptPasswordEncoder()
     }
 
+    /**
+     * Configures CORS settings to allow frontend communication.
+     **/
     @Bean
     fun corsConfigurationSource(): CorsConfigurationSource {
         val configuration = CorsConfiguration()
-        configuration.allowedOrigins = listOf("http://localhost:5173/")
+        configuration.allowedOrigins = listOf("http://localhost:5173") // Allow frontend origin
         configuration.allowedMethods = listOf("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
-        configuration.allowedHeaders = listOf("Authorization", "Content-Type")
+        configuration.allowedHeaders = listOf(CorsConfiguration.ALL) // Allow all headers
         configuration.allowCredentials = true
+        configuration.maxAge = TokenValidityCode.ONE_HOUR.seconds.toLong() // Cache preflight response for 1 hour
 
         val source = UrlBasedCorsConfigurationSource()
         source.registerCorsConfiguration("/**", configuration)

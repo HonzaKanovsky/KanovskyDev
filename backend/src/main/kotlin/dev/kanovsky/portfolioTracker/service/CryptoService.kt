@@ -18,13 +18,23 @@ import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import java.time.LocalDate
 
+/**
+ * Service responsible for handling cryptocurrency data operations.
+ **/
 @Service
 class CryptoService(
     private val cryptoRepository: CryptoRepository,
     private val historisationCryptoPriceRepository: HistorisationCryptoPriceRepository,
 ) {
+
+    /**
+     * Retrieves all cryptocurrencies with pagination.
+     **/
     fun getAllCryptos(pageable: Pageable): Page<Crypto> = cryptoRepository.findAll(pageable)
 
+    /**
+     * Retrieves all cryptocurrencies with their latest prices.
+     **/
     fun getAllCryptosWithPricesToday(pageable: Pageable): Page<HistorisationCryptoPriceDTO> {
         return try {
             val pricesPage =
@@ -35,6 +45,9 @@ class CryptoService(
         }
     }
 
+    /**
+     * Retrieves cryptocurrency data by ID.
+     **/
     fun getCryptoDataById(id: Long): Result<CryptoDTO> {
         return try {
             Result.success(getCryptoById(id).toDto())
@@ -43,6 +56,9 @@ class CryptoService(
         }
     }
 
+    /**
+     * Retrieves historical price data for a given cryptocurrency.
+     **/
     fun getHistoricalData(cryptoId: Long, startDate: String?, endDate: String?): Result<CryptoDetailDTO> {
 
         return try {
@@ -70,9 +86,9 @@ class CryptoService(
 
     }
 
-    /*
-    * Called to initialize fetching and saving new crypto data
-    */
+    /**
+     * Fetches the latest cryptocurrency prices from CoinMarketCap and updates the database.
+     **/
     fun updateDBCryptoEntries(amount: Long, currency: CurrencyCode = CurrencyCode.USD): Result<String> {
         return (
                 try {
@@ -98,15 +114,23 @@ class CryptoService(
                 })
     }
 
+    /**
+     * Searches for cryptocurrencies by name or symbol. (used for search in UI)
+     **/
     fun searchCryptoByNameOrSymbol(query: String): List<CryptoDTO> {
         return cryptoRepository.findByNameContainingIgnoreCaseOrSymbolContainingIgnoreCase(query, query)
             .map { it.toDto() }
     }
 
-
+    /**
+     * Retrieves a cryptocurrency entity by its ID.
+     **/
     private fun getCryptoById(id: Long): Crypto =
         cryptoRepository.findById(id).orElseThrow { IllegalArgumentException("Crypto with id $id not found") }
 
+    /**
+     * Saves or updates historical cryptocurrency prices in the database.
+     **/
     private fun saveNewHistorisationCryptoPrices(data: JSONArray) {
         //Get map of cryptos saved in database group them by name and symbol
         val existingCryptos = cryptoRepository.findAll()
@@ -117,7 +141,6 @@ class CryptoService(
         val existingRecordMap = existingRecordsToday.associateBy { it.crypto }
 
         val currentDate = LocalDate.now()
-
         val latestTimestamp = historisationCryptoPriceRepository.findLatestTimestampBefore(currentDate)
 
         // Get all records from that timestamp
@@ -165,9 +188,9 @@ class CryptoService(
         historisationCryptoPriceRepository.saveAll(newHistorisationCryptoPrices)
     }
 
-    /*
-    * Function responsible for retrieving data from CoinMarketCap API
-    */
+    /**
+     * Fetches cryptocurrency data from CoinMarketCap API.
+     **/
     private fun fetchDataFromCMCApi(apiKey: String, url: String): Response {
         // Set up OkHttp client
         val client = OkHttpClient.Builder()

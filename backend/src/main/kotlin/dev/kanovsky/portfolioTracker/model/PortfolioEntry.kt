@@ -2,13 +2,13 @@ package dev.kanovsky.portfolioTracker.model
 
 import dev.kanovsky.portfolioTracker.dto.PortfolioEntryDTO
 import jakarta.persistence.*
-import lombok.Data
 import java.math.BigDecimal
 import java.time.LocalDateTime
 
-
+/**
+ * Entity representing a user's portfolio entry.
+ */
 @Entity
-@Data
 @Table(name = "portfolio_entry")
 data class PortfolioEntry(
     @Id
@@ -17,7 +17,7 @@ data class PortfolioEntry(
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userID", nullable = false)
-    private val user: User,
+    val user: User, // Removed `private` modifier
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cryptoID", nullable = false)
@@ -29,14 +29,12 @@ data class PortfolioEntry(
     @Column(nullable = false)
     var timestamp: LocalDateTime = LocalDateTime.now()
 ) {
+    /**
+     * Converts this PortfolioEntry entity to a DTO.
+     * @return A DTO representation of this PortfolioEntry.
+     */
     fun toDto() = PortfolioEntryDTO(
         crypto = crypto.toDto(),
         amount = amount
     )
-
-    companion object {
-        fun fromDto() {
-            TODO("Not yet implemented")
-        }
-    }
 }
