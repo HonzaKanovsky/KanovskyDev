@@ -1,5 +1,6 @@
 package dev.kanovsky.portfolioTracker.controller
 
+import dev.kanovsky.portfolioTracker.annotations.ApiDescription
 import dev.kanovsky.portfolioTracker.service.PdfGeneratorService
 import org.springframework.core.io.ByteArrayResource
 import org.springframework.http.HttpHeaders
@@ -28,6 +29,7 @@ class ResumeController(
      * @return A ResponseEntity containing the generated PDF file or an error response.
      **/
     @PostMapping(consumes = [MediaType.MULTIPART_FORM_DATA_VALUE])
+    @ApiDescription("Generates a PDF resume from the provided JSON data")
     fun generatePdf(
         @RequestPart("resumeRequestDTO") resumeRequestString: String, // JSON as String
         @RequestPart("profilePicture") profilePicture: MultipartFile?

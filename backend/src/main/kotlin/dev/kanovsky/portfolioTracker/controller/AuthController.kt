@@ -1,5 +1,6 @@
 package dev.kanovsky.portfolioTracker.controller
 
+import dev.kanovsky.portfolioTracker.annotations.ApiDescription
 import dev.kanovsky.portfolioTracker.dto.LoginRequestDTO
 import dev.kanovsky.portfolioTracker.enums.TokenValidityCode
 import dev.kanovsky.portfolioTracker.model.User
@@ -30,6 +31,7 @@ class AuthController(
      * @return ResponseEntity containing the created user or an error message.
      **/
     @PostMapping("/register")
+    @ApiDescription("Registers a new user.")
     fun registerUser(@RequestBody user: User): ResponseEntity<Any> {
         val result = userService.registerUser(user)
         return result.fold(
@@ -47,6 +49,7 @@ class AuthController(
      * @return ResponseEntity containing the authenticated user or an error message.
      **/
     @PostMapping("/login")
+    @ApiDescription("Authenticates a user and issues an authentication token.")
     fun loginUser(
         @RequestBody loginRequestDTO: LoginRequestDTO,
         httpResponse: HttpServletResponse
@@ -67,6 +70,7 @@ class AuthController(
      * @return ResponseEntity containing the new access token or an error message.
      **/
     @PostMapping("/refresh")
+    @ApiDescription("Refreshes the access token using the refresh token stored in cookies.")
     fun refreshAccessToken(request: HttpServletRequest): ResponseEntity<Any> {
 
         val result = authorisationService.refreshAccessToken(request)
@@ -85,6 +89,7 @@ class AuthController(
      * @return ResponseEntity with an empty response indicating successful logout.
      **/
     @PostMapping("/logout")
+    @ApiDescription("Logs out the user by clearing the refresh token cookie.")
     fun logout(response: HttpServletResponse): ResponseEntity<Unit> {
         // Create a cookie with an empty value and set expiration to zero to remove it
         val cookie = Cookie("refreshToken", "").apply {

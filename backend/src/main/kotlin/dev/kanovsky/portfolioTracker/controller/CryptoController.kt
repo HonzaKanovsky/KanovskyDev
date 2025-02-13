@@ -1,5 +1,6 @@
 package dev.kanovsky.portfolioTracker.controller
 
+import dev.kanovsky.portfolioTracker.annotations.ApiDescription
 import dev.kanovsky.portfolioTracker.dto.CryptoDTO
 import dev.kanovsky.portfolioTracker.dto.HistorisationCryptoPriceDTO
 import dev.kanovsky.portfolioTracker.service.CryptoService
@@ -23,6 +24,7 @@ class CryptoController(private val cryptoService: CryptoService) {
      * @return A list of matching cryptocurrencies.
      **/
     @GetMapping("/search")
+    @ApiDescription("Searches for cryptocurrencies by name or symbol.")
     fun searchCryptos(@RequestParam query: String): ResponseEntity<List<CryptoDTO>> {
         val results = cryptoService.searchCryptoByNameOrSymbol(query)
         return ResponseEntity.ok(results)
@@ -34,6 +36,7 @@ class CryptoController(private val cryptoService: CryptoService) {
      * @return A paginated list of cryptocurrency prices.
      **/
     @GetMapping("/list")
+    @ApiDescription("Retrieves a paginated list of all cryptocurrencies along with their latest prices.")
     fun getAllCryptosWithPrices(
         @PageableDefault(size = 30, sort = ["id"]) pageable: Pageable
     ): Page<HistorisationCryptoPriceDTO> = cryptoService.getAllCryptosWithPricesToday(pageable)
@@ -44,6 +47,7 @@ class CryptoController(private val cryptoService: CryptoService) {
      * @return The cryptocurrency details if found, or an error message otherwise.
      **/
     @GetMapping("/{id}")
+    @ApiDescription("Retrieves cryptocurrency data by its ID.")
     fun getCryptoById(@PathVariable id: Long): ResponseEntity<Any> {
         val foundCryptoEntry = cryptoService.getCryptoDataById(id)
 
@@ -63,6 +67,7 @@ class CryptoController(private val cryptoService: CryptoService) {
      * @return The historical price data if found, or an error message otherwise.
      **/
     @GetMapping("/{id}/history")
+    @ApiDescription("Retrieves historical price data for a cryptocurrency.")
     fun getHistoricalData(
         @PathVariable id: Long = 0,
         @RequestParam(required = false) startDate: String?,
@@ -84,6 +89,7 @@ class CryptoController(private val cryptoService: CryptoService) {
      * @return A success message or an error if the update fails.
      **/
     @PostMapping("/update")
+    @ApiDescription("Manually updates cryptocurrency prices in the database.")
     fun updateCryptoPricesManually(@RequestParam amount: Long): ResponseEntity<Any> {
         val updateResult = cryptoService.updateDBCryptoEntries(amount)
 

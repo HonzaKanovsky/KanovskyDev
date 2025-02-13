@@ -1,5 +1,6 @@
 package dev.kanovsky.portfolioTracker.controller
 
+import dev.kanovsky.portfolioTracker.annotations.ApiDescription
 import dev.kanovsky.portfolioTracker.dto.UserDetailDTO
 import dev.kanovsky.portfolioTracker.service.PortfolioService
 import jakarta.servlet.http.HttpServletRequest
@@ -18,7 +19,6 @@ import java.math.BigDecimal
 @RequestMapping("/api/portfolios")
 class PortfolioController(private val portfolioService: PortfolioService) {
 
-
     /**
      * Retrieves a user's portfolio by their user ID.
      * @param userId The user's unique identifier.
@@ -27,6 +27,7 @@ class PortfolioController(private val portfolioService: PortfolioService) {
      * @return A ResponseEntity containing the user's portfolio or an error response.
      **/
     @GetMapping("/{userId}")
+    @ApiDescription("Retrieves a user's portfolio by their user ID.")
     fun getPortfolioByUserId(
         @PathVariable userId: Long,
         @PageableDefault(size = 30, sort = ["id"]) pageable: Pageable,
@@ -50,6 +51,7 @@ class PortfolioController(private val portfolioService: PortfolioService) {
      * @return A ResponseEntity containing the updated portfolio or an error response.
      **/
     @PostMapping
+    @ApiDescription("Adds a new cryptocurrency entry to the user's portfolio.")
     fun addPortfolioEntry(
         @RequestParam userId: Long,
         @RequestParam cryptoId: Long,
@@ -75,6 +77,7 @@ class PortfolioController(private val portfolioService: PortfolioService) {
      * @return A ResponseEntity containing the updated portfolio or an error response.
      **/
     @PatchMapping
+    @ApiDescription("Updates an existing cryptocurrency entry in the user's portfolio.")
     fun updatePortfolioEntry(
         @RequestParam userId: Long,
         @RequestParam cryptoId: Long,
@@ -99,6 +102,7 @@ class PortfolioController(private val portfolioService: PortfolioService) {
      * @return A ResponseEntity containing the updated portfolio or an error response.
      **/
     @DeleteMapping
+    @ApiDescription("Deletes a cryptocurrency entry from the user's portfolio.")
     fun deletePortfolioEntry(
         @RequestParam userId: Long,
         @RequestParam cryptoId: Long,

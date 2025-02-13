@@ -1,5 +1,5 @@
 package dev.kanovsky.portfolioTracker.dto
 
-class AccessTokenDTO(
+data class AccessTokenDTO(
     val accessToken: String
 )
