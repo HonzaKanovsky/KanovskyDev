@@ -10,12 +10,13 @@ import CryptoHistoryView from '@/views/CryptoHistoryView.vue'
 import LoginView from '@/views/LoginView.vue'
 import RegistrationView from '@/views/RegistrationView.vue'
 import DashBoardView from '@/views/DashBoardView.vue'
+import SpecificationView from '@/views/SpecificationView.vue'
 
 const publicPages = [
   "/crypto-tracker/login", "/crypto-tracker/register", 
   "/resume", "/", "/portfolio", "/contact", 
   "/crypto-tracker", "/crypto-tracker/:id/history", 
-  "/resume-generator", "/404"
+  "/resume-generator", "/404","/specification"
 ];
 const loginPages = ["/crypto-tracker/login", "/crypto-tracker/register"]
 
@@ -73,6 +74,11 @@ const router = createRouter({
       path: "/crypto-tracker/dashboard",
       name: "DashBoard",
       component: DashBoardView
+    },
+    {
+      path: "/specification",
+      name: "specification",
+      component: SpecificationView
     },
     {
       path: '/404',
