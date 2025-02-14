@@ -31,7 +31,7 @@ const switchLocale = (newLocale: string) => {
                     <div class="md:ml-auto">
                         <div class="flex space-x-2">
                             <!-- Reactive Translations -->
-                            <div>
+                            <div class="flex">
                                 <RouterLink to="/"
                                     :class="[isActiveLink('/') ? ['text-gray-800'] : ['hover:text-gray-700'], 'text-gray-500', 'px-3', 'py-2', 'rounded-md']">
                                     {{ t('navbar.home') }}

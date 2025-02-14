@@ -27,7 +27,7 @@ defineProps({
                 </div>
             </div>
 
-            <div class="mx-10 mb-10 mt-5 lg:m-10 lg:w-[67%] flex items-center">
+            <div class="mx-10 mb-10 mt-5 lg:m-10 lg:w-[67%] flex items-center text-base">
                 {{ experience?.description }}
             </div>
         </div>

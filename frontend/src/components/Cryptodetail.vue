@@ -90,8 +90,8 @@ watch(() => route.params.id, fetchCryptoHistory);
 
 
 <template>
-    <section class="my-5">
-        <div class="max-w-5xl mx-auto bg-white shadow-lg rounded-lg p-6">
+    <section class="bg-slate-50 my-5 py-10">
+        <div class="max-w-7xl mx-auto bg-white shadow-lg rounded-lg p-6">
             <div class="flex flex-row text-4xl font-bold text mb-4 items-center">
                 <h2>{{ cryptoDetails?.crypto.name }} ({{ cryptoDetails?.crypto.symbol }})</h2>
                 <span class="">: ${{ formatPrice(cryptoDetails?.historisationCryptoPrices[0].price) }}</span>
@@ -113,27 +113,28 @@ watch(() => route.params.id, fetchCryptoHistory);
                 </div>
 
                 <!-- Historical Data Table -->
-                <table class="w-full border-collapse border border-gray-300">
+                <table class="w-full border-collapse ">
                     <thead>
-                        <tr class="bg-blue-500 text-white">
-                            <th class="border border-gray-300 px-4 py-2">Date</th>
-                            <th class="border border-gray-300 px-4 py-2">Market Cap</th>
-                            <th class="border border-gray-300 px-4 py-2">Price</th>
-                            <th class="border border-gray-300 px-4 py-2">Change (%)</th>
+                        <tr class="bg-blue-500 text-white text-center">
+                            <th class=" px-4 py-2">Date</th>
+                            <th class=" px-4 py-2">Price</th>
+                            <th class=" px-4 py-2">Change (%)</th>
+                            <th class=" px-4 py-2">Market Cap</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr v-for="history in cryptoDetails?.historisationCryptoPrices" :key="history.timestamp"
                             class="hover:bg-gray-100">
-                            <td class="border border-gray-300 px-4 py-2 text-center">{{ history.timestamp }}</td>
-                            <td class="border border-gray-300 px-4 py-2 text-right">{{
-                                history.marketCap.toLocaleString() }}</td>
-                            <td class="border border-gray-300 px-4 py-2 text-right">${{ formatPrice(history.price) }}
+                            <td class=" px-4 py-2 text-center">{{ history.timestamp }}</td>
+
+                            <td class=" px-4 py-2 text-center">${{ formatPrice(history.price) }}
                             </td>
-                            <td class="border border-gray-300 px-4 py-2 text-right"
+                            <td class=" px-4 py-2 text-center"
                                 :class="history.priceChangePercentage > 0 ? 'text-green-600' : (history.priceChangePercentage == 0 ? 'text-black' : 'text-red-600')">
                                 {{ Math.abs(history.priceChangePercentage).toFixed(2) }}%
                             </td>
+                            <td class=" px-4 py-2 text-center">${{
+                                history.marketCap.toLocaleString() }}</td>
                         </tr>
                     </tbody>
                 </table>

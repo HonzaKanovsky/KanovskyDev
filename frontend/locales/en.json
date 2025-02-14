@@ -3,14 +3,14 @@
     "title": "About Me",
     "subtitle": "My name is Jan Kanovsky and I help deliver smart software solutions",
     "paragraphs": [
-      "I am a dedicated software developer with a strong background in backend development and software testing, supported by a Bachelor's degree in Informatics from the Faculty of Economics and Management at CZU Prague. Currently pursuing a Master's degree in Informatics at the Czech University of Life Sciences, I am committed to advancing my expertise in technology and development.",
-      "With over three years of experience as a Backend Developer at Seyfor, I have honed my skills in building robust software solutions. My prior roles include working as a Java Developer and Software Tester at MOPET CZ, where I gained valuable experience in software quality assurance and development. I have also contributed to customer support and testing roles at organizations like Seznam.cz and Česká spořitelna, showcasing my ability to adapt to various aspects of the tech industry.",
-      "Driven by a passion for technology, I continuously seek opportunities to learn and grow. My skill set includes proficiency in C# and Java, alongside a solid foundation in testing methodologies and problem-solving. I am enthusiastic about leveraging my skills to develop innovative solutions and contribute to impactful projects."
+      "I’m a back-end developer with four years of experience working with Java, Kotlin, and Spring Boot. I specialize in building reliable systems that improve performance, streamline processes, and ensure smooth functionality. My goal is to translate complex requirements into practical, efficient software that works seamlessly for users.",
+      "At Seyfor, I worked on a customs clearance system in a dual role as a back-end developer and business analyst, turning client needs into working features and maintaining functional documentation. At MOPET, I managed the back end of a prepaid card system, ensuring stability and smooth operation. I enjoy working on projects that have a real impact, making everyday tasks easier for users.",
+      "I’m currently pursuing my master’s degree at the Czech University of Life Sciences while studying abroad at Inha University in Korea. I’m open to remote opportunities where I can contribute to meaningful projects, grow my skills, and collaborate with teams focused on building useful, efficient software. If you’d like to work together, feel free to reach out!"
     ]
   },
   "hero": {
-    "title": "Build software effortlessly",
-    "subtitle": "I craft intelligent solutions to help you",
+    "title": "Enhance user experience",
+    "subtitle": "I help build applications that",
     "resumeButton": "Resume",
     "portfolioButton": "Portfolio"
   },
@@ -33,7 +33,7 @@
       {
         "position": "Backend Developer",
         "period": "2020 - Present",
-        "description": "Developing robust backend solutions, improving application performance, and collaborating with cross-functional teams to deliver software solutions.",
+        "description": "At Seyfor, I worked on a custom clearance system, developing and maintaining key back-end functionality. I translated customer requirements into clear tasks for both the back-end and front-end teams, ensuring smooth implementation. My role also involved contributing to functional specifications and managing builds and deployments using Microsoft Azure.",
         "company": {
           "name": "Seyfor a.s.",
           "location": "Prague, CZ"
@@ -42,16 +42,16 @@
       {
         "position": "Java Developer",
         "period": "2018 - 2020",
-        "description": "Focused on Java development, bug fixing, and testing software for MOPET CZ.",
+        "description": "At MOPET CZ, I helped develop and maintain a prepaid card management system using Java and Spring Boot. I assisted with database migration from Oracle to PostgreSQL and worked within an Agile environment, contributing to code reviews and daily stand-ups. My role also involved identifying and resolving technical issues to maintain system stability and performance.",
         "company": {
           "name": "Mopet CZ a.s.",
           "location": "Prague, CZ"
         }
       },
       {
-        "position": "Software Tester",
+        "position": "Customer Support",
         "period": "2016 - 2018",
-        "description": "Testing web and mobile applications, providing feedback to the development team, and ensuring high software quality.",
+        "description": "At Seznam.cz, I handled user feedback, assisting customers with technical issues and ensuring a smooth user experience. I also worked closely with the development team, providing QA support for new features, identifying bugs, and suggesting improvements to enhance product quality and usability.",
         "company": {
           "name": "Seznam.cz",
           "location": "Prague, CZ"
@@ -60,22 +60,31 @@
       {
         "position": "Software Tester",
         "period": "2018",
-        "description": "Testování mobilní aplikace, poskytování zpětné vazby vývojovému týmu a zajištění vysoké kvality softwaru.",
+        "description": "I tested a mobile banking app to make sure it worked correctly and was easy to use. I created test cases, looked for issues, and reported them to the development team so they could be fixed. My work helped improve the app before it was released to users.",
         "company": {
           "name": "Česká spořitelna, a.s.",
-          "location": "Praha, CZ"
+          "location": "Prague, CZ"
         }
       }
     ],
     "universities": [
       {
+        "degree": "Exchange Student",
+        "university": {
+          "name": "Inha University",
+          "location": "Incheon, South Korea"
+        },
+        "period": "2024 - Present",
+        "description": "I am studying at Inha University as an exchange student in the field of Information Technologies. This program allows me to expand my knowledge in software development while experiencing a new academic and cultural environment."
+      },
+      {
         "degree": "Master's in Informatics",
         "university": {
           "name": "Czech University of Life Sciences",
-          "location": "Prague, Czech Republic"
+          "location": "Prague, CZ"
         },
         "period": "2023 - Present",
-        "description": "Developing expertise in advanced informatics and software engineering, participating in collaborative research projects, and being a member of the university’s tech innovation club."
+        "description": "I am currently pursuing a master’s degree in Informatics at the Czech University of Life Sciences, continuing my studies after completing my bachelor’s in Informatics. My focus is on advanced software engineering."
       },
       {
         "degree": "Bachelor's in Informatics",
@@ -84,16 +93,7 @@
           "location": "Prague, Czech Republic"
         },
         "period": "2018 - 2023",
-        "description": "Graduated with distinction, completed a thesis on efficient algorithms for software testing, and interned at Seznam.cz as part of a university collaboration program."
-      },
-      {
-        "degree": "Exchange Student",
-        "university": {
-          "name": "Inha University",
-          "location": "Incheon, South Korea"
-        },
-        "period": "2024 - 2025",
-        "description": "Studied advanced topics in software development and international relations, participated in cultural exchange programs to strengthen global collaboration skills, and developed a deeper understanding of the Korean technology and innovation landscape."
+        "description": "I graduated with a bachelor’s degree in Informatics, where I developed a strong foundation in software development and IT management. My thesis focused on optimal leadership of a team, exploring strategies for effective teamwork and productivity in tech environments."
       }
     ],
     "skills": [
@@ -128,13 +128,13 @@
     "projects": [
       {
         "name":"Crypto currency tracking",
-        "description":"Application using coin market cap api to fetch prices of crypto currencies every day so user can track their portfolio prices on day to day basis.",
+        "description":"A web application that fetches daily cryptocurrency prices using the CoinMarketCap API, allowing users to track their portfolio's value over time on day-to-day basis.",
         "redirectLink": "/crypto-tracker",
         "redirectLinkSpecification": "/specification"
       },
       {
         "name":"Resume generator",
-        "description":"Application using coin market cap api to fetch prices of crypto currencies every day so user can track their portfolio prices on day to day basis.",
+        "description":"A web application designed to help users create professional resumes quickly. It allows users to input their details and generates a structured, well-formatted resume that can be downloaded",
         "redirectLink": "/resume-generator",
         "redirectLinkSpecification": "/specification"
       }

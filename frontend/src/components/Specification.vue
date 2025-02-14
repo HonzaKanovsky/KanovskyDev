@@ -39,7 +39,7 @@ const setController = (controller) => {
 </script>
 
 <template >
-  <section class="bg-slate-50 pt-10">
+  <section class="bg-slate-50 py-10">
     <div class="flex min-h-screen h-fit max-w-7xl mx-auto rounded-3xl shadow-lg">
     <SpecificationSidebar :controllers="controllers" @controller-selected="setController" />
     <SpecificationMainContent :selectedController="selectedController" />

@@ -78,7 +78,7 @@ const goToCryptoHistory = (crypto: { id: number; symbol: string; name: string })
                     </div>
                 </div>
 
-                <div class="flex  h-20 items-center justify-between">
+                <div class="flex h-20 items-center justify-between">
                     <div class="flex flex-1 items-center justify-center md:items-stretch md:justify-start">
                         <!-- Logo -->
                         <RouterLink class="flex flex-shrink-0 items-center mr-4" to="/">
@@ -86,7 +86,7 @@ const goToCryptoHistory = (crypto: { id: number; symbol: string; name: string })
                         </RouterLink>
 
                         <!-- Search Bar -->
-                        <div class="relative w-64 md:w-80 mx-4">
+                        <div class="relative w-64 md:w-80 mx-auto">
                             <input v-model="searchQuery" @input="searchCryptos" type="text"
                                 placeholder="Search Crypto (e.g., Bitcoin, BTC)"
                                 class="border p-2 rounded-md w-full pl-10" />
@@ -103,9 +103,9 @@ const goToCryptoHistory = (crypto: { id: number; symbol: string; name: string })
                         </div>
 
 
-                        <div class="md:ml-auto">
-                            <div class="flex space-x-2">
-                                <div>
+                        <div class="">
+                            <div>
+                                <div class="flex flex-row">
                                     <!-- Listings -->
                                     <RouterLink to="/crypto-tracker"
                                         :class="[isActiveLink('/crypto-tracker') ? ['text-gray-800'] : ['hover:text-gray-700'], 'text-gray-500', 'px-3', 'py-2', 'rounded-md']">
@@ -116,14 +116,14 @@ const goToCryptoHistory = (crypto: { id: number; symbol: string; name: string })
                                         Dashboard
                                     </RouterLink>
 
-                                    <span class="px-3">
+                                    <span class="px-3 flex flex-row">
                                         <!-- Show Login/Register if NOT logged in -->
                                         <template v-if="!isAuthenticated">
                                             <RouterLink to="/crypto-tracker/login"
                                                 :class="[isActiveLink('/crypto-tracker/login') ? ['text-gray-800'] : ['hover:text-gray-700'], 'text-gray-500', 'py-2', 'rounded-md']">
                                                 Login
                                             </RouterLink>
-                                            <span>/</span>
+                                            <span class="my-auto">/ </span>
                                             <RouterLink to="/crypto-tracker/register"
                                                 :class="[isActiveLink('/crypto-tracker/register') ? ['text-gray-800'] : ['hover:text-gray-700'], 'text-gray-500', 'py-2', 'rounded-md']">
                                                 Register

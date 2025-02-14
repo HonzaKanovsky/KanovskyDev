@@ -131,126 +131,130 @@ onMounted(fetchPortfolio);
 </script>
 
 <template>
-    <section class="max-w-5xl mx-auto bg-white shadow-lg rounded-lg p-6 relative">
+    <div class="bg-slate-50 pb-10 pt-10">
+        <section class="max-w-7xl mx-auto bg-white shadow-lg rounded-xl p-6 relative">
 
-        <p v-if="loading" class="text-gray-500">Loading portfolio...</p>
-        <p v-if="errorMessage" class="text-red-500">{{ errorMessage }}</p>
+            <p v-if="loading" class="text-gray-500">Loading portfolio...</p>
+            <p v-if="errorMessage" class="text-red-500">{{ errorMessage }}</p>
 
-        <div class="flex flex-row items-center mb-4">
-            <!-- Total Portfolio Value -->
-            <div v-if="!loading && portfolioData" class="text-2xl font-semibold text-center mb-4">
-                {{portfolioData.user.username}}'s Portfolio
-                <span class="text-blue-600">${{ Number(portfolioData.portfolioValue).toLocaleString() }}</span>
-            </div>
-
-
-            <!-- Add Currency Button -->
-            <div class="mr-0 ml-auto ">
-                <button @click="openAddForm"
-                    class="bg-green-500 text-white px-4 py-2 rounded-md flex items-center gap-2 hover:bg-green-700">
-                    <PhPlus class="w-5 h-5" />
-                    Add Currency
-                </button>
-            </div>
-        </div>
-
-
-        <div v-if="!loading && portfolioData">
-            <!-- Portfolio Table -->
-            <table class="w-full border-collapse border border-gray-300">
-                <thead>
-                    <tr class="bg-blue-500 text-white">
-                        <th class="border border-gray-300 px-4 py-2">Crypto</th>
-                        <th class="border border-gray-300 px-4 py-2">Amount</th>
-                        <th class="border border-gray-300 px-4 py-2">Current Value</th>
-                        <th class="border border-gray-300 px-4 py-2">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="entry in portfolioData.portfolio.content" :key="entry.crypto.id">
-                        <td class="border border-gray-300 px-4 py-2 text-center">
-                            {{ entry.crypto.symbol }} - {{ entry.crypto.name }}
-                        </td>
-
-                        <!-- Editable Amount Cell -->
-                        <td class="border border-gray-300 px-4 py-2 text-right">
-                            <template v-if="editingCrypto === entry.crypto.id">
-                                <input v-model="editedAmount" type="number"
-                                    class="border p-1 rounded-md w-20 text-right"
-                                    @blur="saveEditedAmount(entry.crypto.id)"
-                                    @keyup.enter="saveEditedAmount(entry.crypto.id)" autofocus />
-                            </template>
-                            <template v-else>
-                                {{ Number(entry.amount).toLocaleString() }} <!-- ✅ Format with commas -->
-                            </template>
-                        </td>
-
-
-                        <td class="border border-gray-300 px-4 py-2 text-right">${{ entry.currentPrice.toFixed(2) }}
-                        </td>
-
-                        <!-- Edit & Delete Buttons -->
-                        <td class="border border-gray-300 px-4 py-2 text-center flex gap-2 justify-center">
-                            <button v-if="editingCrypto !== entry.crypto.id"
-                                @click="enableEditing(entry.crypto.id, entry.amount)"
-                                class="bg-yellow-500 text-white px-2 py-1 rounded-md hover:bg-yellow-700 flex items-center">
-                                <PhPencil class="w-5 h-5" />
-                            </button>
-                            <button v-if="editingCrypto === entry.crypto.id" @click="saveEditedAmount(entry.crypto.id)"
-                                class="bg-green-500 text-white px-2 py-1 rounded-md hover:bg-green-700 flex items-center">
-                                <PhCheck class="w-5 h-5" />
-                            </button>
-                            <button @click="removeEntry(entry.crypto.id)"
-                                class="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-700 flex items-center">
-                                <PhTrash class="w-5 h-5" />
-                            </button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-
-        <!-- Popup Form -->
-        <div v-if="showAddForm"
-            class="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-gray-900 bg-opacity-50">
-            <div class="bg-white p-6 rounded-md shadow-lg">
-                <h3 class="text-xl font-semibold mb-4">Add New Currency</h3>
-
-                <!-- Crypto Search -->
-                <div class="relative mb-2">
-                    <input v-model="searchQuery" @input="searchCryptos" type="text"
-                        placeholder="Search Crypto (e.g., Bitcoin, BTC)" class="border p-2 rounded-md w-full" />
-                    <PhMagnifyingGlass class="absolute top-3 right-3 text-gray-500 w-5 h-5" />
-
-                    <!-- Search Results Dropdown -->
-                    <ul v-if="searchResults.length"
-                        class="absolute z-10 w-full bg-white border mt-1 rounded-md shadow-lg max-h-60 overflow-y-auto">
-                        <li v-for="crypto in searchResults" :key="crypto.id" @click="selectCrypto(crypto)"
-                            class="p-2 hover:bg-gray-100 cursor-pointer">
-                            <span class="font-semibold">{{ crypto.symbol }}</span> - {{ crypto.name }}
-                        </li>
-                    </ul>
+            <div class="flex flex-row items-center mb-4">
+                <!-- Total Portfolio Value -->
+                <div v-if="!loading && portfolioData" class="text-2xl font-semibold text-center">
+                    {{ portfolioData.user.username }}'s Portfolio
+                    <span class="text-blue-600">${{ Number(portfolioData.portfolioValue).toLocaleString() }}</span>
                 </div>
 
-                <!-- Selected Crypto -->
-                <p v-if="selectedCrypto" class="mb-2 text-blue-600">
-                    Selected: <strong>{{ selectedCrypto.symbol }} - {{ selectedCrypto.name }}</strong>
-                </p>
 
-                <!-- Amount Input -->
-                <input v-model="newAmount" type="number" placeholder="Amount"
-                    class="border p-2 rounded-md w-full mb-2" />
-
-                <div class="flex justify-between">
-                    <button @click="addEntry" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700">
-                        Save
-                    </button>
-                    <button @click="closeAddForm" class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-700">
-                        Cancel
+                <!-- Add Currency Button -->
+                <div class="mr-0 ml-auto ">
+                    <button @click="openAddForm"
+                        class="bg-green-500 text-white px-4 py-2 rounded-md flex items-center gap-2 hover:bg-green-700">
+                        <PhPlus class="w-5 h-5" />
+                        Add Currency
                     </button>
                 </div>
             </div>
-        </div>
-    </section>
+
+
+            <div v-if="!loading && portfolioData">
+                <!-- Portfolio Table -->
+                <table class="w-full border-collapse border">
+                    <thead>
+                        <tr class="bg-blue-500 text-white border-b">
+                            <th class=" px-4 py-2">Crypto</th>
+                            <th class=" px-4 py-2">Amount</th>
+                            <th class=" px-4 py-2">Current Value</th>
+                            <th class=" px-4 py-2">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="entry in portfolioData.portfolio.content" :key="entry.crypto.id" class="border-b">
+                            <td class=" px-4 py-2 text-center">
+                                {{ entry.crypto.symbol }} - {{ entry.crypto.name }}
+                            </td>
+
+                            <!-- Editable Amount Cell -->
+                            <td class=" px-4 py-2 text-center">
+                                <template v-if="editingCrypto === entry.crypto.id">
+                                    <input v-model="editedAmount" type="number"
+                                        class="border p-1 rounded-md w-20 text-center"
+                                        @blur="saveEditedAmount(entry.crypto.id)"
+                                        @keyup.enter="saveEditedAmount(entry.crypto.id)" autofocus />
+                                </template>
+                                <template v-else>
+                                    {{ Number(entry.amount).toLocaleString() }} <!-- ✅ Format with commas -->
+                                </template>
+                            </td>
+
+
+                            <td class=" px-4 py-2 text-center">${{ entry.currentPrice.toFixed(2) }}
+                            </td>
+
+                            <!-- Edit & Delete Buttons -->
+                            <td class=" px-4 py-2 text-center flex gap-2 justify-center">
+                                <button v-if="editingCrypto !== entry.crypto.id"
+                                    @click="enableEditing(entry.crypto.id, entry.amount)"
+                                    class="bg-yellow-500 text-white px-2 py-1 rounded-md hover:bg-yellow-700 flex items-center">
+                                    <PhPencil class="w-5 h-5" />
+                                </button>
+                                <button v-if="editingCrypto === entry.crypto.id"
+                                    @click="saveEditedAmount(entry.crypto.id)"
+                                    class="bg-green-500 text-white px-2 py-1 rounded-md hover:bg-green-700 flex items-center">
+                                    <PhCheck class="w-5 h-5" />
+                                </button>
+                                <button @click="removeEntry(entry.crypto.id)"
+                                    class="bg-red-500 text-white px-2 py-1 rounded-md hover:bg-red-700 flex items-center">
+                                    <PhTrash class="w-5 h-5" />
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+
+            <!-- Popup Form -->
+            <div v-if="showAddForm"
+                class="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-gray-900 bg-opacity-50">
+                <div class="bg-white p-6 rounded-md shadow-lg">
+                    <h3 class="text-xl font-semibold mb-4">Add New Currency</h3>
+
+                    <!-- Crypto Search -->
+                    <div class="relative mb-2">
+                        <input v-model="searchQuery" @input="searchCryptos" type="text"
+                            placeholder="Search Crypto (e.g., Bitcoin, BTC)" class="border p-2 rounded-md w-full" />
+                        <PhMagnifyingGlass class="absolute top-3 right-3 text-gray-500 w-5 h-5" />
+
+                        <!-- Search Results Dropdown -->
+                        <ul v-if="searchResults.length"
+                            class="absolute z-10 w-full bg-white border mt-1 rounded-md shadow-lg max-h-60 overflow-y-auto">
+                            <li v-for="crypto in searchResults" :key="crypto.id" @click="selectCrypto(crypto)"
+                                class="p-2 hover:bg-gray-100 cursor-pointer">
+                                <span class="font-semibold">{{ crypto.symbol }}</span> - {{ crypto.name }}
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Selected Crypto -->
+                    <p v-if="selectedCrypto" class="mb-2 text-blue-600">
+                        Selected: <strong>{{ selectedCrypto.symbol }} - {{ selectedCrypto.name }}</strong>
+                    </p>
+
+                    <!-- Amount Input -->
+                    <input v-model="newAmount" type="number" placeholder="Amount"
+                        class="border p-2 rounded-md w-full mb-2" />
+
+                    <div class="flex justify-between">
+                        <button @click="addEntry" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700">
+                            Save
+                        </button>
+                        <button @click="closeAddForm"
+                            class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-700">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
 </template>
