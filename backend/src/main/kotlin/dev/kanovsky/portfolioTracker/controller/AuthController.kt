@@ -2,8 +2,8 @@ package dev.kanovsky.portfolioTracker.controller
 
 import dev.kanovsky.portfolioTracker.annotations.ApiDescription
 import dev.kanovsky.portfolioTracker.dto.LoginRequestDTO
+import dev.kanovsky.portfolioTracker.dto.UserRegistrationDTO
 import dev.kanovsky.portfolioTracker.enums.TokenValidityCode
-import dev.kanovsky.portfolioTracker.model.User
 import dev.kanovsky.portfolioTracker.service.AuthorisationService
 import dev.kanovsky.portfolioTracker.service.UserService
 import jakarta.servlet.http.Cookie
@@ -32,7 +32,7 @@ class AuthController(
      **/
     @PostMapping("/register")
     @ApiDescription("Registers a new user.")
-    fun registerUser(@RequestBody user: User): ResponseEntity<Any> {
+    fun registerUser(@RequestBody user: UserRegistrationDTO): ResponseEntity<Any> {
         val result = userService.registerUser(user)
         return result.fold(
             onSuccess = { newUser -> ResponseEntity.status(HttpStatus.CREATED).body(newUser) },

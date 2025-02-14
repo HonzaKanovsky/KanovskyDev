@@ -39,7 +39,7 @@ class CryptoController(private val cryptoService: CryptoService) {
     @ApiDescription("Retrieves a paginated list of all cryptocurrencies along with their latest prices.")
     fun getAllCryptosWithPrices(
         @PageableDefault(size = 30, sort = ["id"]) pageable: Pageable
-    ): Page<HistorisationCryptoPriceDTO> = cryptoService.getAllCryptosWithPricesToday(pageable)
+    ): Page<HistorisationCryptoPriceDTO> = cryptoService.getAllCryptosWithLatestPrices(pageable)
 
     /**
      * Retrieves cryptocurrency data by its ID.

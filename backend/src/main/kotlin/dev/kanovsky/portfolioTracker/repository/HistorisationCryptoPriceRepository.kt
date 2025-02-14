@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.stereotype.Repository
 import java.time.LocalDate
 
+
 /**
  * Repository for managing historical cryptocurrency price data.
  **/
@@ -60,4 +61,13 @@ interface HistorisationCryptoPriceRepository : JpaRepository<HistorisationCrypto
      **/
     @Query("SELECT MAX(h.timestamp) FROM HistorisationCryptoPrice h WHERE h.timestamp < :currentDate")
     fun findLatestTimestampBefore(currentDate: LocalDate): LocalDate?
+
+    /**
+     * Retrieves the latest recorded cryptocurrency prices.
+     *
+     * @param pageable The pagination information.
+     * @return A paginated list (`Page`) of `HistorisationCryptoPrice` records with the latest timestamp.
+     */
+    @Query("SELECT h FROM HistorisationCryptoPrice h WHERE h.timestamp = (SELECT MAX(h2.timestamp) FROM HistorisationCryptoPrice h2)")
+    fun findLatestHistorisationCryptoPrices(pageable: Pageable?): Page<HistorisationCryptoPrice?>
 }

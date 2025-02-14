@@ -33,13 +33,26 @@ class CryptoService(
     fun getAllCryptos(pageable: Pageable): Page<Crypto> = cryptoRepository.findAll(pageable)
 
     /**
-     * Retrieves all cryptocurrencies with their latest prices.
+     * Retrieves all cryptocurrencies with todays prices.
      **/
     fun getAllCryptosWithPricesToday(pageable: Pageable): Page<HistorisationCryptoPriceDTO> {
         return try {
             val pricesPage =
                 historisationCryptoPriceRepository.findHistorisationCryptoPricesByTimestamp(pageable, LocalDate.now());
             return pricesPage.map { it.toDto(containCryptoDto = true) }
+        } catch (e: Exception) {
+            Page.empty(pageable)
+        }
+    }
+
+    /**
+     * Retrieves all cryptocurrencies with their latest prices.
+     **/
+    fun getAllCryptosWithLatestPrices(pageable: Pageable): Page<HistorisationCryptoPriceDTO> {
+        return try {
+            val pricesPage =
+                historisationCryptoPriceRepository.findLatestHistorisationCryptoPrices(pageable);
+            return pricesPage.map { it?.toDto(containCryptoDto = true) }
         } catch (e: Exception) {
             Page.empty(pageable)
         }

@@ -3,6 +3,7 @@ package dev.kanovsky.portfolioTracker.service
 import dev.kanovsky.portfolioTracker.dto.LoginRequestDTO
 import dev.kanovsky.portfolioTracker.dto.LoginResponseDTO
 import dev.kanovsky.portfolioTracker.dto.UserDetailDTO
+import dev.kanovsky.portfolioTracker.dto.UserRegistrationDTO
 import dev.kanovsky.portfolioTracker.enums.RegexPatterns
 import dev.kanovsky.portfolioTracker.enums.TokenValidityCode
 import dev.kanovsky.portfolioTracker.exceptions.InvalidPasswordException
@@ -30,10 +31,10 @@ class UserService(private val userRepository: UserRepository) {
 
     /**
      * Registers a new user.
-     * @param user The user object containing registration details.
+     * @param user The UserRegistrationDTO object containing registration details.
      * @return A Result containing the created user's details or an error if registration fails.
      **/
-    fun registerUser(user: User): Result<UserDetailDTO> {
+    fun registerUser(user: UserRegistrationDTO): Result<UserDetailDTO> {
         if (!isUsernameAndEmailValid(user.username, user.email)) {
             return Result.failure(IllegalArgumentException("submitted username or e-mail does not satisfy requirements."))
         }
@@ -41,7 +42,11 @@ class UserService(private val userRepository: UserRepository) {
             return Result.failure(IllegalArgumentException("Password does not satisfy requirements"))
         }
         val hashedPassword = passwordEncoder.encode(user.password)
-        val newUser = user.copy(password = hashedPassword)
+        val newUser = User(
+            username = user.username,
+            email = user.email,
+            password = hashedPassword,
+        )
 
         return Result.success(UserDetailDTO(userRepository.save(newUser).toDto()))
     }
