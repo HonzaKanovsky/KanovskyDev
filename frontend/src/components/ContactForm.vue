@@ -34,7 +34,7 @@ const sendContactForm = async () => {
 <template>
     <section class="lg:my-5 h-[80vh] mb-20">
         <div class="flex flex-col max-w-3xl bg-slate-50 rounded-3xl shadow-lg mx-auto items-center p-6">
-            <PhEnvelope  class="gradient-background-bottom-right text-white text-5xl p-2 rounded-xl" />
+            <PhEnvelope class="gradient-background-bottom-right text-white text-5xl p-2 rounded-xl" />
             <h2 class="text-3xl font-semibold my-4 mx-auto">Contact Me</h2>
             <div class="flex flex-col w-[80%] items-center">
                 <form @submit.prevent="sendContactForm" class="flex flex-col w-[80%] space-y-6">
@@ -42,8 +42,8 @@ const sendContactForm = async () => {
                     <!-- Floating Label Input -->
                     <div class="relative bg-white">
                         <input type="text" id="name" v-model="form.name" required
-                            class="peer w-full px-3 pt-5 pb-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-transparent text-gray-900 placeholder-transparent text-lg" 
-                            placeholder="Name"/>
+                            class="peer w-full px-3 pt-5 pb-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-transparent text-gray-900 placeholder-transparent text-lg"
+                            placeholder="Name" />
                         <label for="name"
                             class="absolute left-3 text-gray-500 transition-all 
                                    peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-lg 
@@ -55,8 +55,8 @@ const sendContactForm = async () => {
 
                     <div class="relative bg-white">
                         <input type="email" id="email" v-model="form.email" required
-                            class="peer w-full px-3 pt-5 pb-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-transparent text-gray-900 placeholder-transparent text-lg" 
-                            placeholder="Email"/>
+                            class="peer w-full px-3 pt-5 pb-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-transparent text-gray-900 placeholder-transparent text-lg"
+                            placeholder="Email" />
                         <label for="email"
                             class="absolute left-3 text-gray-500 transition-all 
                                    peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-lg 
@@ -68,8 +68,8 @@ const sendContactForm = async () => {
 
                     <div class="relative bg-white">
                         <input type="tel" id="phone" v-model="form.phoneNumber" required
-                            class="peer w-full px-3 pt-5 pb-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-transparent text-gray-900 placeholder-transparent text-lg" 
-                            placeholder="Phone Number"/>
+                            class="peer w-full px-3 pt-5 pb-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-transparent text-gray-900 placeholder-transparent text-lg"
+                            placeholder="Phone Number" />
                         <label for="phone"
                             class="absolute left-3 text-gray-500 transition-all 
                                    peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:text-gray-400 peer-placeholder-shown:text-lg 
@@ -81,7 +81,7 @@ const sendContactForm = async () => {
 
                     <div class="relative bg-white">
                         <textarea id="message" v-model="form.message" required
-                            class="peer w-full px-3 pt-5 pb-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-transparent text-gray-900 h-28 placeholder-transparent text-lg" 
+                            class="peer w-full px-3 pt-5 pb-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-transparent text-gray-900 h-28 placeholder-transparent text-lg"
                             placeholder="Message"></textarea>
                         <label for="message"
                             class="absolute left-3 text-gray-500 transition-all 

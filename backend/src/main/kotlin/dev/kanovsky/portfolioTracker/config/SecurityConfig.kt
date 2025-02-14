@@ -48,7 +48,8 @@ class SecurityConfig(
                         "/api/cryptos/**",
                         "/api/cryptos/search",
                         "/api/resume",
-                        "/api/endpoints"
+                        "/api/endpoints",
+                        "/api/contact"
                     )
                     .permitAll() // Publicly accessible endpoints
                     .anyRequest().authenticated() // All other requests require authentication
