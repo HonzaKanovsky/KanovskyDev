@@ -193,7 +193,7 @@ const submitForm = async () => {
         </form>
 
         <!-- Live Resume Preview -->
-        <div class="w-1/2 p-6 min-h-screen border-l mr-[5%] bg-white shadow-md rounded-md">
+        <div id="resume-template" class="w-1/2 p-6 min-h-screen border-l mr-[5%] bg-white shadow-md rounded-md">
             <h2 class="text-2xl font-bold mb-4 bg">Resume Preview</h2>
             <div class="h-auto">
                 <div class="container border p-6 shadow-md">
@@ -217,7 +217,7 @@ const submitForm = async () => {
                         <div class="sidebar-section">
                             <h2>Skills</h2>
                             <hr class="sidebar-separator" />
-                            <ul>
+                            <ul class="list-item">
                                 <li class="skill" v-for="(skill, index) in resumeData.sidebarItemsDTO[0].sidebarItems"
                                     :key="index">
                                     {{ skill.sidebarItemName }}
@@ -229,7 +229,7 @@ const submitForm = async () => {
                         <div class="sidebar-section">
                             <h2>Languages</h2>
                             <hr class="sidebar-separator" />
-                            <ul>
+                            <ul class="list-item">
                                 <li v-for="(lang, index) in resumeData.sidebarItemsDTO[1].sidebarItems" :key="index">
                                     {{ lang.sidebarItemName }} <span v-if="lang.sidebarItemLevel">- {{
                                         lang.sidebarItemLevel }}</span>
@@ -255,7 +255,7 @@ const submitForm = async () => {
                                 <h5 v-if="item.location">{{ item.location }}</h5>
 
                                 <!-- Skills Learned Section -->
-                                <ul v-if="item.skillsLearned && item.skillsLearned.length">
+                                <ul class="list-item" v-if="item.skillsLearned && item.skillsLearned.length">
                                     <li v-for="(skill, j) in item.skillsLearned" :key="j">
                                         {{ skill }}
                                     </li>
@@ -301,24 +301,24 @@ const submitForm = async () => {
     vertical-align: top;
 }
 
-h2 {
+#resume-template h2 {
     font-size: x-large;
     margin-top: 5px;
 }
 
-h3 {
+#resume-template h3 {
     margin: 0;
     font-weight: bold;
     font-size: large;
 
 }
 
-h4 {
+#resume-template h4 {
     margin-bottom: 3px;
     color: #06548c;
 }
 
-h5 {
+#resume-template h5 {
     margin-top: 3px;
     margin-bottom: 3px;
     font-weight: normal;
@@ -349,12 +349,12 @@ h5 {
     margin: 10px 0;
 }
 
-ul {
+.list-item {
     padding-left: 20px;
     list-style-type: disc;
 }
 
-a {
+#resume-template a {
     color: #06548c;
     text-decoration: none;
 }
@@ -391,8 +391,8 @@ a {
 .sidebar-section {
     margin: 40px 0px 0px 0px;
 }
-.job{
+
+.job {
     margin-top: 10px;
 }
-
 </style>
