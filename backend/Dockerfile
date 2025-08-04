@@ -1,14 +1,12 @@
-# Use OpenJDK as the base image
-FROM eclipse-temurin:17-jdk-alpine
-
-# Set working directory
+# Build stage
+FROM eclipse-temurin:17-jdk-jammy as builder
 WORKDIR /app
+COPY . .
+RUN ./gradlew build --no-daemon -x test
 
-# Copy Gradle build file and source code
-COPY build/libs/*.jar app.jar
-
-# Expose backend port
+# Run stage
+FROM eclipse-temurin:17-jdk-jammy
+WORKDIR /app
+COPY --from=builder /app/build/libs/*.jar app.jar
 EXPOSE 8080
-
-# Run the application
 ENTRYPOINT ["java", "-jar", "app.jar"]

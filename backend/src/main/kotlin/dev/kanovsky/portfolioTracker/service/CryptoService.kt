@@ -13,9 +13,11 @@ import okhttp3.Request
 import okhttp3.Response
 import org.json.JSONArray
 import org.json.JSONObject
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
+import org.springframework.util.StringUtils
 import java.time.LocalDate
 
 /**
@@ -26,6 +28,8 @@ class CryptoService(
     private val cryptoRepository: CryptoRepository,
     private val historisationCryptoPriceRepository: HistorisationCryptoPriceRepository,
 ) {
+    @Value("\${cmc.api.key}")
+    private lateinit var apiKey: String
 
     /**
      * Retrieves all cryptocurrencies with pagination.
@@ -105,7 +109,8 @@ class CryptoService(
     fun updateDBCryptoEntries(amount: Long, currency: CurrencyCode = CurrencyCode.USD): Result<String> {
         return (
                 try {
-                    val apiKey = System.getenv("CMC_API_KEY") ?: throw IllegalStateException("API key not found")
+                    if(!StringUtils.hasText(apiKey))
+                        throw IllegalStateException("API key not found")
                     val baseUrl = "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest"
                     val url = "$baseUrl?start=1&limit=$amount&convert=${currency.code}"
 
