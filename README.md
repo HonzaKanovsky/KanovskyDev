@@ -26,7 +26,7 @@ A multi-purpose platform featuring:
 
 | Component       | Technologies                          |
 |-----------------|---------------------------------------|
-| **Frontend**    | React, TypeScript, TailwindCSS, Nginx |
+| **Frontend**    | Vue.js, TypeScript, TailwindCSS, Nginx |
 | **Backend**     | Spring Boot, Kotlin, JWT              |
 | **Database**    | MySQL                                 |
 | **Infra**       | Docker, Docker Compose                |
