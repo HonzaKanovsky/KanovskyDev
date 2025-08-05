@@ -46,9 +46,7 @@ A multi-purpose platform featuring:
 git clone https://github.com/HonzaKanovsky/KanovskyDev.git
 cd KanovskyDev
 
-# 2. Set up environment (create .env file)
-cp .env.example .env
-# Edit with your actual values
+# 2. Edit with your actual values (fill the coin market api)
 
 # 3. Start all services
 docker-compose up --build
